@@ -12,7 +12,7 @@ public class Promise<T> {
     public Promise() {}
 
     /**
-     * Function to set the callback functions that are executed when the callback is available
+     * Function to set the callback functions that are executed when the operation completes (successfully or unsuccessfully)
      * @param resolve The callback function called when the operation completes successfully
      * @param reject The callback function called when the operation is unsuccessful
      */
