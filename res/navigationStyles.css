@@ -1,0 +1,9 @@
+.navBar {
+    -fx-background-color: #5583ed;
+    -fx-effect: dropshadow(gaussian, #000, 10, 0.1, 0, 0);
+}
+
+.navBar > .button {
+    -fx-border-width: 0;
+    -fx-text-fill: white;
+}
