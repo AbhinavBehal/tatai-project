@@ -1,11 +1,14 @@
 package tatai.ui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import tatai.model.Recorder;
 
 import java.io.File;
+import java.io.IOException;
 
 public class TestProgressController {
 
@@ -13,6 +16,8 @@ public class TestProgressController {
     private ProgressBar progressBar;
     @FXML
     private Button startButton;
+    @FXML
+    private Button pushButton;
 
     private Recorder _recorder;
 
@@ -30,6 +35,13 @@ public class TestProgressController {
             });
 
             progressBar.progressProperty().bind(_recorder.progressProperty());
+        });
+        pushButton.setOnAction(e -> {
+            try {
+                Main.pushScene(new Scene(FXMLLoader.load(getClass().getResource("WelcomeScene.fxml"))));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         });
     }
 

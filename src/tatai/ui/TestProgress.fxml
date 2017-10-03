@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.materialdesignicons.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="tatai.ui.TestProgressController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tatai.ui.TestProgressController" stylesheets="/commonStyles.css">
     <VBox>
         <ProgressBar fx:id="progressBar"/>
-        <Button fx:id="startButton" text="Start"/>
+        <Button fx:id="startButton" text="Start" styleClass="h5"/>
+        <Button fx:id="pushButton" text="Push" styleClass="h5"/>
     </VBox>
-</AnchorPane>
+    <HBox>
+        <!--TODO: MAKE ICON-CONTAINER A CUSTOM COMPONENT-->
+        <StackPane styleClass="icon-container">
+            <MaterialDesignIconView glyphName="VOLUME_HIGH"/>
+        </StackPane>
+        <StackPane styleClass="icon-container">
+            <MaterialDesignIconView glyphName="MICROPHONE"/>
+        </StackPane>
+        <StackPane styleClass="icon-container">
+            <MaterialDesignIconView glyphName="CHECK"/>
+        </StackPane>
+        <StackPane styleClass="icon-container">
+            <MaterialDesignIconView glyphName="CLOSE"/>
+        </StackPane>
+        <StackPane styleClass="icon-container">
+            <MaterialDesignIconView glyphName="MENU"/>
+        </StackPane>
+    </HBox>
+</VBox>

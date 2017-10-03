@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-
-<?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="tatai.ui.Main"
-          stylesheets="@../../../../../res/commonStyles.css, @../../../../../res/navigationStyles.css"
+          stylesheets="/commonStyles.css, /navigationStyles.css"
           vgap="20">
     <rowConstraints>
         <RowConstraints prefHeight="90"/>
@@ -21,29 +19,23 @@
 
     <HBox GridPane.columnIndex="0"
           GridPane.rowIndex="0"
-          alignment="CENTER_LEFT"
-          spacing="20"
-          styleClass="navBar">
+          styleClass="navBar"
+          alignment="CENTER" spacing="10">
         <padding>
-            <Insets top="10" bottom="10" left="10" right="10"/>
+            <Insets left="10" right="10"/>
         </padding>
-        <Button fx:id="backButton"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="0"
-                GridPane.halignment="LEFT"
-                text="Back" styleClass="h5"/>
-        <Label GridPane.columnIndex="1"
-               GridPane.rowIndex="0"
-               GridPane.halignment="CENTER"
-               text="T&#257;tai"
-               textFill="white"
+        <MaterialDesignIconView fx:id="backButton"
+                                glyphName="ARROW_LEFT"/>
+        <Label text="T&#257;tai"
                styleClass="h3"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <MaterialDesignIconView glyphName="MENU" glyphSize="48"/>
     </HBox>
 
     <StackPane fx:id="content"
                GridPane.columnIndex="0"
                GridPane.rowIndex="1">
-
+        <Button text="Button" styleClass="h5"/>
     </StackPane>
 
 </GridPane>
