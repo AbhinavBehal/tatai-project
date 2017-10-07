@@ -7,11 +7,10 @@
 <?import javafx.scene.layout.*?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          stylesheets="/commonStyles.css, /navigationStyles.css"
-          vgap="20">
+          stylesheets="/commonStyles.css, /navigationStyles.css">
     <rowConstraints>
-        <RowConstraints prefHeight="90"/>
-        <RowConstraints percentHeight="100"/>
+        <RowConstraints percentHeight="10"/>
+        <RowConstraints percentHeight="90"/>
     </rowConstraints>
     <columnConstraints>
         <ColumnConstraints percentWidth="100"/>
@@ -26,10 +25,13 @@
         </padding>
         <MaterialDesignIconView fx:id="backButton"
                                 glyphName="ARROW_LEFT"/>
-        <Label text="T&#257;tai"
+        <Label fx:id="title"
+               text="T&#257;tai"
                styleClass="h3"/>
         <Region HBox.hgrow="ALWAYS"/>
-        <MaterialDesignIconView glyphName="MENU" glyphSize="48"/>
+        <MaterialDesignIconView fx:id="optionsButton"
+                                glyphName="MENU"
+                                glyphSize="48"/>
     </HBox>
 
     <StackPane fx:id="content"

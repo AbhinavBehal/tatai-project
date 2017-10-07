@@ -5,12 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.Pane;
 import tatai.model.Recorder;
 
 import java.io.File;
 import java.io.IOException;
 
-public class TestProgressController {
+public class TestProgressPage extends Page {
 
     @FXML
     private ProgressBar progressBar;
@@ -20,6 +21,11 @@ public class TestProgressController {
     private Button pushButton;
 
     private Recorder _recorder;
+
+    public TestProgressPage() {
+        loadFXML(getClass().getResource("TestProgress.fxml"));
+    }
+
 
     @FXML
     public void initialize() {
@@ -37,12 +43,22 @@ public class TestProgressController {
             progressBar.progressProperty().bind(_recorder.progressProperty());
         });
         pushButton.setOnAction(e -> {
-            try {
-                Main.pushScene(new Scene(FXMLLoader.load(getClass().getResource("WelcomeScene.fxml"))));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            Main.pushScene(new WelcomePage());
         });
     }
 
+    @Override
+    public String getTitle() {
+        return "Test Progress";
+    }
+
+    @Override
+    public void onBackButtonPressed() {
+        System.out.println("Back button pressed");
+    }
+
+    @Override
+    public void onOptionsButtonPressed() {
+        System.out.println("Options button pressed");
+    }
 }

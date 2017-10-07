@@ -14,9 +14,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Placeholder code until the actual UI is made
-        _navigationPage = new NavigationPage(new Scene(FXMLLoader.load(getClass().getResource("TestProgress.fxml"))));
+        _navigationPage = new NavigationPage(new WelcomePage());
 
         primaryStage.setScene(_navigationPage);
+        primaryStage.setTitle("T\u0101tai");
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
         primaryStage.setMinWidth(WIDTH);
@@ -25,12 +26,12 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void pushScene(Scene scene) {
-        _navigationPage.pushScene(scene);
+    public static void pushScene(Page page) {
+        _navigationPage.pushPage(page);
     }
 
     public static void popScene() {
-        _navigationPage.popScene();
+        _navigationPage.popPage();
     }
 
     public static void main(String[] args) {

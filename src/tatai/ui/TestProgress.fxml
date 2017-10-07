@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="tatai.ui.TestProgressController" stylesheets="/commonStyles.css">
-    <VBox>
+      stylesheets="/commonStyles.css" alignment="CENTER" spacing="10">
+    <VBox alignment="CENTER" spacing="10">
         <ProgressBar fx:id="progressBar"/>
         <Button fx:id="startButton" text="Start" styleClass="h5"/>
         <Button fx:id="pushButton" text="Push" styleClass="h5"/>
     </VBox>
-    <HBox>
+    <HBox alignment="CENTER" spacing="10">
         <!--TODO: MAKE ICON-CONTAINER A CUSTOM COMPONENT-->
         <StackPane styleClass="icon-container">
             <MaterialDesignIconView glyphName="VOLUME_HIGH"/>
