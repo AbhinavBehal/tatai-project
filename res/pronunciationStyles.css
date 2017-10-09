@@ -1,0 +1,11 @@
+.progress-view > .icon-button {
+    -fx-background-color: -background;
+    -fx-border-width: 0 0 1 0;
+    -fx-cursor: default;
+}
+
+.progress-view > .icon-button > .glyph-icon {
+    -glyph-size: 24px;
+    -fx-fill: -foreground;
+    -fx-cursor: default;
+}

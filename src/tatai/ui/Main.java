@@ -1,9 +1,12 @@
 package tatai.ui;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import tatai.ui.page.NavigationPage;
 import tatai.ui.page.Page;
+import tatai.ui.page.PronunciationPage;
 import tatai.ui.page.WelcomePage;
 
 public class Main extends Application {
@@ -15,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Placeholder code until the actual UI is made
-        _navigationPage = new NavigationPage(new WelcomePage());
+        _navigationPage = new NavigationPage(new PronunciationPage());
 
         primaryStage.setTitle("T\u0101tai");
         primaryStage.setScene(_navigationPage);
@@ -26,6 +29,7 @@ public class Main extends Application {
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
         primaryStage.centerOnScreen();
+
     }
 
     public static void pushScene(Page page) {
