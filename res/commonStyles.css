@@ -5,8 +5,8 @@
 
 * {
     -fx-font-smoothing-type: gray;
-    -background: #e7e7e7;
-    -foreground: #403f63;
+    -background: #374353;
+    -foreground: #fa594e;
 }
 
 .root {
@@ -17,13 +17,13 @@
     -fx-font-family: Roboto;
     -fx-background-color: transparent;
     -fx-text-fill: -foreground;
-    -fx-border-radius: 2;
+    -fx-border-radius: 0;
     -fx-border-width: 2;
     -fx-border-color: -foreground;
     -fx-min-width: 125px;
     -fx-min-height: 40px;
     -fx-cursor: hand;
-    -fx-background-radius: 2;
+    -fx-background-radius: 0;
 }
 
 .button:hover {
@@ -41,10 +41,10 @@
 }
 
 .progress-bar, .progress-bar > .bar, .progress-bar .track {
-    -fx-background-radius: 0px;
+    -fx-background-radius: 0;
     -fx-background-insets: 0.5 0.5 0.5 0.5;
-    -fx-border-radius: 0px;
-    -fx-border-width: 0px;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
     -fx-padding: 5 0 5 0;
 }
 
