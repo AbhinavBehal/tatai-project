@@ -5,8 +5,8 @@
 
 * {
     -fx-font-smoothing-type: gray;
-    -background: #444444;
-    -foreground: #ffe047;
+    -background: #e7e7e7;
+    -foreground: #403f63;
 }
 
 .root {
@@ -18,7 +18,7 @@
     -fx-background-color: transparent;
     -fx-text-fill: -foreground;
     -fx-border-radius: 2;
-    -fx-border-width: 1 1 1 1;
+    -fx-border-width: 2;
     -fx-border-color: -foreground;
     -fx-min-width: 125px;
     -fx-min-height: 40px;
@@ -50,7 +50,7 @@
 
 .progress-bar > .track {
     -fx-background-color: -background;
-    -fx-border-width: 1 1 1 1;
+    -fx-border-width: 2;
     -fx-border-color: -foreground;
 }
 
