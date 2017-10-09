@@ -4,20 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EquationGenerator {
+public class EquationGenerator implements Generator {
 
+    private int _value;
+    private List<Operator> _operations;
+    
+    
+    
     /**
-     * Current equation maker, takes answer as input to generate an equation from
-     * @param answer answer of equation
-     * @param operators number of operators
+     * Current equation maker, takes _value as input to generate an equation from
      * @return final equation
      */
-    public static String generate(int answer, int operators) {
+    @Override
+    public String generate() {
         Random r = new Random();
 
         double val = r.nextDouble();
-        int a = Math.abs(r.nextInt(99) - answer);
-        int result = answer;
+        int a = Math.abs(r.nextInt(99) - _value);
+        int result = _value;
 
         String newEquation = "(";
 
@@ -28,8 +32,8 @@ public class EquationGenerator {
             result += a;
             newEquation += result + "-" + a + ")";
         } else if (val < 0.75) {
-            a = factorOf(answer);
-            result = answer / a;
+            a = factorOf(_value);
+            result = _value / a;
 
             if (r.nextBoolean()) {
                 newEquation += result + "*" + a + ")";
@@ -103,9 +107,14 @@ public class EquationGenerator {
     /**
      * TODO: string parser?
      * @param equation equation to parse
-     * @return answer of equation?
+     * @return _value of equation?
      */
     public static int solve(String equation) {
         return -1;
+    }
+
+    @Override
+    public int value() {
+        return _value;
     }
 }
