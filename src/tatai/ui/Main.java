@@ -2,6 +2,9 @@ package tatai.ui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import tatai.ui.page.NavigationPage;
+import tatai.ui.page.Page;
+import tatai.ui.page.WelcomePage;
 
 public class Main extends Application {
 

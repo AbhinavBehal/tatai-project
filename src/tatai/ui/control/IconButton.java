@@ -1,4 +1,4 @@
-package tatai.ui;
+package tatai.ui.control;
 
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.beans.property.ObjectProperty;

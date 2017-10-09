@@ -1,7 +1,8 @@
-package tatai.ui;
+package tatai.ui.page;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import tatai.ui.Main;
 
 public class WelcomePage extends Page {
 

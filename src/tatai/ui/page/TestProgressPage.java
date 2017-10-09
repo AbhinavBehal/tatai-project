@@ -1,15 +1,12 @@
-package tatai.ui;
+package tatai.ui.page;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.Pane;
 import tatai.model.Recorder;
+import tatai.ui.Main;
 
 import java.io.File;
-import java.io.IOException;
 
 public class TestProgressPage extends Page {
 

@@ -1,4 +1,4 @@
-package tatai.ui;
+package tatai.ui.page;
 
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.animation.TranslateTransition;

@@ -1,4 +1,4 @@
-package tatai.ui;
+package tatai.ui.page;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
