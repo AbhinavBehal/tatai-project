@@ -25,7 +25,6 @@ public class Main extends Application {
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
         primaryStage.centerOnScreen();
-
     }
 
     public static void pushScene(Page page) {
