@@ -1,9 +1,12 @@
 package tatai.ui.page;
 
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
@@ -28,6 +31,8 @@ public class NavigationPage extends Scene {
     private MaterialDesignIconView optionsButton;
     @FXML
     private Label title;
+    @FXML
+    private Pane overlay;
     @FXML
     private GridPane optionsBar;
 
@@ -99,19 +104,35 @@ public class NavigationPage extends Scene {
     }
 
     private void popup(boolean show) {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(100), optionsBar);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(200), optionsBar);
+        FadeTransition ft = new FadeTransition(Duration.millis(100), overlay);
+        SequentialTransition st;
+
         if (show) {
             optionsBar.setVisible(true);
             tt.setFromX(optionsBar.getWidth());
             tt.setToX(0);
+
+            overlay.setVisible(true);
+            ft.setFromValue(0);
+            ft.setToValue(0.4);
+
+            st = new SequentialTransition(ft, tt);
         } else {
             tt.setFromX(0);
             tt.setToX(optionsBar.getWidth());
+
+            ft.setFromValue(0.4);
+            ft.setToValue(0);
+
+            st = new SequentialTransition(tt, ft);
         }
-        tt.play();
-        tt.setOnFinished(e -> {
+
+        st.play();
+        st.setOnFinished(e -> {
             if (!show) {
                 optionsBar.setVisible(false);
+                overlay.setVisible(false);
             }
         });
     }

@@ -44,12 +44,17 @@
         </StackPane>
     </GridPane>
 
+    <Pane fx:id="overlay"
+          visible="false"
+          opacity="0"
+          style="-fx-background-color: black" />
+
     <GridPane fx:id="optionsBar"
               visible="false"
-              StackPane.alignment="TOP_RIGHT"
+              StackPane.alignment="CENTER_RIGHT"
               styleClass="options-menu"
-              minWidth="300"
-              maxWidth="300"
+              minWidth="250"
+              maxWidth="250"
               alignment="CENTER">
         <padding>
             <Insets top="10" left="10" right="10" bottom="10"/>
