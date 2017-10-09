@@ -5,39 +5,58 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<GridPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          stylesheets="/commonStyles.css, /navigationStyles.css">
-    <rowConstraints>
-        <RowConstraints percentHeight="10"/>
-        <RowConstraints percentHeight="90"/>
-    </rowConstraints>
-    <columnConstraints>
-        <ColumnConstraints percentWidth="100"/>
-    </columnConstraints>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:id="parentPane"
+           stylesheets="/commonStyles.css, /navigationStyles.css">
+    <GridPane>
+        <rowConstraints>
+            <RowConstraints percentHeight="10"/>
+            <RowConstraints percentHeight="90"/>
+        </rowConstraints>
+        <columnConstraints>
+            <ColumnConstraints percentWidth="100"/>
+        </columnConstraints>
 
-    <HBox GridPane.columnIndex="0"
-          GridPane.rowIndex="0"
-          styleClass="navBar"
-          alignment="CENTER" spacing="10">
-        <padding>
-            <Insets left="10" right="10"/>
-        </padding>
-        <MaterialDesignIconView fx:id="backButton"
-                                glyphName="ARROW_LEFT"/>
-        <Label fx:id="title"
-               text="T&#257;tai"
-               styleClass="h3"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <MaterialDesignIconView fx:id="optionsButton"
-                                glyphName="MENU"
-                                glyphSize="48"/>
-    </HBox>
+        <HBox GridPane.columnIndex="0"
+              GridPane.rowIndex="0"
+              styleClass="navBar"
+              alignment="CENTER" spacing="10">
+            <padding>
+                <Insets left="10" right="10"/>
+            </padding>
+            <MaterialDesignIconView fx:id="backButton"
+                                    glyphName="ARROW_LEFT"/>
+            <Label fx:id="title"
+                   text="T&#257;tai"
+                   styleClass="h3"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <MaterialDesignIconView fx:id="optionsButton"
+                                    glyphName="MENU"
+                                    glyphSize="48"/>
+        </HBox>
 
-    <StackPane fx:id="content"
-               GridPane.columnIndex="0"
-               GridPane.rowIndex="1">
-        <Button text="Button" styleClass="h5"/>
-    </StackPane>
+        <StackPane fx:id="content"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="1">
+            <Button text="Button" styleClass="h5"/>
+        </StackPane>
+    </GridPane>
 
-</GridPane>
+    <GridPane fx:id="optionsBar"
+              layoutX="Infinity"
+              visible="false">
+        <rowConstraints>
+            <RowConstraints percentHeight="50" />
+            <RowConstraints percentHeight="50" />
+        </rowConstraints>
+        <Button fx:id="themes"
+                GridPane.rowIndex="0"
+                alignment="CENTER"
+                text="Placeholder for icon" />
+        <Button fx:id="stats"
+                GridPane.rowIndex="1"
+                alignment="CENTER"
+                text="Placeholder for icon" />
+    </GridPane>
+</StackPane>
