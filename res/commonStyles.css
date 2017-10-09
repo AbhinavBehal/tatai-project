@@ -31,6 +31,10 @@
     -fx-text-fill: -background;
 }
 
+.glyph-icon {
+    -fx-cursor: hand;
+}
+
 .label {
     -fx-font-family: Roboto;
     -fx-text-fill: -foreground;
@@ -54,27 +58,17 @@
     -fx-background-color: -foreground;
 }
 
-.glyph-icon {
+.icon-button {
+    -fx-min-height: 0px;
+    -fx-min-width: 0px;
+}
+
+.icon-button > .glyph-icon {
     -fx-fill: -foreground;
-    -fx-cursor: hand;
-}
-
-.icon-container {
-    -fx-border-width: 1 1 1 1;
-    -fx-border-color: -foreground;
-    -fx-background-color: transparent;
-    -fx-cursor: hand;
-}
-
-.icon-container > .glyph-icon {
     -glyph-size: 48px;
 }
 
-.icon-container:hover {
-    -fx-background-color: -foreground;
-}
-
-.icon-container:hover > .glyph-icon {
+.icon-button:hover > .glyph-icon {
     -fx-fill: -background;
 }
 

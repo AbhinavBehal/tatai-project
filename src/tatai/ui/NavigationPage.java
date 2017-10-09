@@ -61,10 +61,8 @@ public class NavigationPage extends Scene {
         });
         optionsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                System.out.println("pressed");
                 if (!optionsBar.isVisible() ||
                         optionsBar.getBoundsInParent().getMinX() == parentPane.getWidth()) {
-                    System.out.println("popped");
                     popup(true);
                 }
             }
@@ -101,20 +99,17 @@ public class NavigationPage extends Scene {
     }
 
     private void popup(boolean show) {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), optionsBar);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(100), optionsBar);
         if (show) {
-            System.out.println("show: " + show);
             optionsBar.setVisible(true);
-            tt.setFromX(parentPane.getWidth());
-            tt.setToX(parentPane.getWidth() - 150);
+            tt.setFromX(optionsBar.getWidth());
+            tt.setToX(0);
         } else {
-            System.out.println("hide: " + show);
-            tt.setFromX(optionsBar.getBoundsInParent().getMinX());
-            tt.setToX(parentPane.getWidth());
+            tt.setFromX(0);
+            tt.setToX(optionsBar.getWidth());
         }
         tt.play();
         tt.setOnFinished(e -> {
-            System.out.println("SHOW: " + show);
             if (!show) {
                 optionsBar.setVisible(false);
             }

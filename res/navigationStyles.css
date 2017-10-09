@@ -11,3 +11,14 @@
 .navBar > .glyph-icon {
     -fx-fill: -background;
 }
+
+.options-menu {
+    -fx-background-color: -background;
+    -fx-border-width: 0 0 0 2;
+    -fx-border-color: -foreground;
+    -fx-effect: dropshadow(gaussian, black, 20, 0.1, 0, 0);
+}
+
+.options-menu > .icon-button {
+    -fx-min-width: 180px;
+}
