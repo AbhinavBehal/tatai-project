@@ -1,5 +1,6 @@
 package tatai.model;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import tatai.util.Promise;
@@ -52,7 +53,7 @@ public class Recogniser {
                         output.append(line).append(" ");
                     }
                 }
-                _promise.resolve(output.toString().trim().replaceAll("aa", "\u0101"));
+                Platform.runLater(() -> _promise.resolve(output.toString().trim().replaceAll("aa", "\u0101")));
             } catch (IOException | InterruptedException e) {
                 _promise.reject(e);
             }
