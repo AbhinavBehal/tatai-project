@@ -81,6 +81,8 @@ public class PronunciationPage extends Page {
     private void play() {
         if (_player == null) return;
         _player.stop();
+        _player.dispose();
+        _player = new MediaPlayer(_player.getMedia());
         _player.play();
     }
 

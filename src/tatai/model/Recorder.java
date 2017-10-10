@@ -7,6 +7,7 @@ import javafx.scene.media.Media;
 import tatai.util.Promise;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -74,16 +75,16 @@ public class Recorder {
             }, 0, period);
 
             // Uncomment below if on linux
-            /*try {
+            try {
                 builder.start().waitFor();
             } catch (IOException | InterruptedException e) {
                 // Cancel the timer (stop updating progress)
                 // And re-throw the exception so that the callback can handle it
                 progressTimer.cancel();
                 throw e;
-            }*/
+            }
 
-            Thread.sleep(_duration * 1000); // To simulate the recording task (comment this if on linux)
+            //Thread.sleep(_duration * 1000); // To simulate the recording task (comment this if on linux)
             progressTimer.cancel();
             return new Media(_output.toURI().toString());
         }
