@@ -3,14 +3,19 @@ package tatai.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.List;
 
 public class EquationGenerator implements Generator {
 
-    private int _value;
+    private Difficulty _difficulty;
     private List<Operator> _operations;
-    
-    
-    
+    private int _value;
+
+    public EquationGenerator(Difficulty mode, List operations) {
+        _difficulty = mode;
+        _operations = operations;
+    }
+
     /**
      * Current equation maker, takes _value as input to generate an equation from
      * @return final equation
@@ -19,19 +24,23 @@ public class EquationGenerator implements Generator {
     public String generate() {
         Random r = new Random();
 
-        double val = r.nextDouble();
-        int a = Math.abs(r.nextInt(99) - _value);
+        //answer
+        _value = r.nextInt(_difficulty.val() - 1 ) + 1;
+
+        //
+        int operation = r.nextInt(_operations.size());
+        int a = Math.abs(r.nextInt(_difficulty.val()) - _value);
         int result = _value;
 
         String newEquation = "(";
 
-        if (val < 0.25) {
+        if (_operations.get(operation) == Operator.SUM) {
             result -= Math.abs(a);
             newEquation += result + "+" + a + ")";
-        } else if (val < 0.5) {
+        } else if (_operations.get(operation) == Operator.SUBTRACT) {
             result += a;
             newEquation += result + "-" + a + ")";
-        } else if (val < 0.75) {
+        } else if (_operations.get(operation) == Operator.MULTIPLY) {
             a = factorOf(_value);
             result = _value / a;
 
@@ -40,7 +49,7 @@ public class EquationGenerator implements Generator {
             } else {
                 newEquation += a + "*" + result + ")";
             }
-        } else {
+        } else if (_operations.get(operation) == Operator.DIVIDE) {
             result *= a;
             newEquation += result + "/" + a + ")";
         }
@@ -54,11 +63,12 @@ public class EquationGenerator implements Generator {
      */
     private static int factorOf(int number) {
         List<Integer> factors = new ArrayList<>();
-        for (int i = 1; i < number; i++) {
+        for (int i = 1; i < number/2; i++) {
             if (number % i == 0) {
                 factors.add(i);
             }
         }
+        factors.add(number);
         return factors.get(new Random().nextInt(factors.size()));
     }
 

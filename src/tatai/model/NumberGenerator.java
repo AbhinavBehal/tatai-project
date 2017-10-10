@@ -4,17 +4,17 @@ import java.util.Random;
 
 public class NumberGenerator implements Generator {
 
-    private boolean _easyMode;
+    private Difficulty _difficulty;
     private int _value;
 
-    public NumberGenerator(boolean easy) {
-        _easyMode = easy;
+    public NumberGenerator(Difficulty mode) {
+        _difficulty = mode;
     }
 
     @Override
     public String generate() {
         Random r = new Random();
-        _value = r.nextInt(_easyMode ? Difficulty.EASY.val() : Difficulty.HARD.val()) + 1;
+        _value = r.nextInt(_difficulty.val() -1 ) + 1;
         return Integer.toString(_value);
     }
 

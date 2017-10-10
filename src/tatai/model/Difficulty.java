@@ -1,8 +1,8 @@
 package tatai.model;
 
 public enum Difficulty {
-    EASY(8),
-    HARD(98);
+    EASY(9),
+    HARD(99);
 
     private int _value;
 
