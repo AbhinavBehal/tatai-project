@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import tatai.model.Difficulty;
+import tatai.model.NumberGenerator;
 import tatai.ui.page.NavigationPage;
 import tatai.ui.page.Page;
 import tatai.ui.page.PronunciationPage;
@@ -18,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Placeholder code until the actual UI is made
-        _navigationPage = new NavigationPage(new PronunciationPage());
+        _navigationPage = new NavigationPage(new PronunciationPage("Easy", new NumberGenerator(Difficulty.EASY)));
 
         primaryStage.setTitle("T\u0101tai");
         primaryStage.setScene(_navigationPage);
