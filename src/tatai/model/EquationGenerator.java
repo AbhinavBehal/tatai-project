@@ -7,9 +7,23 @@ import java.util.List;
 
 public class EquationGenerator implements Generator {
 
+    // extra entry, used for testing equation generator
+    // remove once completed testing
+    public static void main(String[] args) {
+        ArrayList<Operator> OP = new ArrayList<>();
+        OP.add(Operator.SUM);
+        OP.add(Operator.SUBTRACT);
+        OP.add(Operator.MULTIPLY);
+        OP.add(Operator.DIVIDE);
+        EquationGenerator eg = new EquationGenerator(Difficulty.HARD, OP);
+        System.out.println(eg.generate() + "=" + eg.value());
+    }
+
+    private static final int MIN_OPERATORS = 1;
+    private static final int MAX_OPERATORS = 3;
     private Difficulty _difficulty;
     private List<Operator> _operations;
-    private int _value;
+    private int _answer;
 
     public EquationGenerator(Difficulty mode, List operations) {
         _difficulty = mode;
@@ -17,41 +31,22 @@ public class EquationGenerator implements Generator {
     }
 
     /**
-     * Current equation maker, takes _value as input to generate an equation from
+     * Current equation maker, generates an equation for a random number depending
+     * on input difficulty at construction.
      * @return final equation
      */
     @Override
     public String generate() {
         Random r = new Random();
 
-        //answer
-        _value = r.nextInt(_difficulty.val() - 1 ) + 1;
+        _answer = r.nextInt(_difficulty.val() - 1) + 1;
 
-        //
-        int operation = r.nextInt(_operations.size());
-        int a = Math.abs(r.nextInt(_difficulty.val()) - _value);
-        int result = _value;
+        String newEquation;
 
-        String newEquation = "(";
-
-        if (_operations.get(operation) == Operator.SUM) {
-            result -= Math.abs(a);
-            newEquation += result + "+" + a + ")";
-        } else if (_operations.get(operation) == Operator.SUBTRACT) {
-            result += a;
-            newEquation += result + "-" + a + ")";
-        } else if (_operations.get(operation) == Operator.MULTIPLY) {
-            a = factorOf(_value);
-            result = _value / a;
-
-            if (r.nextBoolean()) {
-                newEquation += result + "*" + a + ")";
-            } else {
-                newEquation += a + "*" + result + ")";
-            }
-        } else if (_operations.get(operation) == Operator.DIVIDE) {
-            result *= a;
-            newEquation += result + "/" + a + ")";
+        if (_difficulty == Difficulty.HARD) {
+            newEquation = append(r.nextInt(MAX_OPERATORS) + 1, _answer);
+        } else {
+            newEquation = append(MIN_OPERATORS, _answer);
         }
         return newEquation;
     }
@@ -63,59 +58,96 @@ public class EquationGenerator implements Generator {
      */
     private static int factorOf(int number) {
         List<Integer> factors = new ArrayList<>();
-        for (int i = 1; i < number/2; i++) {
+        for (int i = 1; i <= Math.abs(number / 2); i++) {
             if (number % i == 0) {
                 factors.add(i);
             }
         }
         factors.add(number);
-        return factors.get(new Random().nextInt(factors.size()));
+        return factors.get(new Random().nextInt(factors.size() - 1));
     }
 
     /**
-     * Old equation maker
-     * TODO: change to append for multiple operators
-     * @param equation to append to
+     * private helper function used to generate a random multiple of a number less than 500
+     * @param number number to get multiple of
+     * @return a random multiple less than 500 of number
+     */
+    private static int multipleOf(int number) {
+        List<Integer> multiples = new ArrayList<>();
+        int i = 0;
+        while (++i * number <= 500) {
+            multiples.add(i * number);
+        }
+        return multiples.get(new Random().nextInt(multiples.size() - 1));
+    }
+
+    /**
+     * recursive func used to append n number of operators into equations
+     * @param n number of operators
+     * @param previousAnswer to calculate to
      * @return appended equation
      */
-    private static String append(String equation) {
+    private String append(int n, int previousAnswer) {
+
+        // check if working correctly
+        System.out.println(n + " " + previousAnswer);
+        if (n == 0) {
+            return Integer.toString(previousAnswer);
+        }
+
         Random r = new Random();
-        double val = r.nextDouble();
-        int a = r.nextInt(98) + 1;
+        int a = Math.abs(r.nextInt(_difficulty.val()) - previousAnswer);
+        int currentAnswer = previousAnswer;
 
-        String newEquation = "(";
-        String op;
-
-        if (val < 0.25) {
-            op = "+";
-        } else if (val < 0.5) {
-            op = "-";
-        } else if (val < 0.75) {
-            op = "*";
+        Operator op;
+        if (_operations.size() == 1) {
+            op = _operations.get(0);
         } else {
-            op = "/";
+            op = _operations.get(r.nextInt(_operations.size() - 1));
         }
 
-        if (equation.isEmpty()) {
-            int b = r.nextInt(99) - a;
-            if (b < 0 && op.equals("+")) {
-                b = Math.abs(b);
-                op = "-";
+        if (op.equals(Operator.SUM)) {
+            currentAnswer -= a;
+        } else if (op.equals(Operator.SUBTRACT)) {
+            currentAnswer += a;
+        } else if (op.equals(Operator.MULTIPLY)) {
+            a = factorOf(currentAnswer);
+            currentAnswer /= a;
+        } else if (op.equals(Operator.DIVIDE)) {
+            a = multipleOf(currentAnswer);
+            currentAnswer = a / currentAnswer;
+        } else {
+            return "";
+        }
+
+        // check current equation output
+        System.out.println(previousAnswer + "=" + currentAnswer + op + a);
+
+        String newEquation = append(--n, currentAnswer);
+
+        if (op.equals(Operator.SUM)) {
+            if (r.nextBoolean()) {
+                newEquation = "(" + newEquation + "+" + a + ")";
+            } else {
+                newEquation = "(" + a + "+" + newEquation + ")";
             }
-            newEquation += a + op + b + ")";
-        } else if (r.nextBoolean()) {
-            newEquation += equation + op + a + ")";
-        } else {
-            newEquation += a + op + equation + ")";
+        } else if (op.equals(Operator.SUBTRACT)) {
+            newEquation = "(" + newEquation + "-" + a + ")";
+        } else if (op.equals(Operator.MULTIPLY)) {
+            if (r.nextBoolean()) {
+                newEquation = "(" + newEquation + "*" + a + ")";
+            } else {
+                newEquation = "(" + a + "*" + newEquation + ")";
+            }
+        } else if (op.equals(Operator.DIVIDE)) {
+            newEquation = "(" + a + "/" + newEquation + ")";
         }
 
-        System.out.println(newEquation);
-
-        return append(newEquation);
+        return newEquation;
     }
 
     /**
-     * TODO: string parser?
+     * TODO: string parser? - may move to util if still needed?
      * @param equation equation to parse
      * @return _value of equation?
      */
@@ -123,8 +155,12 @@ public class EquationGenerator implements Generator {
         return -1;
     }
 
+    /**
+     * Public function used to get the current randomly generated answer
+     * @return answer to equation generated
+     */
     @Override
     public int value() {
-        return _value;
+        return _answer;
     }
 }
