@@ -16,7 +16,8 @@ public class EquationGenerator implements Generator {
         OP.add(Operator.MULTIPLY);
         OP.add(Operator.DIVIDE);
         EquationGenerator eg = new EquationGenerator(Difficulty.HARD, OP);
-        System.out.println(eg.generate() + "=" + eg.value());
+        System.out.println(eg.generate());
+        System.out.println("=" + eg.value());
     }
 
     private static final int MIN_OPERATORS = 1;
@@ -48,7 +49,7 @@ public class EquationGenerator implements Generator {
         } else {
             newEquation = append(MIN_OPERATORS, _answer);
         }
-        return newEquation;
+        return newEquation.substring(1, newEquation.length() - 1) + " = ?";
     }
 
     /**
@@ -127,23 +128,23 @@ public class EquationGenerator implements Generator {
 
         if (op.equals(Operator.SUM)) {
             if (r.nextBoolean()) {
-                newEquation = "(" + newEquation + "+" + a + ")";
+                newEquation = "(" + newEquation + op + a + ")";
             } else {
-                newEquation = "(" + a + "+" + newEquation + ")";
+                newEquation = "(" + a + op + newEquation + ")";
             }
         } else if (op.equals(Operator.SUBTRACT)) {
-            newEquation = "(" + newEquation + "-" + a + ")";
+            newEquation = "(" + newEquation + op + a + ")";
         } else if (op.equals(Operator.MULTIPLY)) {
             if (r.nextBoolean()) {
-                newEquation = "(" + newEquation + "*" + a + ")";
+                newEquation = "(" + newEquation + op + a + ")";
             } else {
-                newEquation = "(" + a + "*" + newEquation + ")";
+                newEquation = "(" + a + op + newEquation + ")";
             }
         } else if (op.equals(Operator.DIVIDE)) {
-            newEquation = "(" + a + "/" + newEquation + ")";
+            newEquation = "(" + a + op + newEquation + ")";
         }
 
-        return newEquation;
+        return newEquation.replace("+-", Operator.SUBTRACT.toString());
     }
 
     /**
