@@ -2,12 +2,9 @@ package tatai.ui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import tatai.model.Difficulty;
-import tatai.model.NumberGenerator;
 import tatai.ui.page.MenuPage;
 import tatai.ui.page.NavigationPage;
 import tatai.ui.page.Page;
-import tatai.ui.page.PronunciationPage;
 
 public class Main extends Application {
 

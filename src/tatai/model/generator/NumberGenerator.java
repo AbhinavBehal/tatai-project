@@ -1,4 +1,4 @@
-package tatai.model;
+package tatai.model.generator;
 
 import java.util.Random;
 

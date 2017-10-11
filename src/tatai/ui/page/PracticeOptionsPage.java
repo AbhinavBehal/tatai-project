@@ -2,9 +2,9 @@ package tatai.ui.page;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import tatai.model.Difficulty;
-import tatai.model.Generator;
-import tatai.model.NumberGenerator;
+import tatai.model.generator.Difficulty;
+import tatai.model.generator.Generator;
+import tatai.model.generator.NumberGenerator;
 import tatai.ui.Main;
 
 public class PracticeOptionsPage extends Page {

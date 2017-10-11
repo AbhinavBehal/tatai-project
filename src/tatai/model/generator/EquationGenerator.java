@@ -1,10 +1,10 @@
-package tatai.model;
+package tatai.model.generator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static tatai.model.Operator.*;
+import static tatai.model.generator.Operator.*;
 
 public class EquationGenerator implements Generator {
 

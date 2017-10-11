@@ -1,6 +1,8 @@
-package tatai.model;
+package tatai.model.statistics;
 
 import javafx.util.Pair;
+import tatai.model.generator.Difficulty;
+import tatai.model.generator.Module;
 
 public interface ScoreListener {
 

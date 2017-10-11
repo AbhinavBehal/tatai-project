@@ -6,7 +6,6 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
@@ -15,11 +14,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import tatai.model.theme.Theme;
+import tatai.model.theme.ThemeListener;
+import tatai.model.theme.ThemeManager;
+import tatai.ui.Main;
+import tatai.ui.control.IconButton;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Stack;
 
-public class NavigationPage extends Scene {
+public class NavigationPage extends Scene implements ThemeListener {
 
     @FXML
     private StackPane parentPane;
@@ -34,8 +40,13 @@ public class NavigationPage extends Scene {
     @FXML
     private Pane overlay;
     @FXML
-    private GridPane optionsBar;
+    private GridPane optionsPane;
+    @FXML
+    private IconButton themesButton;
+    @FXML
+    private IconButton statsButton;
 
+    private static final Theme DEFAULT_THEME = Theme.SUNSET;
     private static final int BACKBUTTON_SIZE = 48;
     private Stack<Page> _pages;
 
@@ -43,6 +54,9 @@ public class NavigationPage extends Scene {
         super(new Pane());
         _pages = new Stack<>();
         _pages.push(content);
+
+        ThemeManager.manager().addListener(this);
+        ThemeManager.manager().setTheme(DEFAULT_THEME);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Navigation.fxml"));
         loader.setController(this);
@@ -66,8 +80,8 @@ public class NavigationPage extends Scene {
         });
         optionsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                if (!optionsBar.isVisible() ||
-                        optionsBar.getBoundsInParent().getMinX() == parentPane.getWidth()) {
+                if (!optionsPane.isVisible() ||
+                        optionsPane.getBoundsInParent().getMinX() == parentPane.getWidth()) {
                     popup(true);
                 }
             }
@@ -76,11 +90,17 @@ public class NavigationPage extends Scene {
         parentPane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             if (e.getPickResult().getIntersectedNode() == null || e.getButton() != MouseButton.PRIMARY) return;
 
-            if (e.getPickResult().getIntersectedNode() != optionsBar && optionsBar.isVisible()) {
+            if (e.getPickResult().getIntersectedNode() != optionsPane && optionsPane.isVisible()) {
                 // Don't move it back if it's already moving
-                if (optionsBar.getTranslateX() != 0) return;
+                if (optionsPane.getTranslateX() != 0) return;
                 popup(false);
             }
+        });
+        themesButton.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                Main.pushScene(new ThemePickerPage());
+            }
+            _pages.peek().onOptionsButtonPressed();
         });
     }
 
@@ -105,14 +125,20 @@ public class NavigationPage extends Scene {
         title.setText(_pages.peek().getTitle());
     }
 
+    @Override
+    public void updateTheme(Theme previousTheme, Theme newTheme) {
+        parentPane.getStylesheets().remove(previousTheme.toString());
+        parentPane.getStylesheets().add(newTheme.toString());
+    }
+
     private void popup(boolean show) {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(200), optionsBar);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(200), optionsPane);
         FadeTransition ft = new FadeTransition(Duration.millis(100), overlay);
         SequentialTransition st;
 
         if (show) {
-            optionsBar.setVisible(true);
-            tt.setFromX(optionsBar.getWidth());
+            optionsPane.setVisible(true);
+            tt.setFromX(optionsPane.getWidth());
             tt.setToX(0);
 
             overlay.setVisible(true);
@@ -122,7 +148,7 @@ public class NavigationPage extends Scene {
             st = new SequentialTransition(ft, tt);
         } else {
             tt.setFromX(0);
-            tt.setToX(optionsBar.getWidth());
+            tt.setToX(optionsPane.getWidth());
 
             ft.setFromValue(0.4);
             ft.setToValue(0);
@@ -133,9 +159,10 @@ public class NavigationPage extends Scene {
         st.play();
         st.setOnFinished(e -> {
             if (!show) {
-                optionsBar.setVisible(false);
+                optionsPane.setVisible(false);
                 overlay.setVisible(false);
             }
         });
     }
+
 }

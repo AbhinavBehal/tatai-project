@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
-import tatai.model.Generator;
+import tatai.model.generator.Generator;
 import tatai.model.Recogniser;
 import tatai.model.Recorder;
 import tatai.model.Translator;

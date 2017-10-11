@@ -1,4 +1,4 @@
-package tatai.model;
+package tatai.model.statistics;
 
 public enum Statistic {
     AVERAGE,

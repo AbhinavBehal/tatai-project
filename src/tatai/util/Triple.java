@@ -1,4 +1,4 @@
-package tatai.model;
+package tatai.util;
 
 public class Triple<K, I, V> {
 

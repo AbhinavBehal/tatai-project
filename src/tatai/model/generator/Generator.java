@@ -1,4 +1,4 @@
-package tatai.model;
+package tatai.model.generator;
 
 public interface Generator {
     String generate();

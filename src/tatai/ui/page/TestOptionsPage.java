@@ -4,10 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
-import tatai.model.Difficulty;
-import tatai.model.EquationGenerator;
-import tatai.model.Generator;
-import tatai.model.Operator;
+import tatai.model.generator.Difficulty;
+import tatai.model.generator.EquationGenerator;
+import tatai.model.generator.Generator;
+import tatai.model.generator.Operator;
 import tatai.ui.Main;
 
 import java.util.ArrayList;
