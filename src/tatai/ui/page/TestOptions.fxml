@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml" stylesheets="/testOptions.css">
+    <padding>
+        <Insets topRightBottomLeft="50"/>
+    </padding>
+    <center>
+        <GridPane alignment="CENTER"
+                  hgap="20">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="33" halignment="CENTER"/>
+                <ColumnConstraints percentWidth="33" halignment="CENTER"/>
+                <ColumnConstraints percentWidth="33" halignment="CENTER"/>
+            </columnConstraints>
+            <Button fx:id="easyButton"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="0"
+                    text="Easy"
+                    styleClass="h3"
+                    maxWidth="Infinity"/>
+            <Label GridPane.rowIndex="1"
+                   GridPane.columnIndex="0"
+                   styleClass="h4"
+                   text="1 - 9"/>
+
+            <Button fx:id="hardButton"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="1"
+                    text="Hard"
+                    styleClass="h3"
+                    maxWidth="Infinity"/>
+            <Label GridPane.rowIndex="1"
+                   GridPane.columnIndex="1"
+                   styleClass="h4"
+                   text="1 - 99"/>
+
+            <Button fx:id="customButton"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="2"
+                    text="Custom"
+                    styleClass="h3"
+                    maxWidth="Infinity"/>
+            <Label GridPane.rowIndex="1"
+                   GridPane.columnIndex="2"
+                   styleClass="h4"/>
+        </GridPane>
+    </center>
+    <bottom>
+        <VBox spacing="10">
+            <Label GridPane.rowIndex="3"
+                   GridPane.columnIndex="0"
+                   styleClass="h4"
+                   text="Types of questions"/>
+            <HBox fx:id="operationsView"
+                  GridPane.rowIndex="4"
+                  GridPane.columnIndex="0"
+                  GridPane.columnSpan="3"
+                  alignment="CENTER"
+                  spacing="20"
+                  styleClass="operationsBox"/>
+        </VBox>
+    </bottom>
+</BorderPane>

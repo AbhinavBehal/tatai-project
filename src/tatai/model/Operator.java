@@ -1,10 +1,10 @@
 package tatai.model;
 
 public enum Operator {
-    SUM("+"),
-    SUBTRACT("-"),
-    MULTIPLY("*"),
-    DIVIDE("/");
+    ADDITION("+"),
+    SUBTRACTION("-"),
+    MULTIPLICATION("x"),
+    DIVISION("/");
 
     private String _operation;
 

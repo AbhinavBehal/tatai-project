@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          alignment="CENTER"
+          hgap="20">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="50"/>
+    </columnConstraints>
+    <padding>
+        <Insets topRightBottomLeft="50"/>
+    </padding>
+    <Button fx:id="easyButton"
+            GridPane.rowIndex="0"
+            GridPane.columnIndex="0"
+            text="Easy"
+            styleClass="h3"
+            maxWidth="Infinity"/>
+    <Label GridPane.rowIndex="1"
+           GridPane.columnIndex="0"
+           styleClass="h4"
+           GridPane.halignment="CENTER"
+           text="1 - 9"/>
+    <Button fx:id="hardButton"
+            GridPane.rowIndex="0"
+            GridPane.columnIndex="1"
+            text="Hard"
+            styleClass="h3"
+            maxWidth="Infinity"/>
+    <Label GridPane.rowIndex="1"
+           GridPane.columnIndex="1"
+           styleClass="h4"
+           GridPane.halignment="CENTER"
+           text="1 - 99"/>
+</GridPane>

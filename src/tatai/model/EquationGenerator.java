@@ -1,11 +1,8 @@
 package tatai.model;
 
-import sun.security.util.AuthResources_de;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.List;
 
 public class EquationGenerator implements Generator {
 
@@ -13,10 +10,10 @@ public class EquationGenerator implements Generator {
     // remove once completed testing
     public static void main(String[] args) {
         ArrayList<Operator> OP = new ArrayList<>();
-        OP.add(Operator.SUM);
-        OP.add(Operator.SUBTRACT);
-        OP.add(Operator.MULTIPLY);
-        OP.add(Operator.DIVIDE);
+        OP.add(Operator.ADDITION);
+        OP.add(Operator.SUBTRACTION);
+        OP.add(Operator.MULTIPLICATION);
+        OP.add(Operator.DIVISION);
         EquationGenerator eg = new EquationGenerator(Difficulty.HARD, OP);
         System.out.println(eg.generate());
         System.out.println("=" + eg.value());
@@ -118,14 +115,14 @@ public class EquationGenerator implements Generator {
             op = _operations.get(r.nextInt(_operations.size() - 1));
         }
 
-        if (op.equals(Operator.SUM)) {
+        if (op.equals(Operator.ADDITION)) {
             currentAnswer -= a;
-        } else if (op.equals(Operator.SUBTRACT)) {
+        } else if (op.equals(Operator.SUBTRACTION)) {
             currentAnswer += a;
-        } else if (op.equals(Operator.MULTIPLY)) {
+        } else if (op.equals(Operator.MULTIPLICATION)) {
             a = factorOf(currentAnswer);
             currentAnswer /= a;
-        } else if (op.equals(Operator.DIVIDE)) {
+        } else if (op.equals(Operator.DIVISION)) {
             a = multipleOf(currentAnswer);
             currentAnswer = a / currentAnswer;
         } else {
@@ -137,25 +134,25 @@ public class EquationGenerator implements Generator {
 
         String newEquation = append(--n, currentAnswer);
 
-        if (op.equals(Operator.SUM)) {
+        if (op.equals(Operator.ADDITION)) {
             if (r.nextBoolean()) {
                 newEquation = "(" + newEquation + " " + op + " " + a + ")";
             } else {
                 newEquation = "(" + a + " " + op + " " + newEquation + ")";
             }
-        } else if (op.equals(Operator.SUBTRACT)) {
+        } else if (op.equals(Operator.SUBTRACTION)) {
             newEquation = "(" + newEquation + " " + op + " " + a + ")";
-        } else if (op.equals(Operator.MULTIPLY)) {
+        } else if (op.equals(Operator.MULTIPLICATION)) {
             if (r.nextBoolean()) {
                 newEquation = "(" + newEquation + " " + op + " " + a + ")";
             } else {
                 newEquation = "(" + a + " " + op + " " + newEquation + ")";
             }
-        } else if (op.equals(Operator.DIVIDE)) {
+        } else if (op.equals(Operator.DIVISION)) {
             newEquation = "(" + a + " " + op + " " + newEquation + ")";
         }
 
-        return newEquation.replace("+-", Operator.SUBTRACT.toString());
+        return newEquation.replace("+-", Operator.SUBTRACTION.toString());
     }
 
     /**

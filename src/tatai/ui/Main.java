@@ -4,21 +4,22 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import tatai.model.Difficulty;
 import tatai.model.NumberGenerator;
+import tatai.ui.page.MenuPage;
 import tatai.ui.page.NavigationPage;
 import tatai.ui.page.Page;
 import tatai.ui.page.PronunciationPage;
 
 public class Main extends Application {
 
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 960;
+    private static final int HEIGHT = 720;
     private static NavigationPage _navigationPage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Placeholder code until the actual UI is made
-        _navigationPage = new NavigationPage(new PronunciationPage("Easy", new NumberGenerator(Difficulty.EASY)));
-
+        //_navigationPage = new NavigationPage(new PronunciationPage("Easy", new NumberGenerator(Difficulty.EASY)));
+        _navigationPage = new NavigationPage(new MenuPage());
         primaryStage.setTitle("T\u0101tai");
         primaryStage.setScene(_navigationPage);
         primaryStage.show();

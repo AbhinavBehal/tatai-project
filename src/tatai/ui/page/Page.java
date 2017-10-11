@@ -9,7 +9,7 @@ import java.net.URL;
 
 /**
  * Wrapper around javafx.Scene that has a title and handles back button/options events
- * From the surrounding NavigationPage
+ * from the surrounding NavigationPage
  */
 public abstract class Page extends Scene {
 
@@ -18,8 +18,9 @@ public abstract class Page extends Scene {
     }
 
     public abstract String getTitle();
+
+    // TODO Make these not abstract
     public abstract void onBackButtonPressed();
-    // Maybe return a list of options to show or something
     public abstract void onOptionsButtonPressed();
 
     protected final void loadFXML(URL fileURL) {

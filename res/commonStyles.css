@@ -31,6 +31,25 @@
     -fx-text-fill: -background;
 }
 
+.check-box {
+    -fx-font-family: Roboto;
+    -fx-text-fill: -foreground;
+}
+
+.check-box > .box {
+    -fx-background-color: -background;
+    -fx-border-width: 2;
+    -fx-border-color: -foreground;
+}
+
+.check-box > .box > .mark {
+    -fx-shape: "M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z";
+}
+
+.check-box:selected > .box > .mark {
+    -fx-background-color: -foreground;
+}
+
 .glyph-icon {
     -fx-cursor: hand;
 }
