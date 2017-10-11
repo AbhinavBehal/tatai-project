@@ -74,9 +74,11 @@ public class NavigationPage extends Scene {
             _pages.peek().onOptionsButtonPressed();
         });
         parentPane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-            if (e.getPickResult().getIntersectedNode() == null) {
-                // do nothing
-            } else if (e.getPickResult().getIntersectedNode() != optionsBar && optionsBar.isVisible()) {
+            if (e.getPickResult().getIntersectedNode() == null || e.getButton() != MouseButton.PRIMARY) return;
+
+            if (e.getPickResult().getIntersectedNode() != optionsBar && optionsBar.isVisible()) {
+                // Don't move it back if it's already moving
+                if (optionsBar.getTranslateX() != 0) return;
                 popup(false);
             }
         });
