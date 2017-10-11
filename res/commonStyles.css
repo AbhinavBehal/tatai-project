@@ -5,8 +5,8 @@
 
 * {
     -fx-font-smoothing-type: gray;
-    -background: #374353;
-    -foreground: #fa594e;
+    -background: #dddddd;
+    -foreground: #403f63;
 }
 
 .root {
@@ -59,9 +59,53 @@
     -fx-text-fill: -foreground;
 }
 
+.list-view {
+    -fx-border-width: 2;
+    -fx-border-color: -foreground;
+    -fx-background-color: -background;
+}
+
+.list-view .list-cell {
+    -fx-background-color: -background;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: -foreground;
+    -fx-text-fill: -foreground;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: -foreground;
+    -fx-text-fill: -background;
+}
+
+.list-view .scroll-bar:horizontal,
+.list-view .scroll-bar:vertical {
+    -fx-background-color: -background;
+    -fx-border-width: 0 0 0 2;
+    -fx-border-color: -foreground;
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: -foreground;
+    -fx-background-radius: 0;
+    -fx-background-insets: 2;
+}
+
+.list-view .scroll-bar:vertical .increment-button,
+.list-view .scroll-bar:vertical .decrement-button {
+    -fx-background-radius: 0;
+    -fx-padding: 0 10 0 0;
+}
+
+.list-view .scroll-bar:vertical .increment-arrow,
+.list-view .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
 .progress-bar, .progress-bar > .bar, .progress-bar .track {
     -fx-background-radius: 0;
-    -fx-background-insets: 0.5 0.5 0.5 0.5;
     -fx-border-radius: 0;
     -fx-border-width: 0;
     -fx-padding: 5 0 5 0;
@@ -69,7 +113,7 @@
 
 .progress-bar > .track {
     -fx-background-color: -background;
-    -fx-border-width: 2;
+    -fx-border-width: 0 0 0 2;
     -fx-border-color: -foreground;
 }
 

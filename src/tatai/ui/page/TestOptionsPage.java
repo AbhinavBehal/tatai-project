@@ -57,9 +57,7 @@ public class TestOptionsPage extends Page {
             Main.pushScene(new PronunciationPage("Test - Hard", generator));
         });
 
-        customButton.setOnAction(e -> {
-            // TODO: Custom Questions
-        });
+        customButton.setOnAction(e -> Main.pushScene(new CustomOptionsPage()));
     }
 
     @Override
