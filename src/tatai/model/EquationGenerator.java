@@ -57,8 +57,8 @@ public class EquationGenerator implements Generator {
      */
     private int factorOf(int number) {
         if (number == 0) {
-            return r.nextInt(_difficulty.val());
-        } else if (number == 1) {
+            return r.nextInt(_difficulty.val()) + 1;
+        } else if (Math.abs(number) == 1) {
             return 1;
         }
 
@@ -99,7 +99,7 @@ public class EquationGenerator implements Generator {
     private String append(int n, int previousAnswer) {
 
         // check if working correctly
-        System.out.println(n + " " + previousAnswer);
+        //System.out.println(n + " " + previousAnswer);
         if (n == 0) {
             return Integer.toString(previousAnswer);
         }
@@ -130,7 +130,7 @@ public class EquationGenerator implements Generator {
         }
 
         // check current equation output
-        System.out.println(previousAnswer + "=" + currentAnswer + op + a);
+        //System.out.println(previousAnswer + "=" + currentAnswer + op + a);
 
         String newEquation = append(--n, currentAnswer);
 
