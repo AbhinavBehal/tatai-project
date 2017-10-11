@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Regular.ttf');
+}
+
+* {
+    -fx-font-smoothing-type: gray;
+}
+
+.root {
+    -fx-background-color: -background;
+}
+
+.button {
+    -fx-font-family: Roboto;
+    -fx-background-color: transparent;
+    -fx-text-fill: -foreground;
+    -fx-border-radius: 0;
+    -fx-border-width: 2;
+    -fx-border-color: -foreground;
+    -fx-min-width: 125px;
+    -fx-min-height: 40px;
+    -fx-cursor: hand;
+    -fx-background-radius: 0;
+}
+
+.button:hover {
+    -fx-background-color: -foreground;
+    -fx-text-fill: -background;
+}
+
+.check-box {
+    -fx-font-family: Roboto;
+    -fx-text-fill: -foreground;
+}
+
+.check-box > .box {
+    -fx-background-color: -background;
+    -fx-border-width: 2;
+    -fx-border-color: -foreground;
+}
+
+.check-box > .box > .mark {
+    -fx-shape: "M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z";
+}
+
+.check-box:selected > .box > .mark {
+    -fx-background-color: -foreground;
+}
+
+.glyph-icon {
+    -fx-cursor: hand;
+}
+
+.label {
+    -fx-font-family: Roboto;
+    -fx-text-fill: -foreground;
+}
+
+.list-view {
+    -fx-border-width: 2;
+    -fx-border-color: -foreground;
+    -fx-background-color: -background;
+}
+
+.list-view .list-cell {
+    -fx-background-color: -background;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: -foreground;
+    -fx-text-fill: -foreground;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: -foreground;
+    -fx-text-fill: -background;
+}
+
+.list-view .scroll-bar:horizontal,
+.list-view .scroll-bar:vertical {
+    -fx-background-color: -background;
+    -fx-border-width: 0 0 0 2;
+    -fx-border-color: -foreground;
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: -foreground;
+    -fx-background-radius: 0;
+    -fx-background-insets: 2;
+}
+
+.list-view .scroll-bar:vertical .increment-button,
+.list-view .scroll-bar:vertical .decrement-button {
+    -fx-background-radius: 0;
+    -fx-padding: 0 10 0 0;
+}
+
+.list-view .scroll-bar:vertical .increment-arrow,
+.list-view .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+.progress-bar, .progress-bar > .bar, .progress-bar .track {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 5 0 5 0;
+}
+
+.progress-bar > .track {
+    -fx-background-color: -background;
+    -fx-border-width: 0 0 0 2;
+    -fx-border-color: -foreground;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: -foreground;
+}
+
+.icon-button {
+    -fx-min-height: 0px;
+    -fx-min-width: 0px;
+}
+
+.icon-button > .glyph-icon {
+    -fx-fill: -foreground;
+    -glyph-size: 48px;
+}
+
+.icon-button:hover > .glyph-icon {
+    -fx-fill: -background;
+}
+
+.h1 { -fx-font-size: 64px }
+.h2 { -fx-font-size: 56px }
+.h3 { -fx-font-size: 48px }
+.h4 { -fx-font-size: 32px }
+.h5 { -fx-font-size: 24px }
+.h6 { -fx-font-size: 16px }

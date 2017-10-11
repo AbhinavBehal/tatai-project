@@ -46,10 +46,7 @@ public class StatsManager {
      */
     public void updateScore(Pair<Module, Difficulty> list, int score) {
         _scores.get(list).add(score);
-
-        for (ScoreListener l : _listeners) {
-            l.updateScore(list, score);
-        }
+        _listeners.forEach(l -> l.updateScore(list, score));
     }
 
     public void setStatistic(Module module, Difficulty difficulty, Statistic statistic, double value) {

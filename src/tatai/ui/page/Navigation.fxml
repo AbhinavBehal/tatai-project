@@ -9,7 +9,7 @@
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:id="parentPane"
-           stylesheets="/sunsetStyle.css, /navigationStyles.css">
+           stylesheets="/sunsetStyle.css, /commonStyle.css, /navigationStyles.css">
     <BorderPane StackPane.alignment="TOP_CENTER">
         <top>
             <HBox styleClass="navBar"

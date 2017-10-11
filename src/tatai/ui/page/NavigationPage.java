@@ -46,7 +46,6 @@ public class NavigationPage extends Scene implements ThemeListener {
     @FXML
     private IconButton statsButton;
 
-    private static final Theme DEFAULT_THEME = Theme.SUNSET;
     private static final int BACKBUTTON_SIZE = 48;
     private Stack<Page> _pages;
 
@@ -56,7 +55,6 @@ public class NavigationPage extends Scene implements ThemeListener {
         _pages.push(content);
 
         ThemeManager.manager().addListener(this);
-        ThemeManager.manager().setTheme(DEFAULT_THEME);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Navigation.fxml"));
         loader.setController(this);
@@ -99,6 +97,14 @@ public class NavigationPage extends Scene implements ThemeListener {
         themesButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Main.pushScene(new ThemePickerPage());
+                themesButton.setDisable(true);
+            }
+            _pages.peek().onOptionsButtonPressed();
+        });
+        statsButton.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                //Main.pushScene(new StatisticsPage());
+                statsButton.setDisable(true);
             }
             _pages.peek().onOptionsButtonPressed();
         });
@@ -111,6 +117,8 @@ public class NavigationPage extends Scene implements ThemeListener {
     }
 
     public void popPage() {
+        themesButton.setDisable(_pages.peek() == new ThemePickerPage());
+//        statsButton.setDisable(_pages.peek() == new StatisticsPage());
         if (_pages.size() > 1) {
             _pages.pop();
             changePage();

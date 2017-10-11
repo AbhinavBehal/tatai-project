@@ -1,19 +1,18 @@
 package tatai.model.theme;
 
-import tatai.model.statistics.ScoreListener;
-import tatai.model.statistics.StatsManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThemeManager {
 
+    private static final Theme DEFAULT_THEME = Theme.SUNSET;
     private static ThemeManager _manager;
     private List<ThemeListener> _listeners;
     private Theme _currentTheme;
 
     private ThemeManager() {
         _listeners = new ArrayList<>();
+        _currentTheme = DEFAULT_THEME;
     }
 
     public static ThemeManager manager() {
@@ -27,14 +26,8 @@ public class ThemeManager {
         _listeners.add(listener);
     }
 
-    public void setTheme(Theme theme) {
-        _currentTheme = theme;
-    }
-
     public void updateTheme(Theme newTheme) {
-        for (ThemeListener l : _listeners) {
-            l.updateTheme(_currentTheme, newTheme);
-        }
+        _listeners.forEach(l -> l.updateTheme(_currentTheme, newTheme));
         _currentTheme = newTheme;
     }
 }
