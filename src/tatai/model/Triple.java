@@ -19,7 +19,7 @@ public class Triple<K, I, V> {
 
     @Override
     public String toString() {
-        return "[" + _key + ", " + _item + "]" + "=" + _value;
+        return "[" + _key + ", " + _item + ", " + _value + "]";
     }
 
     @Override

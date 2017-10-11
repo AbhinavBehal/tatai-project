@@ -4,10 +4,6 @@ import javafx.util.Pair;
 
 import java.util.*;
 
-import static tatai.model.Difficulty.*;
-import static tatai.model.Module.*;
-import static tatai.model.Statistic.*;
-
 public class StatsManager {
 
     private static StatsManager _manager;
