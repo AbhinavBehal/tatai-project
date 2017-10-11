@@ -1,15 +1,12 @@
 package tatai.ui;
 
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import tatai.model.Difficulty;
 import tatai.model.NumberGenerator;
 import tatai.ui.page.NavigationPage;
 import tatai.ui.page.Page;
 import tatai.ui.page.PronunciationPage;
-import tatai.ui.page.WelcomePage;
 
 public class Main extends Application {
 

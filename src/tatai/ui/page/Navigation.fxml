@@ -15,7 +15,7 @@
             <HBox styleClass="navBar"
                   alignment="CENTER" spacing="10">
                 <padding>
-                    <Insets left="10" right="10"/>
+                    <Insets topRightBottomLeft="10"/>
                 </padding>
                 <MaterialDesignIconView fx:id="backButton"
                                         glyphName="ARROW_LEFT"/>
