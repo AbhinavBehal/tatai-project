@@ -6,63 +6,83 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.*?>
 <?import tatai.ui.control.*?>
+<?import com.sun.javafx.charts.Legend?>
 <BorderPane xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      stylesheets="/pronunciationStyles.css">
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="/pronunciationStyles.css">
     <padding>
         <Insets topRightBottomLeft="20"/>
     </padding>
     <center>
-        <VBox alignment="CENTER"
-              maxWidth="600"
-              spacing="10">
-            <Label fx:id="question"
-                   text="(33 + 3) = ?"
-                   styleClass="h3">
-                <padding>
-                    <Insets bottom="35"/>
-                </padding>
-            </Label>
-            <HBox spacing="10"
-                  alignment="CENTER">
-                <IconButton fx:id="recordButton"
-                            glyphName="MICROPHONE"
+        <StackPane maxWidth="600">
+            <VBox fx:id="questionView"
+                  alignment="CENTER"
+                  spacing="10">
+                <Label fx:id="questionLabel"
+                       text="(33 + 3) = ?"
+                       styleClass="h3">
+                    <padding>
+                        <Insets bottom="35"/>
+                    </padding>
+                </Label>
+                <Label fx:id="checkLabel"
+                       textAlignment="CENTER"
+                       styleClass="h5"/>
+                <HBox spacing="10"
+                      alignment="CENTER">
+                    <IconButton fx:id="recordButton"
+                                glyphName="MICROPHONE"
+                                maxWidth="Infinity"
+                                HBox.hgrow="ALWAYS"/>
+                    <IconButton fx:id="playButton"
+                                glyphName="VOLUME_HIGH"
+                                maxWidth="Infinity"
+                                HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="checkButton"
+                            text="Check"
+                            styleClass="h5"
+                            maxHeight="Infinity"
                             maxWidth="Infinity"
                             HBox.hgrow="ALWAYS"/>
-                <IconButton fx:id="playButton"
-                            glyphName="VOLUME_HIGH"
-                            maxWidth="Infinity"
-                            HBox.hgrow="ALWAYS"/>
-                <Button fx:id="checkButton"
-                        text="Check"
+                </HBox>
+                <ProgressBar fx:id="progressBar"
+                             maxWidth="Infinity"/>
+                <Button fx:id="submitButton"
+                        text="Submit"
                         styleClass="h5"
-                        maxHeight="Infinity"
-                        maxWidth="Infinity"
-                        HBox.hgrow="ALWAYS"/>
-            </HBox>
-            <ProgressBar fx:id="progressBar"
-                         maxWidth="Infinity"/>
-            <Button fx:id="submitButton"
-                    text="Submit"
-                    styleClass="h5"
-                    maxWidth="Infinity"/>
-        </VBox>
+                        maxWidth="Infinity"/>
+            </VBox>
+            <VBox fx:id="feedbackView"
+                  visible="false"
+                  alignment="CENTER"
+                  spacing="10">
+                <Label fx:id="resultLabel"
+                       textAlignment="CENTER"
+                       styleClass="h3"/>
+                <Label fx:id="feedbackLabel"
+                       textAlignment="CENTER"
+                       styleClass="h4"
+                       wrapText="true"/>
+                <Button fx:id="continueButton"
+                        styleClass="h5"/>
+            </VBox>
+            <VBox fx:id="finishView"
+                  visible="false"
+                  alignment="CENTER"
+                  spacing="10">
+                <Label fx:id="scoreLabel"
+                       textAlignment="CENTER"
+                       styleClass="h3"/>
+                <Button fx:id="restartButton"
+                        text="Restart"
+                        styleClass="h5"/>
+            </VBox>
+        </StackPane>
     </center>
     <bottom>
         <HBox fx:id="progressView"
               styleClass="progress-view"
               alignment="CENTER"
-              spacing="20">
-            <IconButton glyphName="CHECK" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="CHECK" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="CLOSE" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="CHECK" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="CLOSE" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="CHECK" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="CLOSE" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="CHECK" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="MINUS" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <IconButton glyphName="MINUS" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-        </HBox>
+              spacing="20"/>
     </bottom>
 </BorderPane>

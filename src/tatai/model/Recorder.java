@@ -77,15 +77,15 @@ public class Recorder {
             // Uncomment below if on linux
             try {
                 builder.start().waitFor();
+                progressTimer.cancel();
+                updateProgress(_duration * 1000,  _duration * 1000);
             } catch (IOException | InterruptedException e) {
                 // Cancel the timer (stop updating progress)
                 // And re-throw the exception so that the callback can handle it
                 progressTimer.cancel();
                 throw e;
             }
-
             //Thread.sleep(_duration * 1000); // To simulate the recording task (comment this if on linux)
-            progressTimer.cancel();
             return new Media(_output.toURI().toString());
         }
     }
