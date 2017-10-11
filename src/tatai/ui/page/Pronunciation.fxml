@@ -14,12 +14,14 @@
         <Insets topRightBottomLeft="20"/>
     </padding>
     <center>
-        <StackPane maxWidth="600">
+        <StackPane maxWidth="700">
             <VBox fx:id="questionView"
                   alignment="CENTER"
                   spacing="10">
                 <Label fx:id="questionLabel"
                        text="(33 + 3) = ?"
+                       textAlignment="CENTER"
+                       wrapText="true"
                        styleClass="h3">
                     <padding>
                         <Insets bottom="35"/>
