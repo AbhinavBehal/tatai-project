@@ -38,7 +38,7 @@ public class EquationGenerator implements Generator {
      */
     @Override
     public String generate() {
-        _answer = r.nextInt(_difficulty.val() - 1) + 1;
+        _answer = r.nextInt(_difficulty.val()) + 1;
 
         String newEquation;
 
@@ -69,7 +69,7 @@ public class EquationGenerator implements Generator {
             }
         }
         factors.add(number);
-        return factors.get(new Random().nextInt(factors.size() - 1));
+        return factors.get(new Random().nextInt(factors.size()));
     }
 
     /**
@@ -78,16 +78,19 @@ public class EquationGenerator implements Generator {
      * @return a random multiple less than 500 of number
      */
     private int multipleOf(int number) {
+        int bound = 500;
         if (number == 0) {
             return 0;
+        } else if (number > bound) {
+            return number;
         }
 
         List<Integer> multiples = new ArrayList<>();
         int i = 0;
-        while (++i * number <= 500) {
+        while (Math.abs(++i * number) <= bound) {
             multiples.add(i * number);
         }
-        return multiples.get(new Random().nextInt(multiples.size() - 1));
+        return multiples.get(new Random().nextInt(multiples.size()));
     }
 
     /**
@@ -112,7 +115,11 @@ public class EquationGenerator implements Generator {
         if (_operations.size() == 1) {
             op = _operations.get(0);
         } else {
-            op = _operations.get(r.nextInt(_operations.size() - 1));
+            op = _operations.get(r.nextInt(_operations.size()));
+        }
+
+        if (op == Operator.DIVISION && currentAnswer == 0) {
+            op = Operator.ADDITION;
         }
 
         if (op.equals(Operator.ADDITION)) {
