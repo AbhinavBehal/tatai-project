@@ -16,9 +16,9 @@
         <GridPane alignment="CENTER"
                   hgap="20">
             <columnConstraints>
-                <ColumnConstraints percentWidth="33" halignment="CENTER"/>
-                <ColumnConstraints percentWidth="33" halignment="CENTER"/>
-                <ColumnConstraints percentWidth="33" halignment="CENTER"/>
+                <ColumnConstraints percentWidth="33.33" halignment="CENTER"/>
+                <ColumnConstraints percentWidth="33.33" halignment="CENTER"/>
+                <ColumnConstraints percentWidth="33.33" halignment="CENTER"/>
             </columnConstraints>
             <Button fx:id="easyButton"
                     GridPane.rowIndex="0"

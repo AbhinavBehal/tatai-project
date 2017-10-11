@@ -111,7 +111,7 @@
 
 .progress-bar > .track {
     -fx-background-color: -background;
-    -fx-border-width: 0 0 0 2;
+    -fx-border-width: 2;
     -fx-border-color: -foreground;
 }
 

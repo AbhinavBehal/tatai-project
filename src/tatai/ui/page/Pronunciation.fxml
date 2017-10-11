@@ -19,7 +19,6 @@
                   alignment="CENTER"
                   spacing="10">
                 <Label fx:id="questionLabel"
-                       text="(33 + 3) = ?"
                        textAlignment="CENTER"
                        wrapText="true"
                        styleClass="h3">
@@ -33,27 +32,24 @@
                 <GridPane alignment="CENTER" 
                           hgap="10">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="33"/>
-                        <ColumnConstraints percentWidth="33"/>
-                        <ColumnConstraints percentWidth="33"/>
+                        <ColumnConstraints percentWidth="33.33"/>
+                        <ColumnConstraints percentWidth="33.33"/>
+                        <ColumnConstraints percentWidth="33.33"/>
                     </columnConstraints>
                     <IconButton fx:id="recordButton"
                                 GridPane.columnIndex="0"
                                 glyphName="MICROPHONE"
-                                maxWidth="Infinity"
-                                HBox.hgrow="ALWAYS"/>
+                                maxWidth="Infinity"/>
                     <IconButton fx:id="playButton"
                                 GridPane.columnIndex="1"
                                 glyphName="VOLUME_HIGH"
-                                maxWidth="Infinity"
-                                HBox.hgrow="ALWAYS"/>
+                                maxWidth="Infinity"/>
                     <Button fx:id="checkButton"
                             GridPane.columnIndex="2"
                             text="Check"
                             styleClass="h5"
                             maxHeight="Infinity"
-                            maxWidth="Infinity"
-                            HBox.hgrow="ALWAYS"/>
+                            maxWidth="Infinity"/>
                 </GridPane>
                 <ProgressBar fx:id="progressBar"
                              maxWidth="Infinity"/>
