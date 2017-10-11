@@ -1,5 +1,7 @@
 package tatai.model;
 
+import sun.security.util.AuthResources_de;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,6 +27,7 @@ public class EquationGenerator implements Generator {
     private Difficulty _difficulty;
     private List<Operator> _operations;
     private int _answer;
+    Random r = new Random();
 
     public EquationGenerator(Difficulty mode, List operations) {
         _difficulty = mode;
@@ -38,8 +41,6 @@ public class EquationGenerator implements Generator {
      */
     @Override
     public String generate() {
-        Random r = new Random();
-
         _answer = r.nextInt(_difficulty.val() - 1) + 1;
 
         String newEquation;
@@ -57,7 +58,13 @@ public class EquationGenerator implements Generator {
      * @param number number to get factor of
      * @return a random factor of number
      */
-    private static int factorOf(int number) {
+    private int factorOf(int number) {
+        if (number == 0) {
+            return r.nextInt(_difficulty.val());
+        } else if (number == 1) {
+            return 1;
+        }
+
         List<Integer> factors = new ArrayList<>();
         for (int i = 1; i <= Math.abs(number / 2); i++) {
             if (number % i == 0) {
@@ -73,7 +80,11 @@ public class EquationGenerator implements Generator {
      * @param number number to get multiple of
      * @return a random multiple less than 500 of number
      */
-    private static int multipleOf(int number) {
+    private int multipleOf(int number) {
+        if (number == 0) {
+            return 0;
+        }
+
         List<Integer> multiples = new ArrayList<>();
         int i = 0;
         while (++i * number <= 500) {
@@ -128,20 +139,20 @@ public class EquationGenerator implements Generator {
 
         if (op.equals(Operator.SUM)) {
             if (r.nextBoolean()) {
-                newEquation = "(" + newEquation + op + a + ")";
+                newEquation = "(" + newEquation + " " + op + " " + a + ")";
             } else {
-                newEquation = "(" + a + op + newEquation + ")";
+                newEquation = "(" + a + " " + op + " " + newEquation + ")";
             }
         } else if (op.equals(Operator.SUBTRACT)) {
-            newEquation = "(" + newEquation + op + a + ")";
+            newEquation = "(" + newEquation + " " + op + " " + a + ")";
         } else if (op.equals(Operator.MULTIPLY)) {
             if (r.nextBoolean()) {
-                newEquation = "(" + newEquation + op + a + ")";
+                newEquation = "(" + newEquation + " " + op + " " + a + ")";
             } else {
-                newEquation = "(" + a + op + newEquation + ")";
+                newEquation = "(" + a + " " + op + " " + newEquation + ")";
             }
         } else if (op.equals(Operator.DIVIDE)) {
-            newEquation = "(" + a + op + newEquation + ")";
+            newEquation = "(" + a + " " + op + " " + newEquation + ")";
         }
 
         return newEquation.replace("+-", Operator.SUBTRACT.toString());
@@ -152,7 +163,7 @@ public class EquationGenerator implements Generator {
      * @param equation equation to parse
      * @return _value of equation?
      */
-    public static int solve(String equation) {
+    public int solve(String equation) {
         return -1;
     }
 
