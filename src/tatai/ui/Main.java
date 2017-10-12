@@ -1,10 +1,17 @@
 package tatai.ui;
 
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import tatai.model.theme.ThemeManager;
 import tatai.ui.page.MenuPage;
 import tatai.ui.page.NavigationPage;
 import tatai.ui.page.Page;
+
+import java.util.Optional;
 
 public class Main extends Application {
 
@@ -14,9 +21,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Placeholder code until the actual UI is made
-        //_navigationPage = new NavigationPage(new PronunciationPage("Easy", new NumberGenerator(Difficulty.EASY)));
         _navigationPage = new NavigationPage(new MenuPage());
+
         primaryStage.setTitle("T\u0101tai");
         primaryStage.setScene(_navigationPage);
         primaryStage.show();
@@ -35,6 +41,20 @@ public class Main extends Application {
 
     public static void popScene() {
         _navigationPage.popPage();
+    }
+
+    public static Optional<ButtonType> showAlert(Alert.AlertType type, String text, ButtonType... buttons) {
+        Alert alert = new Alert(type, text, buttons);
+        alert.getDialogPane().getStylesheets().addAll("/commonStyle.css", ThemeManager.manager().getCurrentTheme().toString());
+        switch(type) {
+            case CONFIRMATION:
+                alert.getDialogPane().setGraphic(new MaterialDesignIconView(MaterialDesignIcon.HELP_CIRCLE));
+                break;
+            case ERROR:
+                alert.getDialogPane().setGraphic(new MaterialDesignIconView(MaterialDesignIcon.CLOSE_BOX));
+                break;
+        }
+        return alert.showAndWait();
     }
 
     public static void main(String[] args) {

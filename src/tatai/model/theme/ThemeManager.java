@@ -30,4 +30,6 @@ public class ThemeManager {
         _listeners.forEach(l -> l.updateTheme(_currentTheme, newTheme));
         _currentTheme = newTheme;
     }
+
+    public Theme getCurrentTheme() { return _currentTheme; }
 }

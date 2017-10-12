@@ -10,6 +10,7 @@ import tatai.model.generator.Generator;
 import tatai.model.Recogniser;
 import tatai.model.Recorder;
 import tatai.model.Translator;
+import tatai.model.theme.ThemeManager;
 import tatai.ui.Main;
 import tatai.ui.control.IconButton;
 
@@ -98,12 +99,11 @@ public class PronunciationPage extends Page {
         if (_rounds == 0 || _rounds == MAX_ROUNDS) {
             Main.popScene();
         } else {
-            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+            Main.showAlert(Alert.AlertType.CONFIRMATION,
                     "Are you sure you want to go back?\n" +
-                    "This round's progress will be lost.");
-            confirmation.showAndWait()
-                        .filter(response -> response == ButtonType.OK)
-                        .ifPresent(reply -> Main.popScene());
+                    "This round's progress will be lost.")
+                    .filter(response -> response == ButtonType.OK)
+                    .ifPresent(reply -> Main.popScene());
         }
     }
 
@@ -129,8 +129,7 @@ public class PronunciationPage extends Page {
             _player = new MediaPlayer(media);
             updateState(GameState.IDLE);
         }, err -> {
-            Alert error = new Alert(Alert.AlertType.ERROR, "Your computer does not support recording.");
-            error.showAndWait();
+            Main.showAlert(Alert.AlertType.ERROR, "Your computer does not support recording.");
             progressBar.progressProperty().unbind();
             progressBar.setProgress(0.0);
             recordButton.setDisable(false);
@@ -164,8 +163,7 @@ public class PronunciationPage extends Page {
         Recogniser.recognise(new File(_player.getMedia().getSource())).then(recognised -> {
             checkLabel.setText("- " + recognised + " -");
         }, err -> {
-            Alert error = new Alert(Alert.AlertType.ERROR, "An error occurred while trying recognise what you said.");
-            error.showAndWait();
+            Main.showAlert(Alert.AlertType.ERROR, "An error occurred while trying recognise what you said.");
         });
     }
 
@@ -204,8 +202,7 @@ public class PronunciationPage extends Page {
             continueButton.setText(continueText);
             updateState(GameState.FEEDBACK);
         }, err -> {
-            Alert error = new Alert(Alert.AlertType.ERROR, "An error occurred while trying recognise what you said.");
-            error.showAndWait();
+            Main.showAlert(Alert.AlertType.ERROR, "An error occurred while trying recognise what you said.");
         });
     }
 
