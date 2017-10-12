@@ -8,6 +8,8 @@ import static tatai.model.generator.Operator.*;
 
 public class EquationGenerator implements Generator {
 
+    private static final int NUM_QUESTIONS = 10;
+
     // extra entry, used for testing equation generator
     // remove once completed testing
     public static void main(String[] args) {
@@ -26,9 +28,9 @@ public class EquationGenerator implements Generator {
     private Difficulty _difficulty;
     private List<Operator> _operations;
     private int _answer;
-    Random r = new Random();
+    private Random r = new Random();
 
-    public EquationGenerator(Difficulty mode, List operations) {
+    public EquationGenerator(Difficulty mode, List<Operator> operations) {
         _difficulty = mode;
         _operations = operations;
     }
@@ -181,4 +183,7 @@ public class EquationGenerator implements Generator {
     public int value() {
         return _answer;
     }
+
+    @Override
+    public int questions() { return NUM_QUESTIONS; }
 }

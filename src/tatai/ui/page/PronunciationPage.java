@@ -56,8 +56,8 @@ public class PronunciationPage extends Page {
 
     private final static String FILENAME = "out.wav";
     private final static int DURATION = 3;
-    private final static int MAX_ROUNDS = 10; // Should this be a part of the generator?
     private static final int MAX_ATTEMPTS = 2;
+    private final int MAX_ROUNDS;
     private Recorder _recorder;
     private int _rounds;
     private int _attempts;
@@ -70,6 +70,7 @@ public class PronunciationPage extends Page {
         _generator = generator;
         _title = title;
         _recorder = new Recorder();
+        MAX_ROUNDS = generator.questions();
         loadFXML(getClass().getResource("Pronunciation.fxml"));
     }
 

@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
+import tatai.model.generator.CustomGenerator;
+import tatai.model.generator.Generator;
+import tatai.ui.Main;
 
 import java.io.*;
 import java.nio.Buffer;
@@ -22,8 +25,13 @@ public class CustomOptionsPage extends Page {
 
     private static final String TITLE = "Load your questions";
     private FileChooser _fileChooser;
+    private List<String> _questions;
+    private List<Integer> _answers;
 
     public CustomOptionsPage() {
+        _questions = new ArrayList<>();
+        _answers = new ArrayList<>();
+
         _fileChooser = new FileChooser();
         _fileChooser.setTitle("Select your custom question file");
         _fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -34,9 +42,17 @@ public class CustomOptionsPage extends Page {
     }
 
     public void initialize() {
+        startButton.setDisable(true);
+
         loadButton.setOnAction(e -> {
             File questionFile = _fileChooser.showOpenDialog(questionsView.getScene().getWindow());
             processFile(questionFile);
+            startButton.setDisable(questionsView.getItems().isEmpty());
+        });
+
+        startButton.setOnAction(e -> {
+            Generator generator = new CustomGenerator(_questions, _answers);
+            Main.pushScene(new PronunciationPage("Custom Questions", generator));
         });
     }
 
@@ -52,7 +68,8 @@ public class CustomOptionsPage extends Page {
     private void processFile(File questionFile) {
         if (questionFile == null) return;
         try (BufferedReader reader = new BufferedReader(new FileReader(questionFile))) {
-            List<String> equations = new ArrayList<>();
+            _questions.clear();
+            _answers.clear();
             String line;
             while ((line = reader.readLine()) != null) {
                 long leftBrackets = line.chars().filter(c -> c == '(').count();
@@ -81,9 +98,10 @@ public class CustomOptionsPage extends Page {
                 // 1 + 2 + = 5 is treated as valid
                 // check for bracket or number after every non number and non bracket (operation) character
                 line = withoutSpaces.substring(0, equalsIndex);
-                equations.add(line);
+                _questions.add(line);
+                _answers.add(Integer.parseInt(answer));
             }
-            questionsView.setItems(FXCollections.observableArrayList(equations));
+            questionsView.setItems(FXCollections.observableArrayList(_questions));
         } catch (IOException e) {
             e.printStackTrace();
         }

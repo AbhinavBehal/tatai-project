@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class NumberGenerator implements Generator {
 
+    private static final int NUM_QUESTIONS = 10;
     private Difficulty _difficulty;
     private int _value;
 
@@ -14,12 +15,17 @@ public class NumberGenerator implements Generator {
     @Override
     public String generate() {
         Random r = new Random();
-        _value = r.nextInt(_difficulty.val() -1 ) + 1;
+        _value = r.nextInt(_difficulty.val()) + 1;
         return Integer.toString(_value);
     }
 
     @Override
     public int value() {
         return _value;
+    }
+
+    @Override
+    public int questions() {
+        return NUM_QUESTIONS;
     }
 }
