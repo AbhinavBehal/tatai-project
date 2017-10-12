@@ -1,0 +1,116 @@
+* {
+    -chart0: -foreground;
+    -chart1: derive(-foreground, -30%);
+    -chart2: derive(-foreground, 60%);
+    -chart3: derive(-foreground, 90%);
+    -chart4: derive(-foreground, 30%);
+    -chart5: derive(-foreground, -60%);
+    -chart6: derive(-foreground, -90%);
+    -chart7: derive(-foreground, -60%);
+}
+
+.chart-pie {
+    -fx-background-color: -fx-pie-color;
+    -fx-border-width: 0;
+    -fx-background-insets: 2;
+}
+
+.chart-pie-label {
+    -fx-fill: -foreground;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: -foreground;
+}
+
+.chart-legend {
+    -fx-background-color: -background;
+    -fx-text-fill: -foreground;
+    -fx-border-width: 2;
+    -fx-border-color: -foreground;
+}
+
+.chart-plot-background {
+    -fx-background-color: -background;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: -background;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: -foreground;
+    -fx-stroke-dash-array: 1;
+    -fx-stroke-width: 1;
+}
+
+.axis {
+    -fx-tick-label-fill: -foreground;
+    -fx-tick-label-font-size: 14px;
+}
+
+.axis:top {
+    -fx-border-color: transparent transparent -foreground transparent;
+}
+
+.axis:right {
+    -fx-border-color: transparent transparent transparent -foreground;
+}
+
+.axis:bottom {
+    -fx-border-color: -foreground transparent transparent transparent;
+}
+
+.axis:left {
+    -fx-border-color: transparent -foreground transparent transparent;
+}
+
+.axis-label {
+    -fx-font-size: 18px;
+}
+
+.axis-tick-mark,
+.axis-minor-tick-mark {
+    -fx-fill: -foreground;
+    -fx-stroke: -foreground;
+}
+
+.default-color0.chart-bar { -fx-bar-fill: -chart0; }
+.default-color0.chart-line-symbol { -fx-background-color: -chart0; }
+.default-color0.chart-series-line { -fx-stroke: -chart0; }
+.default-color0.chart-pie { -fx-pie-color: -chart0; }
+
+.default-color1.chart-bar { -fx-bar-fill: -chart1; }
+.default-color1.chart-line-symbol { -fx-background-color: -chart1; }
+.default-color1.chart-series-line { -fx-stroke: -chart1; }
+.default-color1.chart-pie { -fx-pie-color: -chart1; }
+
+.default-color2.chart-bar { -fx-bar-fill: -chart2; }
+.default-color2.chart-line-symbol { -fx-background-color: -chart2 }
+.default-color2.chart-series-line { -fx-stroke: -chart2; }
+.default-color2.chart-pie { -fx-pie-color: -chart2; }
+
+.default-color3.chart-bar { -fx-bar-fill: -chart3; }
+.default-color3.chart-line-symbol { -fx-background-color: -chart3; }
+.default-color3.chart-series-line { -fx-stroke: -chart3; }
+.default-color3.chart-pie { -fx-pie-color: -chart3; }
+
+.default-color4.chart-bar { -fx-bar-fill: -chart4; }
+.default-color4.chart-line-symbol { -fx-background-color: -chart4; }
+.default-color4.chart-series-line { -fx-stroke: -chart4; }
+.default-color4.chart-pie { -fx-pie-color: -chart4; }
+
+.default-color5.chart-bar { -fx-bar-fill: -chart5; }
+.default-color5.chart-line-symbol { -fx-background-color: -chart5; }
+.default-color5.chart-series-line { -fx-stroke: -chart5; }
+.default-color5.chart-pie { -fx-pie-color: -chart5; }
+
+.default-color6.chart-bar { -fx-bar-fill: -chart6; }
+.default-color6.chart-line-symbol { -fx-background-color: -chart6; }
+.default-color6.chart-series-line { -fx-stroke: -chart6; }
+.default-color6.chart-pie { -fx-pie-color: -chart6; }
+
+.default-color7.chart-bar { -fx-bar-fill: -chart7; }
+.default-color7.chart-line-symbol { -fx-background-color: -chart7; }
+.default-color7.chart-series-line { -fx-stroke: -chart7; }
+.default-color7.chart-pie { -fx-pie-color: -chart7; }
