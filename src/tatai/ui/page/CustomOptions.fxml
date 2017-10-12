@@ -14,14 +14,14 @@
     <padding>
         <Insets topRightBottomLeft="30"/>
     </padding>
-    <columnConstraints>
-        <ColumnConstraints percentWidth="70"/>
-        <ColumnConstraints percentWidth="30"/>
-    </columnConstraints>
     <rowConstraints>
         <RowConstraints percentHeight="90"/>
         <RowConstraints percentHeight="15"/>
     </rowConstraints>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="70"/>
+        <ColumnConstraints percentWidth="30"/>
+    </columnConstraints>
 
     <VBox GridPane.rowIndex="0"
           GridPane.columnIndex="0"

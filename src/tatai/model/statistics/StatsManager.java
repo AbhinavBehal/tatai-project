@@ -1,5 +1,6 @@
 package tatai.model.statistics;
 
+import javafx.scene.chart.XYChart;
 import javafx.util.Pair;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
@@ -8,6 +9,20 @@ import tatai.util.Triple;
 import java.util.*;
 
 public class StatsManager {
+
+    public static void main(String[] args) {
+        List<Integer> scores;
+        Pair<Module, Difficulty> TH = new Pair<>(Module.TEST, Difficulty.HARD);
+        manager().populateScores(TH, new ArrayList<>());
+        scores = _manager._scores.get(TH);
+        scores.add(8);
+        scores.add(4);
+        scores.add(5);
+        scores.add(3);
+        scores.add(6);
+        scores.add(9);
+        _manager.getScores(Module.TEST, Difficulty.HARD);
+    }
 
     private static StatsManager _manager;
     private List<ScoreListener> _listeners;
@@ -52,6 +67,18 @@ public class StatsManager {
     public void setStatistic(Module module, Difficulty difficulty, Statistic statistic, double value) {
         Triple<Module, Difficulty, Statistic> triple = new Triple<>(module, difficulty, statistic);
         _statistics.put(triple, value);
+    }
+
+    public XYChart.Series<Number, Number> getScores(Module module, Difficulty difficulty) {
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        int i = 1;
+        for (int score : _scores.get(new Pair<>(module, difficulty))) {
+//            System.out.println(i + ", " + score);
+            series.getData().add(new XYChart.Data<>(i, score));
+            i++;
+        }
+
+        return series;
     }
 
     public double getStatistic(Module module, Difficulty difficulty, Statistic statistic) {
