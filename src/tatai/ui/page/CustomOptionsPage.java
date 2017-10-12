@@ -72,31 +72,40 @@ public class CustomOptionsPage extends Page {
             _answers.clear();
             String line;
             while ((line = reader.readLine()) != null) {
+                // Check that the number of left and right brackets are equal,
+                // and that there is exactly one equals sign in the equation
                 long leftBrackets = line.chars().filter(c -> c == '(').count();
                 long rightBrackets = line.chars().filter(c -> c == ')').count();
                 long numEquals = line.chars().filter(c -> c == '=').count();
                 if (leftBrackets != rightBrackets || numEquals != 1) continue;
 
                 boolean valid = true;
+                boolean wasOperator = false;
+                // Check that each character in the equation is a bracket, number or operator
+                // and check that every operator is followed by either a number or bracket
                 for (char c : line.toCharArray()) {
-                    valid = (Character.isDigit(c) ||
-                                        c == '(' ||
-                                        c == ')' ) ||
-                                        !Character.isLetter(c);
+                    boolean numberOrBracket = Character.isDigit(c) || c == '(' || c == ')';
+                    boolean isOperator = !numberOrBracket && !Character.isLetter(c);
+
+                    valid = numberOrBracket || (!wasOperator && isOperator);
+                    wasOperator = isOperator;
+
                     if (!valid) break;
                 }
+
                 if (!valid) continue;
 
+                // Check that there is something after the equals sign
                 String withoutSpaces = line.replaceAll("\\s+", "");
                 int equalsIndex= withoutSpaces.lastIndexOf("=");
                 if (equalsIndex == 0 || equalsIndex > withoutSpaces.length() - 2) continue;
 
+                // Check that the characters after the equals sign are all numbers
                 String answer = withoutSpaces.substring(equalsIndex + 1);
                 long invalidCount = answer.chars().filter(c -> !Character.isDigit(c)).count();
                 if (invalidCount > 0) continue;
 
-                // 1 + 2 + = 5 is treated as valid
-                // check for bracket or number after every non number and non bracket (operation) character
+                // Add the equation without the answer to the list of questions that will be displayed
                 line = withoutSpaces.substring(0, equalsIndex);
                 _questions.add(line);
                 _answers.add(Integer.parseInt(answer));
