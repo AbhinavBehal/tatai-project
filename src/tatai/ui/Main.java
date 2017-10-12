@@ -45,7 +45,7 @@ public class Main extends Application {
 
     public static Optional<ButtonType> showAlert(Alert.AlertType type, String text, ButtonType... buttons) {
         Alert alert = new Alert(type, text, buttons);
-        alert.getDialogPane().getStylesheets().addAll("/commonStyle.css", ThemeManager.manager().getCurrentTheme().toString());
+        alert.getDialogPane().getStylesheets().addAll("/styles/common-styles.css", ThemeManager.manager().getCurrentTheme().toString());
         switch(type) {
             case CONFIRMATION:
                 alert.getDialogPane().setGraphic(new MaterialDesignIconView(MaterialDesignIcon.HELP_CIRCLE));

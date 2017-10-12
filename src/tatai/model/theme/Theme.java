@@ -1,10 +1,10 @@
 package tatai.model.theme;
 
 public enum Theme {
-    SUNSET("/sunsetStyle.css", "#374258", "#fa584d"),
-    LABORATORY("/laboratoryStyle.css", "#dddddd", "#403f63"),
-    SUBLIME("/sublimeStyle.css", "#444444", "#ffe047"),
-    PLACEHOLDER("/placeholderStyle.css", "#222222", "#dddddd");
+    SUNSET("/themes/sunset-theme.css", "#374258", "#fa584d"),
+    LABORATORY("/themes/laboratory-theme.css", "#dddddd", "#403f63"),
+    SUBLIME("/themes/sublime-theme.css", "#444444", "#ffe047"),
+    PLACEHOLDER("/themes/placeholder-theme.css", "#222222", "#dddddd");
 
 
     private String _url;

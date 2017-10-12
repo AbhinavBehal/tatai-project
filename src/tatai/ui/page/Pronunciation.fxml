@@ -9,7 +9,7 @@
 <?import com.sun.javafx.charts.Legend?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            stylesheets="/pronunciationStyles.css">
+            stylesheets="/styles/pronunciation-styles.css">
     <padding>
         <Insets topRightBottomLeft="20"/>
     </padding>

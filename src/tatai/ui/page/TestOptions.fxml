@@ -8,7 +8,7 @@
 
 <?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml" stylesheets="/testOptions.css">
+            xmlns:fx="http://javafx.com/fxml" stylesheets="/styles/test-options-styles.css">
     <padding>
         <Insets topRightBottomLeft="50"/>
     </padding>

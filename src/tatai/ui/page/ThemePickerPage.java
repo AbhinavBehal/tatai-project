@@ -5,7 +5,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -75,7 +74,7 @@ public class ThemePickerPage extends Page {
 
         gc.setFill(fg);
         gc.setTextAlign(TextAlignment.CENTER);
-        gc.setFont(Font.loadFont(getClass().getResource("/Roboto-Regular.ttf").toExternalForm(), 48));
+        gc.setFont(Font.loadFont(getClass().getResource("/fonts/Roboto-Regular.ttf").toExternalForm(), 48));
         gc.fillText("T\u0101", 100,120);
     }
 
