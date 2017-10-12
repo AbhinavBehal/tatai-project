@@ -82,11 +82,11 @@ public class PronunciationPage extends Page {
                 updateState(GameState.INIT);
             }
         });
-        recordButton.setOnAction(e -> record());
-        playButton.setOnAction(e -> play());
-        checkButton.setOnAction(e -> check());
-        submitButton.setOnAction(e -> submit());
-        restartButton.setOnAction(e -> updateState(GameState.START));
+        recordButton.setOnMouseClicked(e -> record());
+        playButton.setOnMouseClicked(e -> play());
+        checkButton.setOnMouseClicked(e -> check());
+        submitButton.setOnMouseClicked(e -> submit());
+        restartButton.setOnMouseClicked(e -> updateState(GameState.START));
         updateState(GameState.START);
     }
 

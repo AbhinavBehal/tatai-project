@@ -29,7 +29,6 @@ public class DetailedStatsPage extends Page {
     }
 
     public void initialize() {
-        testLinePop();
         XYChart.Series<Number, Number> easySeries = StatsManager.manager().getScoreList(_module, EASY);
         XYChart.Series<Number, Number> hardSeries = StatsManager.manager().getScoreList(_module, HARD);
         easySeries.setName("Easy");
@@ -41,33 +40,6 @@ public class DetailedStatsPage extends Page {
             xAxis.setUpperBound(easySeries.getData().size());
         }
         lineChart.getData().addAll(easySeries, hardSeries);
-    }
-
-    private void testLinePop() {
-        Pair<Module, Difficulty> me = new Pair<>(_module, EASY);
-        Pair<Module, Difficulty> mh = new Pair<>(_module, HARD);
-        StatsManager m = StatsManager.manager();
-        m.populateScores(me, new ArrayList<>());
-        m.updateScore(me, 8);
-        m.updateScore(me, 4);
-        m.updateScore(me, 5);
-        m.updateScore(me, 3);
-        m.updateScore(me, 6);
-        m.updateScore(me, 4);
-        m.updateScore(me, 5);
-        m.updateScore(me, 3);
-        m.updateScore(me, 6);
-        m.updateScore(me, 9);
-        m.updateScore(me, 9);
-
-        m.populateScores(mh, new ArrayList<>());
-        m.updateScore(mh, 5);
-        m.updateScore(mh, 3);
-        m.updateScore(mh, 6);
-        m.updateScore(mh, 4);
-        m.updateScore(mh, 5);
-        m.updateScore(mh, 3);
-        m.updateScore(mh, 6);
     }
 
     @Override

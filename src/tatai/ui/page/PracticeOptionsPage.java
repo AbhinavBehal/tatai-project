@@ -2,6 +2,7 @@ package tatai.ui.page;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Generator;
 import tatai.model.generator.NumberGenerator;
@@ -21,13 +22,17 @@ public class PracticeOptionsPage extends Page {
     }
 
     public void initialize() {
-        easyButton.setOnAction(e -> {
-            Generator generator = new NumberGenerator(Difficulty.EASY);
-            Main.pushScene(new PronunciationPage("Practice - Easy", generator));
+        easyButton.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                Generator generator = new NumberGenerator(Difficulty.EASY);
+                Main.pushScene(new PronunciationPage("Practice - Easy", generator));
+            }
         });
-        hardButton.setOnAction(e -> {
-            Generator generator = new NumberGenerator(Difficulty.HARD);
-            Main.pushScene(new PronunciationPage("Practice - Hard", generator));
+        hardButton.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                Generator generator = new NumberGenerator(Difficulty.HARD);
+                Main.pushScene(new PronunciationPage("Practice - Hard", generator));
+            }
         });
     }
 

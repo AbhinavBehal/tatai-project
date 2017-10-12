@@ -2,6 +2,7 @@ package tatai.ui.page;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import tatai.ui.Main;
 
 public class MenuPage extends Page {
@@ -18,8 +19,16 @@ public class MenuPage extends Page {
     }
 
     public void initialize() {
-        practiceButton.setOnAction(e -> Main.pushScene(new PracticeOptionsPage()));
-        testButton.setOnAction(e -> Main.pushScene(new TestOptionsPage()));
+        practiceButton.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                Main.pushScene(new PracticeOptionsPage());
+            }
+        });
+        testButton.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                Main.pushScene(new TestOptionsPage());
+            }
+        });
     }
 
     @Override

@@ -48,16 +48,16 @@ public class TestOptionsPage extends Page {
         }
         _operatorMap.get(Operator.ADDITION).setSelected(true);
 
-        easyButton.setOnAction(e -> {
+        easyButton.setOnMouseClicked(e -> {
             Generator generator = new EquationGenerator(Difficulty.EASY, getSelectedOperations());
             Main.pushScene(new PronunciationPage("Test - Easy", generator));
         });
-        hardButton.setOnAction(e ->{
+        hardButton.setOnMouseClicked(e ->{
             Generator generator = new EquationGenerator(Difficulty.HARD, getSelectedOperations());
             Main.pushScene(new PronunciationPage("Test - Hard", generator));
         });
 
-        customButton.setOnAction(e -> Main.pushScene(new CustomOptionsPage()));
+        customButton.setOnMouseClicked(e -> Main.pushScene(new CustomOptionsPage()));
     }
 
     @Override

@@ -1,8 +1,5 @@
 package tatai.model.statistics;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart;
 import javafx.util.Pair;
 import tatai.model.generator.Difficulty;
@@ -11,34 +8,28 @@ import tatai.util.Triple;
 
 import java.util.*;
 
+import static tatai.model.generator.Difficulty.EASY;
+import static tatai.model.generator.Difficulty.HARD;
+import static tatai.model.generator.Module.PRACTICE;
+
 public class StatsManager {
 
     public static void main(String[] args) {
-        List<Integer> scores;
-        Pair<Module, Difficulty> TH = new Pair<>(Module.TEST, Difficulty.HARD);
-        manager().populateScores(TH, new ArrayList<>());
-        scores = _manager._scoreLists.get(TH);
-        scores.add(8);
-        scores.add(4);
-        scores.add(5);
-        scores.add(3);
-        scores.add(6);
-        scores.add(9);
-        _manager.getScoreList(Module.TEST, Difficulty.HARD);
+        System.out.println("TBD");
     }
 
     private static StatsManager _manager;
     private List<ScoreListener> _listeners;
-    private List<Triple<Module, Difficulty, Integer>> _scores;
     private Map<Pair<Module, Difficulty>, List<Integer>> _scoreLists;
     private Map<Triple<Module, Difficulty, Statistic>, Double> _statistics;
 
     private StatsManager() {
         _listeners = new ArrayList<>();
-        _scores = new ArrayList<>();
         _scoreLists = new HashMap<>();
         _statistics = new HashMap<>();
 
+        // for testing
+        testPopulation();
     }
 
     public static StatsManager manager() {
@@ -53,47 +44,22 @@ public class StatsManager {
     }
 
     public void populateScores(Pair<Module, Difficulty> list, List<Integer> scores) {
-//        System.out.println(list);
-//        System.out.println(_scoreLists.keySet());
         if (!_scoreLists.containsKey(list)) {
             _scoreLists.put(list, scores);
         }
         _scoreLists.get(list).addAll(scores);
     }
 
-    /**
-     *
-     * @param list
-     * @param score
-     */
     public void updateScore(Pair<Module, Difficulty> list, int score) {
-        _scores.add(new Triple<>(list.getKey(), list.getValue(), score));
         _scoreLists.get(list).add(score);
         _listeners.forEach(l -> l.updateScore(list, score));
-//        System.out.println(_scoreLists.entrySet());
     }
 
-    /*
-    public void setStatistic(Module module, Difficulty difficulty, Statistic statistic, double value) {
-        Triple<Module, Difficulty, Statistic> triple = new Triple<>(module, difficulty, statistic);
-        _statistics.put(triple, value);
-    }*/
-
+    // TODO to be changed with new bar chart
     public XYChart.Series<String, Number> getAllScores(int n) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-
-        int i = n < _scores.size() ? _scores.size() - n : 0;
-        while (i < _scores.size()) {
-            String module = _scores.get(i).Key() + " - " + _scores.get(i).Item();
-//            System.out.println(module + " " + _scores.get(i).Val());
-            series.getData().add(new XYChart.Data<>(module, _scores.get(i++).Val()));
-        }
-
-//        System.out.println(series.getData());
         return series;
     }
-
-
 
     public XYChart.Series<Number, Number> getScoreList(Module module, Difficulty difficulty) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -109,4 +75,50 @@ public class StatsManager {
         return _statistics.get(new Triple<>(module, difficulty, statistic));
     }
 
+    // private function to simulate data
+    private void testPopulation() {
+        Pair<Module, Difficulty> pe = new Pair<>(PRACTICE, EASY);
+        Pair<Module, Difficulty> ph = new Pair<>(PRACTICE, HARD);
+        Pair<Module, Difficulty> te = new Pair<>(PRACTICE, EASY);
+        Pair<Module, Difficulty> th = new Pair<>(PRACTICE, HARD);
+        StatsManager m = StatsManager.manager();
+        m.populateScores(pe, new ArrayList<>());
+        m.updateScore(pe, 8);
+        m.updateScore(pe, 5);
+        m.updateScore(pe, 3);
+        m.updateScore(pe, 6);
+        m.updateScore(pe, 5);
+        m.updateScore(pe, 9);
+        m.updateScore(pe, 9);
+
+        m.populateScores(ph, new ArrayList<>());
+        m.updateScore(ph, 5);
+        m.updateScore(ph, 3);
+        m.updateScore(ph, 6);
+        m.updateScore(ph, 4);
+        m.updateScore(ph, 5);
+        m.updateScore(ph, 3);
+        m.updateScore(ph, 6);
+
+        m.populateScores(te, new ArrayList<>());
+        m.updateScore(ph, 5);
+        m.updateScore(ph, 3);
+        m.updateScore(ph, 5);
+        m.updateScore(ph, 3);
+        m.updateScore(ph, 6);
+        m.updateScore(ph, 6);
+        m.updateScore(ph, 4);
+
+        m.populateScores(th, new ArrayList<>());
+        m.updateScore(pe, 3);
+        m.updateScore(pe, 6);
+        m.updateScore(pe, 4);
+        m.updateScore(pe, 4);
+        m.updateScore(pe, 3);
+        m.updateScore(pe, 6);
+        m.updateScore(pe, 4);
+        m.updateScore(pe, 5);
+        m.updateScore(pe, 3);
+        m.updateScore(pe, 6);
+    }
 }

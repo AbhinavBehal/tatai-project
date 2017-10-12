@@ -53,7 +53,7 @@
     <Label GridPane.rowIndex="1"
            GridPane.columnIndex="0"
            GridPane.columnSpan="2"
-           text="Questions can be loaded from text file, with each question on a separate line. Questions need to contain the answer to the equation after an equals sign. Refer to the supplied manual for more details and some examples."
+           text="Questions can be loaded from text file, with each question on a separate line. Questions need to contain the answer to the equation after an equals sign. Refer to the supplied manual for more details and some examples. Scores obtained here are not counted."
            maxHeight="Infinity"
            wrapText="true"
            styleClass="h6"/>

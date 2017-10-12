@@ -9,8 +9,6 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.geometry.Insets?>
-<?import com.sun.javafx.charts.Legend?>
-<?import javafx.geometry.Side?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           hgap="20" vgap="20"
