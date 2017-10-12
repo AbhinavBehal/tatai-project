@@ -3,6 +3,7 @@ package tatai.ui.page;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import tatai.ui.Main;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,8 +20,9 @@ public abstract class Page extends Scene {
 
     public abstract String getTitle();
 
-    // TODO Make these not abstract
-    public abstract void onBackButtonPressed();
+    public void onBackButtonPressed() {
+        Main.popScene();
+    }
     public abstract void onOptionsButtonPressed();
 
     protected final void loadFXML(URL fileURL) {

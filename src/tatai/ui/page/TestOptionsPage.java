@@ -66,9 +66,6 @@ public class TestOptionsPage extends Page {
     }
 
     @Override
-    public void onBackButtonPressed() { }
-
-    @Override
     public void onOptionsButtonPressed() { }
 
 

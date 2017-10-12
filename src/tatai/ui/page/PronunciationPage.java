@@ -1,9 +1,7 @@
 package tatai.ui.page;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -12,6 +10,7 @@ import tatai.model.generator.Generator;
 import tatai.model.Recogniser;
 import tatai.model.Recorder;
 import tatai.model.Translator;
+import tatai.ui.Main;
 import tatai.ui.control.IconButton;
 
 import java.io.File;
@@ -97,6 +96,16 @@ public class PronunciationPage extends Page {
     @Override
     public void onBackButtonPressed() {
         // Show confirmation here
+        if (_rounds == 0 || _rounds == MAX_ROUNDS) {
+            Main.popScene();
+        } else {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Are you sure you want to go back?\n" +
+                    "This round's progress will be lost.");
+            confirmation.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(reply -> Main.popScene());
+        }
     }
 
     @Override

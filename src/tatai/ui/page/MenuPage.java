@@ -28,8 +28,5 @@ public class MenuPage extends Page {
     }
 
     @Override
-    public void onBackButtonPressed() { }
-
-    @Override
     public void onOptionsButtonPressed() { }
 }

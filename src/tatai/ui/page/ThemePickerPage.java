@@ -85,12 +85,5 @@ public class ThemePickerPage extends Page {
     }
 
     @Override
-    public void onBackButtonPressed() {
-
-    }
-
-    @Override
-    public void onOptionsButtonPressed() {
-
-    }
+    public void onOptionsButtonPressed() { }
 }

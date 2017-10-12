@@ -37,8 +37,5 @@ public class PracticeOptionsPage extends Page {
     }
 
     @Override
-    public void onBackButtonPressed() { }
-
-    @Override
     public void onOptionsButtonPressed() { }
 }

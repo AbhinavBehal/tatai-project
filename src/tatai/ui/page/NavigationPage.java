@@ -71,10 +71,6 @@ public class NavigationPage extends Scene implements ThemeListener {
         backButton.setOnMouseClicked(e -> {
             if (!e.getButton().equals(MouseButton.PRIMARY)) return;
             _pages.peek().onBackButtonPressed();
-
-            // Should we always pop?
-            // The page might want to show some sort of confirmation before going back
-            popPage();
         });
         optionsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
