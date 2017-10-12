@@ -14,7 +14,8 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           fx:id="parentPane">
+           fx:id="parentPane"
+           stylesheets="/styles/chart-styles.css">
     <GridPane hgap="20" vgap="20">
         <padding>
             <Insets topRightBottomLeft="30"/>
@@ -28,25 +29,34 @@
             <ColumnConstraints percentWidth="70"/>
         </columnConstraints>
 
-        <IconButton GridPane.rowIndex="0"
-                    GridPane.columnIndex="0"
-                    fx:id="pieChartButton"
-                    glyphName="CHART_PIE"
-                    alignment="CENTER"/>
+        <HBox GridPane.rowIndex="0"
+              GridPane.columnIndex="0"
+              alignment="CENTER">
+            <IconButton fx:id="pieChartButton"
+                        glyphName="CHART_PIE"/>
+        </HBox>
 
         <StackPane GridPane.rowIndex="1"
                    GridPane.columnIndex="0">
             <IconButton fx:id="lineChartButton"
-                        glyphName="CHART_LINE"/>
+                        glyphName="CHART_LINE"
+                        maxWidth="Infinity"
+                        maxHeight="Infinity"/>
             <VBox fx:id="moduleBox"
                   visible="false"
                   opacity="0"
                   alignment="CENTER"
-                  spacing="20"
-                  maxWidth="Infinity"
-                  maxHeight="Infinity">
-                <Button fx:id="practice" text="Practice"/>
-                <Button fx:id="test" text="Test"/>
+                  spacing="20">
+                <Button fx:id="practice"
+                        text="Practice"
+                        styleClass="h5"
+                        maxWidth="Infinity"
+                        maxHeight="Infinity"/>
+                <Button fx:id="test"
+                        text="Test"
+                        styleClass="h5"
+                        maxWidth="Infinity"
+                        maxHeight="Infinity"/>
             </VBox>
         </StackPane>
 
@@ -83,5 +93,6 @@
               maxWidth="Infinity"
               visible="false"
               opacity="0"
-              title="Overview of all Answers"/>
+              title="Overview of all Answers"
+              startAngle="90"/>
 </StackPane>

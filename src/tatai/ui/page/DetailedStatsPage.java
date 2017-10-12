@@ -4,12 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.util.Pair;
-import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
 
-import java.util.ArrayList;
 
 import static tatai.model.generator.Difficulty.*;
 
@@ -36,10 +33,13 @@ public class DetailedStatsPage extends Page {
         xAxis.setLowerBound(1);
         if (easySeries.getData().size() < hardSeries.getData().size()) {
             xAxis.setUpperBound(hardSeries.getData().size());
+            xAxis.setTickUnit((int) xAxis.getUpperBound() / 10);
         } else {
             xAxis.setUpperBound(easySeries.getData().size());
+            xAxis.setTickUnit((int) xAxis.getUpperBound() / 10);
         }
-        lineChart.getData().addAll(easySeries, hardSeries);
+        lineChart.getData().add(easySeries);
+        lineChart.getData().add(hardSeries);
     }
 
     @Override

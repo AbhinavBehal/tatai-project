@@ -2,6 +2,7 @@ package tatai.model.statistics;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.util.Pair;
 import tatai.model.generator.Difficulty;
@@ -9,6 +10,7 @@ import tatai.model.generator.Module;
 import tatai.util.Triple;
 
 import java.util.*;
+import java.util.List;
 
 import static tatai.model.generator.Difficulty.*;
 import static tatai.model.generator.Module.*;
@@ -33,7 +35,7 @@ public class StatsManager {
         _statistics = new HashMap<>();
 
         // for testing
-        testPopulation();
+        testPopulation(20);
     }
 
     public static StatsManager manager() {
@@ -81,7 +83,7 @@ public class StatsManager {
         _statistics.put(new Triple<>(list.getKey(), list.getValue(), AVERAGE), average);
         _statistics.put(new Triple<>(list.getKey(), list.getValue(), LAST), (double) score);
         _statistics.put(new Triple<>(list.getKey(), list.getValue(), MAX), max);
-        _statistics.put(new Triple<>(list.getKey(), list.getValue(), CORRECT), correct);
+        _statistics.put(new Triple<>(list.getKey(), list.getValue(), CORRECT), correct + score);
         _statistics.put(new Triple<>(list.getKey(), list.getValue(), TOTAL), _scoreLists.get(list).size() * MAX_SCORE);
     }
 
@@ -99,7 +101,27 @@ public class StatsManager {
             }
         }
 
-        series.forEach(s -> System.out.println(s.getData()));
+//        series.forEach(s -> System.out.println(s.getData()));
+
+        return series;
+    }
+
+    public ObservableList<PieChart.Data> getTotalCorrect() {
+        ObservableList<PieChart.Data> series = FXCollections.observableArrayList();
+        double totalCorrect = 0;
+        double total = 0;
+        for (Module m : Module.values()) {
+            for (Difficulty d : Difficulty.values()) {
+                double correct = _statistics.get(new Triple<>(m, d, CORRECT));
+                series.add(new PieChart.Data(m + " " + d, correct));
+                totalCorrect += correct;
+                total += _statistics.get(new Triple<>(m, d, TOTAL));
+            }
+        }
+
+        series.add(new PieChart.Data("Attempted", total - totalCorrect));
+
+//        series.forEach(System.out::println);
 
         return series;
     }
@@ -119,49 +141,40 @@ public class StatsManager {
     }
 
     // private function to simulate data
-    private void testPopulation() {
+    private void testPopulation(int n) {
         Pair<Module, Difficulty> pe = new Pair<>(PRACTICE, EASY);
         Pair<Module, Difficulty> ph = new Pair<>(PRACTICE, HARD);
         Pair<Module, Difficulty> te = new Pair<>(TEST, EASY);
         Pair<Module, Difficulty> th = new Pair<>(TEST, HARD);
+
         populateScores(pe, new ArrayList<>());
-        updateScore(pe, 8);
-        updateScore(pe, 5);
-        updateScore(pe, 3);
-        updateScore(pe, 6);
-        updateScore(pe, 5);
-        updateScore(pe, 9);
-        updateScore(pe, 9);
-
         populateScores(ph, new ArrayList<>());
-        updateScore(ph, 5);
-        updateScore(ph, 3);
-        updateScore(ph, 6);
-        updateScore(ph, 4);
-        updateScore(ph, 5);
-        updateScore(ph, 3);
-        updateScore(ph, 6);
-
         populateScores(te, new ArrayList<>());
-        updateScore(te, 5);
-        updateScore(te, 3);
-        updateScore(te, 5);
-        updateScore(te, 3);
-        updateScore(te, 6);
-        updateScore(te, 6);
-        updateScore(te, 4);
-
         populateScores(th, new ArrayList<>());
-        updateScore(th, 3);
-        updateScore(th, 4);
-        updateScore(th, 4);
-        updateScore(th, 3);
-        updateScore(th, 6);
-        updateScore(th, 4);
-        updateScore(th, 5);
-        updateScore(th, 3);
-        updateScore(th, 6);
-        updateScore(th, 6);
+        for (int i = 0; i < n;  i++) {
+            updateScore(pe, new Random().nextInt(7));
+            updateScore(ph, new Random().nextInt(6));
+            updateScore(te, new Random().nextInt(6));
+            updateScore(th, new Random().nextInt(5));
+        }
+        for (int i = 0; i < n;  i++) {
+            updateScore(pe, new Random().nextInt(7)+1);
+            updateScore(ph, new Random().nextInt(6)+2);
+            updateScore(te, new Random().nextInt(6)+2);
+            updateScore(th, new Random().nextInt(5)+3);
+        }
+        for (int i = 0; i < n;  i++) {
+            updateScore(pe, new Random().nextInt(7)+2);
+            updateScore(ph, new Random().nextInt(6)+3);
+            updateScore(te, new Random().nextInt(6)+3);
+            updateScore(th, new Random().nextInt(5)+4);
+        }
+        for (int i = 0; i < n;  i++) {
+            updateScore(pe, new Random().nextInt(7)+4);
+            updateScore(ph, new Random().nextInt(6)+5);
+            updateScore(te, new Random().nextInt(6)+6);
+            updateScore(th, new Random().nextInt(5)+6);
+        }
     }
 
     // private function to check stats
@@ -169,7 +182,7 @@ public class StatsManager {
         for (Module m : Module.values()) {
             for (Difficulty d : Difficulty.values()) {
                 for (Statistic s : Statistic.values()) {
-                    System.out.println(_statistics.get(new Triple<>(m, d, s)));
+                    System.out.println(s + "=" + _statistics.get(new Triple<>(m, d, s)));
                 }
             }
         }

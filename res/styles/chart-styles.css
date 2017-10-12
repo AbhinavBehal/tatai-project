@@ -1,12 +1,12 @@
 * {
-    -chart0: -foreground;
-    -chart1: derive(-foreground, -30%);
-    -chart2: derive(-foreground, 60%);
-    -chart3: derive(-foreground, 90%);
-    -chart4: derive(-foreground, 30%);
-    -chart5: derive(-foreground, -60%);
-    -chart6: derive(-foreground, -90%);
-    -chart7: derive(-foreground, -60%);
+    -chart0: derive(-foreground, -30%);
+    -chart1: derive(-foreground, 90%);
+    -chart2: derive(-background, -30%);
+    -chart3: derive(-background, 90%);
+    -chart4: derive(-foreground, 60%);
+    -chart5: derive(-background, 60%);
+    -chart6: derive(-foreground, 30%);
+    -chart7: derive(-background, 30%);
 }
 
 .chart-pie {
@@ -32,6 +32,11 @@
 
 .chart-plot-background {
     -fx-background-color: -background;
+}
+
+.chart-line-symbol {
+    -fx-background-radius: 2px;
+    -fx-padding: 2px;
 }
 
 .chart-vertical-grid-lines {

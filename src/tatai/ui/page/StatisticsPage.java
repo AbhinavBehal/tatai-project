@@ -53,7 +53,7 @@ public class StatisticsPage extends Page {
 
     public void initialize() {
 
-        pieChart.setData(testPiePop());
+        pieChart.setData(StatsManager.manager().getTotalCorrect());
         pieChartButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)){
                 showChart(true);
@@ -95,25 +95,6 @@ public class StatisticsPage extends Page {
 
         // possibly change to a set number of points, 10/20/50 or let user choose
         barChart.getData().addAll(StatsManager.manager().getTopScores());
-    }
-
-    private ObservableList<PieChart.Data> testPiePop() {
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("January", 100),
-                new PieChart.Data("February", 200),
-                new PieChart.Data("March", 50),
-                new PieChart.Data("April", 75),
-                new PieChart.Data("May", 110),
-                new PieChart.Data("June", 300),
-                new PieChart.Data("July", 111),
-                new PieChart.Data("August", 30),
-                new PieChart.Data("September", 75),
-                new PieChart.Data("October", 55),
-                new PieChart.Data("November", 225),
-                new PieChart.Data("December", 99));
-
-        pieChart.setTitle("Monthly Record");
-        return pieChartData;
     }
 
     private void showChart(boolean show) {
