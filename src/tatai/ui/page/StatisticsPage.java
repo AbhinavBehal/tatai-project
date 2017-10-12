@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -16,9 +17,13 @@ import javafx.util.Pair;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
+import tatai.ui.Main;
 import tatai.ui.control.IconButton;
 
 import java.util.ArrayList;
+
+import static tatai.model.generator.Module.PRACTICE;
+import static tatai.model.generator.Module.TEST;
 
 public class StatisticsPage extends Page {
 
@@ -35,7 +40,11 @@ public class StatisticsPage extends Page {
     @FXML
     private IconButton lineChartButton;
     @FXML
-    private VBox modeBox;
+    private VBox moduleBox;
+    @FXML
+    private Button practice;
+    @FXML
+    private Button test;
     @FXML
     private BarChart<String, Number> barChart;
     @FXML
@@ -71,17 +80,31 @@ public class StatisticsPage extends Page {
             }
         });
 
-        modeBox.setOnMouseExited(e -> {
-            if (modeBox.isVisible()) {
+        moduleBox.setOnMouseExited(e -> {
+            if (moduleBox.isVisible()) {
                 showModes(false);
+            }
+        });
+
+        practice.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                Main.pushScene(new DetailedStatsPage(PRACTICE));
+            }
+        });
+
+        test.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                Main.pushScene(new DetailedStatsPage(TEST));
             }
         });
 
         testBarPop();
 
         // possibly change to a set number of points, 10/20/50 or let user choose
-        barChart.getData().add(StatsManager.manager().getScores(10));
-        barChart.getData().get(0).getData().forEach(System.out::println);
+        XYChart.Series<String, Number> series = StatsManager.manager().getAllScores(10);
+        series.setName("Recent");
+        barChart.getData().add(series);
+//        barChart.getData().get(0).getData().forEach(System.out::println);
     }
 
     private ObservableList<PieChart.Data> testPiePop() {
@@ -151,14 +174,14 @@ public class StatisticsPage extends Page {
 
     private void showModes(boolean show) {
         FadeTransition iconFade = new FadeTransition(Duration.millis(100), lineChartButton);
-        FadeTransition modeFade = new FadeTransition(Duration.millis(100), modeBox);
+        FadeTransition modeFade = new FadeTransition(Duration.millis(100), moduleBox);
         SequentialTransition st;
 
         if (show) {
             iconFade.setFromValue(1);
             iconFade.setToValue(0);
 
-            modeBox.setVisible(true);
+            moduleBox.setVisible(true);
             modeFade.setFromValue(0);
             modeFade.setToValue(1);
 
@@ -179,7 +202,7 @@ public class StatisticsPage extends Page {
             if (show) {
                 lineChartButton.setVisible(false);
             } else {
-                modeBox.setVisible(false);
+                moduleBox.setVisible(false);
             }
         });
     }

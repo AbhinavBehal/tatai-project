@@ -38,15 +38,15 @@
                    GridPane.columnIndex="0">
             <IconButton fx:id="lineChartButton"
                         glyphName="CHART_LINE"/>
-            <VBox fx:id="modeBox"
+            <VBox fx:id="moduleBox"
                   visible="false"
                   opacity="0"
                   alignment="CENTER"
                   spacing="20"
                   maxWidth="Infinity"
                   maxHeight="Infinity">
-                <Button text="Practice"/>
-                <Button text="Test"/>
+                <Button fx:id="practice" text="Practice"/>
+                <Button fx:id="test" text="Test"/>
             </VBox>
         </StackPane>
 
@@ -56,11 +56,11 @@
                   fx:id="barChart"
                   maxWidth="Infinity"
                   maxHeight="Infinity"
-                  title="Recent Scores">
+                  title="Recent Scores"
+                  legendVisible="false">
             <xAxis>
                 <CategoryAxis fx:id="xAxis"
-                              side="BOTTOM"
-                              autoRanging="false"/>
+                              side="BOTTOM"/>
             </xAxis>
             <yAxis>
                 <NumberAxis fx:id="yAxis"

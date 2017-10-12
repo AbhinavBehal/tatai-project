@@ -53,6 +53,8 @@ public class StatsManager {
     }
 
     public void populateScores(Pair<Module, Difficulty> list, List<Integer> scores) {
+//        System.out.println(list);
+//        System.out.println(_scoreLists.keySet());
         if (!_scoreLists.containsKey(list)) {
             _scoreLists.put(list, scores);
         }
@@ -68,6 +70,7 @@ public class StatsManager {
         _scores.add(new Triple<>(list.getKey(), list.getValue(), score));
         _scoreLists.get(list).add(score);
         _listeners.forEach(l -> l.updateScore(list, score));
+//        System.out.println(_scoreLists.entrySet());
     }
 
     /*
@@ -76,27 +79,27 @@ public class StatsManager {
         _statistics.put(triple, value);
     }*/
 
-    public XYChart.Series<String, Number> getScores(int n) {
+    public XYChart.Series<String, Number> getAllScores(int n) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
 
         int i = n < _scores.size() ? _scores.size() - n : 0;
         while (i < _scores.size()) {
             String module = _scores.get(i).Key() + " - " + _scores.get(i).Item();
-            System.out.println(module + " " + _scores.get(i).Val());
+//            System.out.println(module + " " + _scores.get(i).Val());
             series.getData().add(new XYChart.Data<>(module, _scores.get(i++).Val()));
         }
 
-        System.out.println(series.getData());
+//        System.out.println(series.getData());
         return series;
     }
+
+
 
     public XYChart.Series<Number, Number> getScoreList(Module module, Difficulty difficulty) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         int i = 1;
         for (int score : _scoreLists.get(new Pair<>(module, difficulty))) {
-//            System.out.println(i + ", " + score);
-            series.getData().add(new XYChart.Data<>(i, score));
-            i++;
+            series.getData().add(new XYChart.Data<>(i++, score));
         }
 
         return series;
