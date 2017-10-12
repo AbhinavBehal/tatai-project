@@ -78,15 +78,12 @@ public class NavigationPage extends Scene implements ThemeListener {
         });
         optionsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                if (!optionsPane.isVisible() ||
-                        optionsPane.getBoundsInParent().getMinX() == parentPane.getWidth()) {
-                    popup(true);
-                }
+                popup(true);
             }
-            _pages.peek().onOptionsButtonPressed();
+            _pages.peek().onBackButtonPressed();
         });
         parentPane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-            if (e.getPickResult().getIntersectedNode() == null || e.getButton() != MouseButton.PRIMARY) return;
+            if (e.getPickResult().getIntersectedNode() == null || !e.getButton().equals(MouseButton.PRIMARY)) return;
 
             if (e.getPickResult().getIntersectedNode() != optionsPane && optionsPane.isVisible()) {
                 // Don't move it back if it's already moving
@@ -99,14 +96,14 @@ public class NavigationPage extends Scene implements ThemeListener {
                 Main.pushScene(new ThemePickerPage());
                 themesButton.setDisable(true);
             }
-            _pages.peek().onOptionsButtonPressed();
+            _pages.peek().onBackButtonPressed();
         });
         statsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                //Main.pushScene(new StatisticsPage());
+                Main.pushScene(new StatisticsPage());
                 statsButton.setDisable(true);
             }
-            _pages.peek().onOptionsButtonPressed();
+            _pages.peek().onBackButtonPressed();
         });
     }
 
@@ -117,8 +114,8 @@ public class NavigationPage extends Scene implements ThemeListener {
     }
 
     public void popPage() {
-        themesButton.setDisable(_pages.peek() == new ThemePickerPage());
-//        statsButton.setDisable(_pages.peek() == new StatisticsPage());
+        themesButton.setDisable(!(_pages.peek() instanceof ThemePickerPage) && themesButton.isDisabled());
+        statsButton.setDisable(!(_pages.peek() instanceof StatisticsPage) && statsButton.isDisabled());
         if (_pages.size() > 1) {
             _pages.pop();
             changePage();
@@ -140,28 +137,28 @@ public class NavigationPage extends Scene implements ThemeListener {
     }
 
     private void popup(boolean show) {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(200), optionsPane);
-        FadeTransition ft = new FadeTransition(Duration.millis(100), overlay);
+        TranslateTransition popOutTranslate = new TranslateTransition(Duration.millis(200), optionsPane);
+        FadeTransition overlayFade = new FadeTransition(Duration.millis(100), overlay);
         SequentialTransition st;
 
         if (show) {
-            optionsPane.setVisible(true);
-            tt.setFromX(optionsPane.getWidth());
-            tt.setToX(0);
-
             overlay.setVisible(true);
-            ft.setFromValue(0);
-            ft.setToValue(0.4);
+            overlayFade.setFromValue(0);
+            overlayFade.setToValue(0.4);
 
-            st = new SequentialTransition(ft, tt);
+            optionsPane.setVisible(true);
+            popOutTranslate.setFromX(optionsPane.getWidth());
+            popOutTranslate.setToX(0);
+
+            st = new SequentialTransition(overlayFade, popOutTranslate);
         } else {
-            tt.setFromX(0);
-            tt.setToX(optionsPane.getWidth());
+            popOutTranslate.setFromX(0);
+            popOutTranslate.setToX(optionsPane.getWidth());
 
-            ft.setFromValue(0.4);
-            ft.setToValue(0);
+            overlayFade.setFromValue(0.4);
+            overlayFade.setToValue(0);
 
-            st = new SequentialTransition(tt, ft);
+            st = new SequentialTransition(popOutTranslate, overlayFade);
         }
 
         st.play();
@@ -172,5 +169,4 @@ public class NavigationPage extends Scene implements ThemeListener {
             }
         });
     }
-
 }

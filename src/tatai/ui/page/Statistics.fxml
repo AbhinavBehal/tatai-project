@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import tatai.ui.control.IconButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:id="parentPane">
+    <GridPane hgap="20" vgap="20">
+        <padding>
+            <Insets topRightBottomLeft="30"/>
+        </padding>
+        <rowConstraints>
+            <RowConstraints percentHeight="50"/>
+            <RowConstraints percentHeight="50"/>
+        </rowConstraints>
+        <columnConstraints>
+            <ColumnConstraints percentWidth="30"/>
+            <ColumnConstraints percentWidth="70"/>
+        </columnConstraints>
+
+        <IconButton GridPane.rowIndex="0"
+                    GridPane.columnIndex="0"
+                    fx:id="pieChartButton"
+                    alignment="CENTER"/>
+
+        <StackPane GridPane.rowIndex="1"
+                   GridPane.columnIndex="0"
+                   fx:id="barChartPane">
+            <IconButton fx:id="barChartButton" text="HOVER"/>
+            <VBox fx:id="modeBox"
+                  visible="false"
+                  opacity="0"
+                  alignment="CENTER"
+                  spacing="20"
+                  maxWidth="Infinity"
+                  maxHeight="Infinity">
+                <Button text="Practice"/>
+                <Button text="Test"/>
+            </VBox>
+        </StackPane>
+
+        <LineChart GridPane.rowIndex="0"
+                   GridPane.rowSpan="2"
+                   GridPane.columnIndex="1"
+                   fx:id="lineChart"
+                   maxWidth="Infinity"
+                   maxHeight="Infinity"
+                   title="Recent Scores">
+            <xAxis>
+                <NumberAxis fx:id="xAxis"
+                            side="BOTTOM"
+                            autoRanging="false"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis"
+                            label="Score/10"
+                            side="LEFT"
+                            autoRanging="false"
+                            upperBound="10"
+                            tickUnit="1"/>
+            </yAxis>
+        </LineChart>
+    </GridPane>
+
+    <Pane fx:id="overlay"
+          visible="false"
+          opacity="0"
+          style="-fx-background-color: black" />
+
+    <PieChart fx:id="pieChart"
+              maxHeight="Infinity"
+              maxWidth="Infinity"
+              visible="false"
+              opacity="0"
+              title="Overview of all Answers"/>
+</StackPane>
