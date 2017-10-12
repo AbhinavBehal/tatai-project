@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import tatai.ui.control.*?>
 <?import com.sun.javafx.charts.Legend?>
+<?import javafx.scene.control.ScrollPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             stylesheets="/styles/pronunciation-styles.css">
@@ -29,7 +30,7 @@
                 <Label fx:id="checkLabel"
                        textAlignment="CENTER"
                        styleClass="h5"/>
-                <GridPane alignment="CENTER" 
+                <GridPane alignment="CENTER"
                           hgap="10">
                     <columnConstraints>
                         <ColumnConstraints percentWidth="33.33"/>
@@ -86,9 +87,11 @@
         </StackPane>
     </center>
     <bottom>
-        <HBox fx:id="progressView"
-              styleClass="progress-view"
-              alignment="CENTER"
-              spacing="20"/>
+        <ScrollPane styleClass="edge-to-edge" fitToHeight="true" fitToWidth="true">
+            <HBox fx:id="progressView"
+                  styleClass="progress-view"
+                  alignment="CENTER"
+                  spacing="20"/>
+        </ScrollPane>
     </bottom>
 </BorderPane>

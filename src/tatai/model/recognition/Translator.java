@@ -1,4 +1,4 @@
-package tatai.model;
+package tatai.model.recognition;
 
 public class Translator {
     private static final String[] words = {

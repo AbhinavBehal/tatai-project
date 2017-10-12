@@ -1,4 +1,4 @@
-package tatai.model;
+package tatai.model.recognition;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;

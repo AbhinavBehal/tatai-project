@@ -1,16 +1,16 @@
 package tatai.ui.page;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import tatai.model.generator.Generator;
-import tatai.model.Recogniser;
-import tatai.model.Recorder;
-import tatai.model.Translator;
-import tatai.model.theme.ThemeManager;
+import tatai.model.recognition.Recogniser;
+import tatai.model.recognition.Recorder;
+import tatai.model.recognition.Translator;
 import tatai.ui.Main;
 import tatai.ui.control.IconButton;
 
@@ -226,6 +226,7 @@ public class PronunciationPage extends Page {
             button.setGlyphName("CHECKBOX_BLANK_OUTLINE");
             button.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(button, Priority.ALWAYS);
+            HBox.setMargin(button, new Insets(0, 10, 0, 10));
             progressView.getChildren().add(button);
         }
     }

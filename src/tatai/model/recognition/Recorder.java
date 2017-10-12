@@ -1,4 +1,4 @@
-package tatai.model;
+package tatai.model.recognition;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.concurrent.Task;
