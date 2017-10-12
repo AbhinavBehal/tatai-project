@@ -76,7 +76,7 @@ public class NavigationPage extends Scene implements ThemeListener {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 popup(true);
             }
-            _pages.peek().onBackButtonPressed();
+            _pages.peek().onOptionsButtonPressed();
         });
         parentPane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             if (e.getPickResult().getIntersectedNode() == null || !e.getButton().equals(MouseButton.PRIMARY)) return;
@@ -92,14 +92,12 @@ public class NavigationPage extends Scene implements ThemeListener {
                 Main.pushScene(new ThemePickerPage());
                 themesButton.setDisable(true);
             }
-            _pages.peek().onBackButtonPressed();
         });
         statsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Main.pushScene(new StatisticsPage());
                 statsButton.setDisable(true);
             }
-            _pages.peek().onBackButtonPressed();
         });
     }
 
