@@ -13,14 +13,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import javafx.util.Pair;
-import tatai.model.generator.Difficulty;
-import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
 import tatai.ui.Main;
 import tatai.ui.control.IconButton;
-
-import java.util.ArrayList;
 
 import static tatai.model.generator.Module.PRACTICE;
 import static tatai.model.generator.Module.TEST;
@@ -98,13 +93,8 @@ public class StatisticsPage extends Page {
             }
         });
 
-        testBarPop();
-
         // possibly change to a set number of points, 10/20/50 or let user choose
-        XYChart.Series<String, Number> series = StatsManager.manager().getAllScores(10);
-        series.setName("Recent");
-        barChart.getData().add(series);
-//        barChart.getData().get(0).getData().forEach(System.out::println);
+        barChart.getData().addAll(StatsManager.manager().getTopScores());
     }
 
     private ObservableList<PieChart.Data> testPiePop() {
@@ -124,18 +114,6 @@ public class StatisticsPage extends Page {
 
         pieChart.setTitle("Monthly Record");
         return pieChartData;
-    }
-
-    private void testBarPop() {
-        Pair<Module, Difficulty> TH = new Pair<>(Module.TEST, Difficulty.HARD);
-        StatsManager m = StatsManager.manager();
-        m.populateScores(TH, new ArrayList<>());
-        m.updateScore(TH, 8);
-        m.updateScore(TH, 4);
-        m.updateScore(TH, 5);
-        m.updateScore(TH, 3);
-        m.updateScore(TH, 6);
-        m.updateScore(TH, 9);
     }
 
     private void showChart(boolean show) {

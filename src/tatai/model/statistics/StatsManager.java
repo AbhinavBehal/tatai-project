@@ -1,5 +1,7 @@
 package tatai.model.statistics;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import javafx.util.Pair;
 import tatai.model.generator.Difficulty;
@@ -8,11 +10,13 @@ import tatai.util.Triple;
 
 import java.util.*;
 
-import static tatai.model.generator.Difficulty.EASY;
-import static tatai.model.generator.Difficulty.HARD;
-import static tatai.model.generator.Module.PRACTICE;
+import static tatai.model.generator.Difficulty.*;
+import static tatai.model.generator.Module.*;
+import static tatai.model.statistics.Statistic.*;
 
 public class StatsManager {
+
+    private static final double MAX_SCORE = 10;
 
     public static void main(String[] args) {
         System.out.println("TBD");
@@ -53,11 +57,50 @@ public class StatsManager {
     public void updateScore(Pair<Module, Difficulty> list, int score) {
         _scoreLists.get(list).add(score);
         _listeners.forEach(l -> l.updateScore(list, score));
+
+        Double average;
+        Double max;
+        Double correct;
+
+        if ((average = _statistics.get(new Triple<>(list.getKey(), list.getValue(), AVERAGE))) == null ) {
+            average = (double) score;
+        } else {
+            average = (average * _scoreLists.get(list).size() + score ) / (_scoreLists.get(list).size() + 1);
+        }
+
+        if ((max = _statistics.get(new Triple<>(list.getKey(), list.getValue(), MAX))) == null ) {
+            max = (double) score;
+        } else {
+            max = max < score ? score : max;
+        }
+
+        if ((correct = _statistics.get(new Triple<>(list.getKey(), list.getValue(), CORRECT))) == null ) {
+            correct = (double) score;
+        }
+
+        _statistics.put(new Triple<>(list.getKey(), list.getValue(), AVERAGE), average);
+        _statistics.put(new Triple<>(list.getKey(), list.getValue(), LAST), (double) score);
+        _statistics.put(new Triple<>(list.getKey(), list.getValue(), MAX), max);
+        _statistics.put(new Triple<>(list.getKey(), list.getValue(), CORRECT), correct);
+        _statistics.put(new Triple<>(list.getKey(), list.getValue(), TOTAL), _scoreLists.get(list).size() * MAX_SCORE);
     }
 
-    // TODO to be changed with new bar chart
-    public XYChart.Series<String, Number> getAllScores(int n) {
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
+    public ObservableList<XYChart.Series<String, Number>> getTopScores() {
+        ObservableList<XYChart.Series<String, Number>> series = FXCollections.observableArrayList();
+
+        for (Module m : Module.values()) {
+            for (Difficulty d : Difficulty.values()) {
+                XYChart.Series<String, Number> mdMax = new XYChart.Series<>();
+                Triple<Module, Difficulty, Statistic> mdMaxStat = new Triple<>(m, d, MAX);
+                XYChart.Data<String, Number> mdMaxScore =
+                        new XYChart.Data<>(mdMaxStat.Key() + "-" + mdMaxStat.Item(), _statistics.get(mdMaxStat));
+                mdMax.getData().add(mdMaxScore);
+                series.add(mdMax);
+            }
+        }
+
+        series.forEach(s -> System.out.println(s.getData()));
+
         return series;
     }
 
@@ -79,46 +122,56 @@ public class StatsManager {
     private void testPopulation() {
         Pair<Module, Difficulty> pe = new Pair<>(PRACTICE, EASY);
         Pair<Module, Difficulty> ph = new Pair<>(PRACTICE, HARD);
-        Pair<Module, Difficulty> te = new Pair<>(PRACTICE, EASY);
-        Pair<Module, Difficulty> th = new Pair<>(PRACTICE, HARD);
-        StatsManager m = StatsManager.manager();
-        m.populateScores(pe, new ArrayList<>());
-        m.updateScore(pe, 8);
-        m.updateScore(pe, 5);
-        m.updateScore(pe, 3);
-        m.updateScore(pe, 6);
-        m.updateScore(pe, 5);
-        m.updateScore(pe, 9);
-        m.updateScore(pe, 9);
+        Pair<Module, Difficulty> te = new Pair<>(TEST, EASY);
+        Pair<Module, Difficulty> th = new Pair<>(TEST, HARD);
+        populateScores(pe, new ArrayList<>());
+        updateScore(pe, 8);
+        updateScore(pe, 5);
+        updateScore(pe, 3);
+        updateScore(pe, 6);
+        updateScore(pe, 5);
+        updateScore(pe, 9);
+        updateScore(pe, 9);
 
-        m.populateScores(ph, new ArrayList<>());
-        m.updateScore(ph, 5);
-        m.updateScore(ph, 3);
-        m.updateScore(ph, 6);
-        m.updateScore(ph, 4);
-        m.updateScore(ph, 5);
-        m.updateScore(ph, 3);
-        m.updateScore(ph, 6);
+        populateScores(ph, new ArrayList<>());
+        updateScore(ph, 5);
+        updateScore(ph, 3);
+        updateScore(ph, 6);
+        updateScore(ph, 4);
+        updateScore(ph, 5);
+        updateScore(ph, 3);
+        updateScore(ph, 6);
 
-        m.populateScores(te, new ArrayList<>());
-        m.updateScore(ph, 5);
-        m.updateScore(ph, 3);
-        m.updateScore(ph, 5);
-        m.updateScore(ph, 3);
-        m.updateScore(ph, 6);
-        m.updateScore(ph, 6);
-        m.updateScore(ph, 4);
+        populateScores(te, new ArrayList<>());
+        updateScore(te, 5);
+        updateScore(te, 3);
+        updateScore(te, 5);
+        updateScore(te, 3);
+        updateScore(te, 6);
+        updateScore(te, 6);
+        updateScore(te, 4);
 
-        m.populateScores(th, new ArrayList<>());
-        m.updateScore(pe, 3);
-        m.updateScore(pe, 6);
-        m.updateScore(pe, 4);
-        m.updateScore(pe, 4);
-        m.updateScore(pe, 3);
-        m.updateScore(pe, 6);
-        m.updateScore(pe, 4);
-        m.updateScore(pe, 5);
-        m.updateScore(pe, 3);
-        m.updateScore(pe, 6);
+        populateScores(th, new ArrayList<>());
+        updateScore(th, 3);
+        updateScore(th, 4);
+        updateScore(th, 4);
+        updateScore(th, 3);
+        updateScore(th, 6);
+        updateScore(th, 4);
+        updateScore(th, 5);
+        updateScore(th, 3);
+        updateScore(th, 6);
+        updateScore(th, 6);
+    }
+
+    // private function to check stats
+    private void checkem() {
+        for (Module m : Module.values()) {
+            for (Difficulty d : Difficulty.values()) {
+                for (Statistic s : Statistic.values()) {
+                    System.out.println(_statistics.get(new Triple<>(m, d, s)));
+                }
+            }
+        }
     }
 }
