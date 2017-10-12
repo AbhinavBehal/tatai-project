@@ -5,10 +5,7 @@ import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -36,15 +33,13 @@ public class StatisticsPage extends Page {
     @FXML
     private PieChart pieChart;
     @FXML
-    private StackPane barChartPane;
-    @FXML
-    private IconButton barChartButton;
+    private IconButton lineChartButton;
     @FXML
     private VBox modeBox;
     @FXML
-    private LineChart<Number, Number> lineChart;
+    private BarChart<String, Number> barChart;
     @FXML
-    private NumberAxis xAxis;
+    private CategoryAxis xAxis;
     @FXML
     private NumberAxis yAxis;
 
@@ -70,8 +65,8 @@ public class StatisticsPage extends Page {
             }
         });
 
-        barChartButton.setOnMouseEntered(e -> {
-            if (barChartButton.isVisible()){
+        lineChartButton.setOnMouseEntered(e -> {
+            if (lineChartButton.isVisible()){
                 showModes(true);
             }
         });
@@ -82,12 +77,11 @@ public class StatisticsPage extends Page {
             }
         });
 
-        testLinePop();
-        XYChart.Series<Number, Number> series = StatsManager.manager().getScores(Module.TEST, Difficulty.HARD);
+        testBarPop();
+
         // possibly change to a set number of points, 10/20/50 or let user choose
-        xAxis.setLowerBound(1);
-        xAxis.setUpperBound(series.getData().size());
-        lineChart.getData().add(series);
+        barChart.getData().add(StatsManager.manager().getScores(10));
+        barChart.getData().get(0).getData().forEach(System.out::println);
     }
 
     private ObservableList<PieChart.Data> testPiePop() {
@@ -109,7 +103,7 @@ public class StatisticsPage extends Page {
         return pieChartData;
     }
 
-    private void testLinePop() {
+    private void testBarPop() {
         Pair<Module, Difficulty> TH = new Pair<>(Module.TEST, Difficulty.HARD);
         StatsManager m = StatsManager.manager();
         m.populateScores(TH, new ArrayList<>());
@@ -156,7 +150,7 @@ public class StatisticsPage extends Page {
     }
 
     private void showModes(boolean show) {
-        FadeTransition iconFade = new FadeTransition(Duration.millis(100), barChartButton);
+        FadeTransition iconFade = new FadeTransition(Duration.millis(100), lineChartButton);
         FadeTransition modeFade = new FadeTransition(Duration.millis(100), modeBox);
         SequentialTransition st;
 
@@ -170,14 +164,12 @@ public class StatisticsPage extends Page {
 
             st = new SequentialTransition(iconFade, modeFade);
         } else {
-            barChartButton.setVisible(true);
+            lineChartButton.setVisible(true);
             iconFade.setFromValue(0);
             iconFade.setToValue(1);
 
             modeFade.setFromValue(1);
             modeFade.setToValue(0);
-
-            System.out.println("?");
 
             st = new SequentialTransition(modeFade, iconFade);
         }
@@ -185,7 +177,7 @@ public class StatisticsPage extends Page {
         st.play();
         st.setOnFinished(e -> {
             if (show) {
-                barChartButton.setVisible(false);
+                lineChartButton.setVisible(false);
             } else {
                 modeBox.setVisible(false);
             }

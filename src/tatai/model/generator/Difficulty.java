@@ -1,12 +1,23 @@
 package tatai.model.generator;
 
 public enum Difficulty {
-    EASY(9),
-    HARD(99);
+    EASY("Easy", 9),
+    HARD("Hard", 99);
 
     private int _value;
+    private String _difficulty;
 
-    Difficulty(int value) { _value = value; }
+    Difficulty(String difficulty, int value) {
+        _difficulty = difficulty;
+        _value = value;
+    }
 
-    public int val() { return _value; }
+    public int val() {
+        return _value;
+    }
+
+    @Override
+    public String toString() {
+        return _difficulty;
+    }
 }

@@ -8,9 +8,10 @@
 
 <?import tatai.ui.control.IconButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:id="parentPane">
@@ -30,12 +31,13 @@
         <IconButton GridPane.rowIndex="0"
                     GridPane.columnIndex="0"
                     fx:id="pieChartButton"
+                    glyphName="CHART_PIE"
                     alignment="CENTER"/>
 
         <StackPane GridPane.rowIndex="1"
-                   GridPane.columnIndex="0"
-                   fx:id="barChartPane">
-            <IconButton fx:id="barChartButton" text="HOVER"/>
+                   GridPane.columnIndex="0">
+            <IconButton fx:id="lineChartButton"
+                        glyphName="CHART_LINE"/>
             <VBox fx:id="modeBox"
                   visible="false"
                   opacity="0"
@@ -48,27 +50,27 @@
             </VBox>
         </StackPane>
 
-        <LineChart GridPane.rowIndex="0"
-                   GridPane.rowSpan="2"
-                   GridPane.columnIndex="1"
-                   fx:id="lineChart"
-                   maxWidth="Infinity"
-                   maxHeight="Infinity"
-                   title="Recent Scores">
+        <BarChart GridPane.rowIndex="0"
+                  GridPane.rowSpan="2"
+                  GridPane.columnIndex="1"
+                  fx:id="barChart"
+                  maxWidth="Infinity"
+                  maxHeight="Infinity"
+                  title="Recent Scores">
             <xAxis>
-                <NumberAxis fx:id="xAxis"
-                            side="BOTTOM"
-                            autoRanging="false"/>
+                <CategoryAxis fx:id="xAxis"
+                              side="BOTTOM"
+                              autoRanging="false"/>
             </xAxis>
             <yAxis>
                 <NumberAxis fx:id="yAxis"
-                            label="Score/10"
+                            label="Score"
                             side="LEFT"
                             autoRanging="false"
                             upperBound="10"
                             tickUnit="1"/>
             </yAxis>
-        </LineChart>
+        </BarChart>
     </GridPane>
 
     <Pane fx:id="overlay"
