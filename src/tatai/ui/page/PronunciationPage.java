@@ -95,7 +95,6 @@ public class PronunciationPage extends Page {
 
     @Override
     public void onBackButtonPressed() {
-        // Show confirmation here
         if (_rounds == 0 || _rounds == MAX_ROUNDS) {
             Main.popScene();
         } else {
@@ -130,8 +129,11 @@ public class PronunciationPage extends Page {
             _player = new MediaPlayer(media);
             updateState(GameState.IDLE);
         }, err -> {
-            // Show an error dialog?
-            err.printStackTrace();
+            Alert error = new Alert(Alert.AlertType.ERROR, "Your computer does not support recording.");
+            error.showAndWait();
+            progressBar.progressProperty().unbind();
+            progressBar.setProgress(0.0);
+            recordButton.setDisable(false);
         });
         updateState(GameState.RECORDING);
         // TODO: Change the way you get progress from the recorder, sometimes the recording finishes faster than the TimerTask and the bar jumps
@@ -162,7 +164,8 @@ public class PronunciationPage extends Page {
         Recogniser.recognise(new File(_player.getMedia().getSource())).then(recognised -> {
             checkLabel.setText("- " + recognised + " -");
         }, err -> {
-            err.printStackTrace();
+            Alert error = new Alert(Alert.AlertType.ERROR, "An error occurred while trying recognise what you said.");
+            error.showAndWait();
         });
     }
 
@@ -201,8 +204,8 @@ public class PronunciationPage extends Page {
             continueButton.setText(continueText);
             updateState(GameState.FEEDBACK);
         }, err -> {
-            // Handle the error somehow
-            err.printStackTrace();
+            Alert error = new Alert(Alert.AlertType.ERROR, "An error occurred while trying recognise what you said.");
+            error.showAndWait();
         });
     }
 
