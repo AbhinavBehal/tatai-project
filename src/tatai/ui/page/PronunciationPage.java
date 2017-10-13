@@ -202,9 +202,7 @@ public class PronunciationPage extends Page {
             feedbackLabel.setText(feedback);
             continueButton.setText(continueText);
             updateState(GameState.FEEDBACK);
-        }, err -> {
-            Main.showAlert(Alert.AlertType.ERROR, "An error occurred while trying recognise what you said.");
-        });
+        }, err -> Main.showAlert(Alert.AlertType.ERROR, "An error occurred while trying recognise what you said."));
     }
 
     private void updateProgress(boolean correct) {

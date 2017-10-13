@@ -1,20 +1,22 @@
 package tatai.model.recognition;
 
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import tatai.util.Promise;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Recogniser {
 
     public static Promise<String> recognise(File audioFile) {
         Promise<String> promise = new Promise<>();
-        RecogniserTask task = new RecogniserTask(audioFile, promise);
+        RecogniserTask task = new RecogniserTask(audioFile);
+
+        task.setOnSucceeded(wse -> onRecognitionFinished(wse, promise));
+        task.setOnCancelled(wse -> onRecognitionFinished(wse, promise));
+        task.setOnFailed(wse -> onRecognitionFinished(wse, promise));
 
         Thread thread = new Thread(task);
         thread.setDaemon(true);
@@ -23,28 +25,35 @@ public class Recogniser {
         return promise;
     }
 
-    private static class RecogniserTask extends Task<Void> {
-        private File _audioFile;
-        private Promise<String> _promise;
+    private static void onRecognitionFinished(WorkerStateEvent e, Promise<String> promise) {
+        if (e.getSource().getException() != null) {
+            promise.reject(e.getSource().getException());
+        } else {
+            promise.resolve((String) e.getSource().getValue());
+        }
+    }
 
-        RecogniserTask(File audioFile, Promise<String> promise) {
+    private static class RecogniserTask extends Task<String> {
+        private File _audioFile;
+
+        RecogniserTask(File audioFile) {
             _audioFile = audioFile;
-            _promise = promise;
         }
 
         @Override
-        protected Void call() throws Exception {
+        protected String call() throws Exception {
             // Might need to change the path to the HMMs if we're packaging it in the jar
             String cmd = "HVite -H ~/Documents/HTK/MaoriNumbers/HMMs/hmm15/macros -H ~/Documents/HTK/MaoriNumbers/HMMs/hmm15/hmmdefs" +
                     " -C ~/Documents/HTK/MaoriNumbers/user/configLR -w ~/Documents/HTK/MaoriNumbers/user/wordNetworkNum -o SWT -l '*' -i out.mlf" +
                     " -p 0.0 -s 5.0 ~/Documents/HTK/MaoriNumbers/user/dictionaryD ~/Documents/HTK/MaoriNumbers/user/tiedList " +
                     _audioFile.getName() +
                     "; cat out.mlf";
+
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", cmd);
-            try {
-                Process process = builder.start();
-                process.waitFor();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            Process process = builder.start();
+            process.waitFor();
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
                 StringBuilder output = new StringBuilder();
                 while ((line = reader.readLine()) != null) {
@@ -53,11 +62,8 @@ public class Recogniser {
                         output.append(line).append(" ");
                     }
                 }
-                Platform.runLater(() -> _promise.resolve(output.toString().trim().replaceAll("aa", "\u0101")));
-            } catch (IOException | InterruptedException e) {
-                _promise.reject(e);
+                return output.toString().trim().replaceAll("aa", "\u0101");
             }
-            return null;
         }
     }
 }
