@@ -13,6 +13,7 @@ import java.io.*;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class CustomOptionsPage extends Page {
 
@@ -72,18 +73,34 @@ public class CustomOptionsPage extends Page {
             _answers.clear();
             String line;
             while ((line = reader.readLine()) != null) {
-                // Check that the number of left and right brackets are equal,
-                // and that there is exactly one equals sign in the equation
-                long leftBrackets = line.chars().filter(c -> c == '(').count();
-                long rightBrackets = line.chars().filter(c -> c == ')').count();
-                long numEquals = line.chars().filter(c -> c == '=').count();
-                if (leftBrackets != rightBrackets || numEquals != 1) continue;
-
+                // Check that the number of left and right brackets are equal
                 boolean valid = true;
-                boolean wasOperator = false;
+                line = line.replaceAll("\\s+", "");
+                Stack<Character> bracketStack = new Stack<>();
+                char[] chars = line.toCharArray();
+                for (char c : chars) {
+                    if (c == '(') {
+                        bracketStack.push(c);
+                    } else if (c == ')') {
+                        if (bracketStack.size() > 0) {
+                            bracketStack.pop();
+                        } else {
+                            valid = false;
+                            break;
+                        }
+                    }
+                }
+                valid = valid && bracketStack.size() == 0;
+                if (!valid) continue;
+
+                // Check that there is exactly one equals sign in the equation
+                long numEquals = line.chars().filter(c -> c == '=').count();
+                if (numEquals != 1) continue;
+
                 // Check that each character in the equation is a bracket, number or operator
                 // and check that every operator is followed by either a number or bracket
-                for (char c : line.toCharArray()) {
+                boolean wasOperator = false;
+                for (char c : chars) {
                     boolean numberOrBracket = Character.isDigit(c) || c == '(' || c == ')';
                     boolean isOperator = !numberOrBracket && !Character.isLetter(c);
 
@@ -96,17 +113,20 @@ public class CustomOptionsPage extends Page {
                 if (!valid) continue;
 
                 // Check that there is something after the equals sign
-                String withoutSpaces = line.replaceAll("\\s+", "");
-                int equalsIndex= withoutSpaces.lastIndexOf("=");
-                if (equalsIndex == 0 || equalsIndex > withoutSpaces.length() - 2) continue;
+                int equalsIndex = line.lastIndexOf("=");
+                if (equalsIndex > line.length() - 2) continue;
+
+                char first = line.charAt(0);
+                valid = Character.isDigit(first) || first == '-';
+                if (!valid) continue;
 
                 // Check that the characters after the equals sign are all numbers
-                String answer = withoutSpaces.substring(equalsIndex + 1);
+                String answer = line.substring(equalsIndex + 1);
                 long invalidCount = answer.chars().filter(c -> !Character.isDigit(c)).count();
                 if (invalidCount > 0) continue;
 
                 // Add the equation without the answer to the list of questions that will be displayed
-                line = withoutSpaces.substring(0, equalsIndex);
+                line = line.substring(0, equalsIndex);
                 _questions.add(line);
                 _answers.add(Integer.parseInt(answer));
             }
