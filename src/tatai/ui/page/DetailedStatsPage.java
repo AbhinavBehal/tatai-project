@@ -1,12 +1,15 @@
 package tatai.ui.page;
 
+import com.sun.org.glassfish.external.statistics.Stats;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ListView;
+import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
-
 
 import static tatai.model.generator.Difficulty.*;
 
@@ -19,6 +22,11 @@ public class DetailedStatsPage extends Page {
     private LineChart<Number, Number> lineChart;
     @FXML
     private NumberAxis xAxis;
+    @FXML
+    private ListView<String> easyList;
+    @FXML
+    private ListView<String> hardList;
+
 
     public DetailedStatsPage(Module module) {
         _module = module;
@@ -40,6 +48,23 @@ public class DetailedStatsPage extends Page {
         }
         lineChart.getData().add(easySeries);
         lineChart.getData().add(hardSeries);
+        populateList();
+    }
+
+    private void populateList() {
+        easyList.setItems(FXCollections.observableArrayList());
+        hardList.setItems(FXCollections.observableArrayList());
+
+        for (Difficulty difficulty : Difficulty.values()) {
+            XYChart.Series<Number, Number> series = StatsManager.manager().getScoreList(_module, difficulty);
+            for (XYChart.Data<Number, Number> data : series.getData()) {
+                if (difficulty == HARD) {
+                    hardList.getItems().add("" + data.getYValue());
+                } else if(difficulty == EASY) {
+                    easyList.getItems().add("" + data.getYValue());
+                }
+            }
+        }
     }
 
     @Override
