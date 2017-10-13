@@ -64,8 +64,7 @@ public class CustomOptionsPage extends Page {
 
     @Override
     public void onOptionsButtonPressed() { }
-
-
+    
     private void processFile(File questionFile) {
         if (questionFile == null) return;
         try (BufferedReader reader = new BufferedReader(new FileReader(questionFile))) {

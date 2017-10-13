@@ -53,6 +53,9 @@ public class StatisticsPage extends Page {
 
     public void initialize() {
 
+        pieChartButton.setText("\nScores\nOverview");
+        lineChartButton.setText("\nDetailed\nStatistics");
+
         pieChart.setData(StatsManager.manager().getTotalCorrect());
         pieChartButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)){
@@ -105,7 +108,7 @@ public class StatisticsPage extends Page {
         if (show) {
             overlay.setVisible(true);
             overlayFade.setFromValue(0);
-            overlayFade.setToValue(0.4);
+            overlayFade.setToValue(0.8);
 
             pieChart.setVisible(true);
             pieChartFade.setFromValue(0);
@@ -116,7 +119,7 @@ public class StatisticsPage extends Page {
             pieChartFade.setFromValue(1);
             pieChartFade.setToValue(0);
 
-            overlayFade.setFromValue(0.4);
+            overlayFade.setFromValue(0.8);
             overlayFade.setToValue(0);
 
             st = new SequentialTransition(pieChartFade, overlayFade);

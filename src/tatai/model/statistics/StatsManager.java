@@ -9,8 +9,9 @@ import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.util.Triple;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.*;
-import java.util.List;
 
 import static tatai.model.generator.Difficulty.*;
 import static tatai.model.generator.Module.*;
@@ -21,7 +22,7 @@ public class StatsManager {
     private static final double MAX_SCORE = 10;
 
     public static void main(String[] args) {
-        System.out.println("TBD");
+        StatsManager.manager().checkem();
     }
 
     private static StatsManager _manager;
@@ -182,9 +183,21 @@ public class StatsManager {
         for (Module m : Module.values()) {
             for (Difficulty d : Difficulty.values()) {
                 for (Statistic s : Statistic.values()) {
-                    System.out.println(s + "=" + _statistics.get(new Triple<>(m, d, s)));
+                    System.out.println(m + ":" + d + ":" + s + "=" + _statistics.get(new Triple<>(m, d, s)));
                 }
             }
+        }
+    }
+
+    private void read() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(getClass().getResource("data.txt").getPath()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
