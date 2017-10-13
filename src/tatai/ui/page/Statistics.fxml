@@ -33,15 +33,15 @@
               GridPane.columnIndex="0"
               alignment="CENTER">
             <IconButton fx:id="pieChartButton"
-                        glyphName="CHART_PIE"/>
+                        glyphName="CHART_PIE"
+                        styleClass="h5"/>
         </HBox>
 
         <StackPane GridPane.rowIndex="1"
                    GridPane.columnIndex="0">
             <IconButton fx:id="lineChartButton"
                         glyphName="CHART_LINE"
-                        maxWidth="Infinity"
-                        maxHeight="Infinity"/>
+                        styleClass="h5"/>
             <VBox fx:id="moduleBox"
                   visible="false"
                   opacity="0"
@@ -49,14 +49,10 @@
                   spacing="20">
                 <Button fx:id="practice"
                         text="Practice"
-                        styleClass="h5"
-                        maxWidth="Infinity"
-                        maxHeight="Infinity"/>
+                        styleClass="h5"/>
                 <Button fx:id="test"
                         text="Test"
-                        styleClass="h5"
-                        maxWidth="Infinity"
-                        maxHeight="Infinity"/>
+                        styleClass="h5"/>
             </VBox>
         </StackPane>
 
@@ -86,7 +82,7 @@
     <Pane fx:id="overlay"
           visible="false"
           opacity="0"
-          style="-fx-background-color: black" />
+          style="-fx-background-color: -background"/>
 
     <PieChart fx:id="pieChart"
               maxHeight="Infinity"
