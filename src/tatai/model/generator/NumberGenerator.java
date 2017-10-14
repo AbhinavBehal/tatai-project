@@ -5,6 +5,7 @@ import java.util.Random;
 public class NumberGenerator implements Generator {
 
     private static final int NUM_QUESTIONS = 10;
+    private static final Module MODULE = Module.PRACTICE;
     private Difficulty _difficulty;
     private int _value;
 
@@ -27,5 +28,15 @@ public class NumberGenerator implements Generator {
     @Override
     public int questions() {
         return NUM_QUESTIONS;
+    }
+
+    @Override
+    public Module module() {
+        return MODULE;
+    }
+
+    @Override
+    public Difficulty difficulty() {
+        return _difficulty;
     }
 }

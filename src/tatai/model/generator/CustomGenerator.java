@@ -35,6 +35,16 @@ public class CustomGenerator implements Generator {
         return _questions.size();
     }
 
+    @Override
+    public Module module() {
+        return null;
+    }
+
+    @Override
+    public Difficulty difficulty() {
+        return null;
+    }
+
     private void randomise() {
         Random r = new Random();
         for (int i = 0; i < _questions.size(); ++i) {

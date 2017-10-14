@@ -8,8 +8,6 @@ import static tatai.model.generator.Operator.*;
 
 public class EquationGenerator implements Generator {
 
-    private static final int NUM_QUESTIONS = 10;
-
     // extra entry, used for testing equation generator
     // remove once completed testing
     public static void main(String[] args) {
@@ -25,19 +23,26 @@ public class EquationGenerator implements Generator {
 
     private static final int MIN_OPERATORS = 1;
     private static final int MAX_OPERATORS = 3;
+    private static final int NUM_QUESTIONS = 10;
+    private static final Module MODULE = Module.TEST;
     private Difficulty _difficulty;
-    private List<Operator> _operations;
-    private int _answer;
+    private List<Operator> _operators;
     private Random r = new Random();
+    private int _answer;
 
-    public EquationGenerator(Difficulty mode, List<Operator> operations) {
-        _difficulty = mode;
-        _operations = operations;
+    /**
+     * Constructor used to define specifications of the equations.
+     * @param difficulty Difficulty of the Module.
+     * @param operators Types of Operators to use.
+     */
+    public EquationGenerator(Difficulty difficulty, List<Operator> operators) {
+        _difficulty = difficulty;
+        _operators = operators;
     }
 
     /**
-     * Current equation maker, generates an equation for a random number depending
-     * on input difficulty at construction.
+     * Public method used to generate an equation with a random answer between 1 - 99
+     * depending difficulty.
      * @return final equation
      */
     @Override
@@ -55,7 +60,7 @@ public class EquationGenerator implements Generator {
     }
 
     /**
-     * private helper function used to generate a random factor of a number
+     * Private helper method used to generate a random factor of a given number.
      * @param number number to get factor of
      * @return a random factor of number
      */
@@ -77,7 +82,8 @@ public class EquationGenerator implements Generator {
     }
 
     /**
-     * private helper function used to generate a random multiple of a number less than 500
+     * Private helper method used to generate a random multiple of a number less than 500.
+     * TODO: change after 13/10 meeting regarding operating with numbers > 99
      * @param number number to get multiple of
      * @return a random multiple less than 500 of number
      */
@@ -98,7 +104,7 @@ public class EquationGenerator implements Generator {
     }
 
     /**
-     * recursive func used to append n number of operators into equations
+     * Private recursive method used to append n number of operators into equations.
      * @param n number of operators
      * @param previousAnswer to calculate to
      * @return appended equation
@@ -116,10 +122,10 @@ public class EquationGenerator implements Generator {
         int currentAnswer = previousAnswer;
 
         Operator op;
-        if (_operations.size() == 1) {
-            op = _operations.get(0);
+        if (_operators.size() == 1) {
+            op = _operators.get(0);
         } else {
-            op = _operations.get(r.nextInt(_operations.size()));
+            op = _operators.get(r.nextInt(_operators.size()));
         }
 
         if (op == DIVISION && currentAnswer == 0) {
@@ -176,7 +182,7 @@ public class EquationGenerator implements Generator {
     }
 
     /**
-     * Public function used to get the current randomly generated answer
+     * Public method used to get the current randomly generated answer.
      * @return answer to equation generated
      */
     @Override
@@ -184,6 +190,31 @@ public class EquationGenerator implements Generator {
         return _answer;
     }
 
+    /**
+     * Public method used to get the number of questions for this generator.
+     * @return Total number of questions for the Module.
+     */
     @Override
-    public int questions() { return NUM_QUESTIONS; }
+    public int questions() {
+        return NUM_QUESTIONS;
+    }
+
+    /**
+     * Public method used to get the module of the generator, which
+     * (for now) will only be TEST.
+     * @return TEST Module enum.
+     */
+    @Override
+    public Module module() {
+        return MODULE;
+    }
+
+    /**
+     * Public method used to get the difficulty of the generator.
+     * @return Difficulty assigned at construction.
+     */
+    @Override
+    public Difficulty difficulty() {
+        return _difficulty;
+    }
 }

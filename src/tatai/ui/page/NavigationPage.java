@@ -21,8 +21,6 @@ import tatai.ui.Main;
 import tatai.ui.control.IconButton;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Stack;
 
 public class NavigationPage extends Scene implements ThemeListener {
@@ -53,7 +51,6 @@ public class NavigationPage extends Scene implements ThemeListener {
         super(new Pane());
         _pages = new Stack<>();
         _pages.push(content);
-
         ThemeManager.manager().addListener(this);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Navigation.fxml"));
@@ -99,6 +96,8 @@ public class NavigationPage extends Scene implements ThemeListener {
                 statsButton.setDisable(true);
             }
         });
+
+        parentPane.getStylesheets().add(ThemeManager.manager().getCurrentTheme().toString());
     }
 
     public void pushPage(Page page) {
