@@ -19,7 +19,10 @@ public class CustomGenerator implements Generator {
 
     @Override
     public String generate() {
-        if (_currentQuestion == _questions.size()) return "";
+        if (_currentQuestion == _questions.size()) {
+            _currentQuestion = 0;
+            randomise();
+        }
 
         _currentAnswer = _answers.get(_currentQuestion);
         return _questions.get(_currentQuestion++) + " = ?";
