@@ -6,10 +6,10 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
+import tatai.model.theme.ThemeManager;
 import tatai.util.Triple;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -44,7 +44,6 @@ public class StatsManager {
         _statistics = new HashMap<>();
         _date = LocalDate.now();
         read();
-        makeLists(_date);
     }
 
     /**
@@ -81,31 +80,19 @@ public class StatsManager {
         _scoreLists.get(dateScores).add(score);
         _listeners.forEach(l -> l.updateScore(module, difficulty, score));
 
-        Double average;
-        Double max;
-        Double correct;
+        int games = _scoreLists.get(dateScores).size();
 
-        if ((average = _statistics.get(new Triple<>(module, difficulty, AVERAGE))) == null ) {
-            average = (double) score;
-        } else {
-            average = (average * _scoreLists.get(dateScores).size() + score ) / (_scoreLists.get(dateScores).size() + 1);
-        }
-
-        if ((max = _statistics.get(new Triple<>(module, difficulty, MAX))) == null ) {
-            max = (double) score;
-        } else {
-            max = max < score ? score : max;
-        }
-
-        if ((correct = _statistics.get(new Triple<>(module, difficulty, CORRECT))) == null ) {
-            correct = (double) score;
-        }
+        double average = _statistics.get(new Triple<>(module, difficulty, AVERAGE));
+        average = (average * games + score ) / (games + 1);
+        double max = _statistics.get(new Triple<>(module, difficulty, MAX));
+        max = max < score ? score : max;
+        double correct = _statistics.get(new Triple<>(module, difficulty, CORRECT));
 
         _statistics.put(new Triple<>(module, difficulty, AVERAGE), average);
         _statistics.put(new Triple<>(module, difficulty, LAST), (double) score);
         _statistics.put(new Triple<>(module, difficulty, MAX), max);
         _statistics.put(new Triple<>(module, difficulty, CORRECT), correct + score);
-        _statistics.put(new Triple<>(module, difficulty, TOTAL), _scoreLists.get(dateScores).size() * MAX_SCORE);
+        _statistics.put(new Triple<>(module, difficulty, TOTAL), games * MAX_SCORE);
     }
 
     /**
@@ -201,15 +188,29 @@ public class StatsManager {
      * Maps, and variables.
      */
     private void read() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(getClass().getResource("/data.txt").getPath()))) {
+        File dataFile = new File("data.txt");
+        if (!dataFile.exists()) {
+            try {
+                if (dataFile.createNewFile()) {
+                    System.out.println("?");
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
+                    writer.write(ThemeManager.manager().getCurrentTheme().simpleName() + ";\n");
+                    writer.write(_practiceUnlocked + "," + _testUnlocked + ";\n");
+                    writer.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("data.txt")))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
                 if (line.split(",").length == 2) {
                     String[] unlocked = line.split(",");
 
-                    _practiceUnlocked = unlocked[0].equals("t");
-                    _testUnlocked = unlocked[1].equals("t");
+                    _practiceUnlocked = unlocked[0].contains("true");
+                    _testUnlocked = unlocked[1].contains("true");
 
                 } else if (line.split(";").length == 2) {
                     String[] dateScores = line.split(";");
@@ -230,8 +231,12 @@ public class StatsManager {
                             updateScore(date, module, difficulty, score);
                         }
                     }
+                } else {
+                    makeLists(_date);
                 }
             }
+
+            reader.close();
 
             // for checking if data read in is correct
             System.out.println(_practiceUnlocked + ", " + _testUnlocked);
@@ -250,6 +255,9 @@ public class StatsManager {
         for (Module module : Module.values()) {
             for (Difficulty difficulty : Difficulty.values()) {
                 _scoreLists.put(new Triple<>(date, module, difficulty), new ArrayList<>());
+                for (Statistic statistic : Statistic.values()) {
+                    _statistics.put(new Triple<>(module, difficulty, statistic), 0.0);
+                }
             }
         }
     }

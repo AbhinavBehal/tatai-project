@@ -1,22 +1,24 @@
 package tatai.model.theme;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThemeManager {
 
+    private static final Theme DEFAULT_THEME = Theme.SUNSET;
     private static ThemeManager _manager;
     private List<ThemeListener> _listeners;
     private Theme _currentTheme;
 
     /**
-     * Private constructor for singleton ThemeManager instance calls setDefaultTheme().
+     * Private constructor for singleton ThemeManager instance calls setInitialTheme().
      */
     private ThemeManager() {
         _listeners = new ArrayList<>();
-        setDefaultTheme();
+        setInitialTheme();
     }
 
     /**
@@ -62,20 +64,28 @@ public class ThemeManager {
      * theme to the last theme the user had active before exiting the application.
      * This is stored in the data file.
      */
-    private void setDefaultTheme() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(getClass().getResource("/data.txt").getPath()))) {
-            String line;
+    private void setInitialTheme() {
+        if (!new File("data.txt").exists()) {
+            _currentTheme = DEFAULT_THEME;
+        } else {
+            try (BufferedReader reader = new BufferedReader(new FileReader(new File("data.txt")))) {
+                String line;
 
-            if ((line = reader.readLine()) != null) {
-                for (Theme t : Theme.values()) {
-                    if (line.equals(t.simpleName())) {
-                        System.out.println(line);
-                        _currentTheme = t;
+                if ((line = reader.readLine()) != null) {
+                    for (Theme t : Theme.values()) {
+                        if (line.contains(t.simpleName())) {
+                            System.out.println(line);
+                            _currentTheme = t;
+                        }
                     }
+                } else {
+                    _currentTheme = DEFAULT_THEME;
                 }
+                reader.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        System.out.println(_currentTheme);
     }
 }
