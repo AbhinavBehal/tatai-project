@@ -37,6 +37,8 @@ public class StatisticsPage extends Page {
     @FXML
     private VBox moduleBox;
     @FXML
+    private VBox containerBox;
+    @FXML
     private Button practice;
     @FXML
     private Button test;
@@ -78,9 +80,15 @@ public class StatisticsPage extends Page {
             }
         });
 
-        moduleBox.setOnMouseExited(e -> {
+        containerBox.setOnMouseExited(e -> {
             if (moduleBox.isVisible()) {
-                showModes(false);
+                // Don't do anything if during transition
+                // NOTE: this will cause state to be stuck in container box even if
+                // the mouse is outside, this is due to user moving over the region
+                // too quickly.
+                if (!lineChartButton.isVisible()) {
+                    showModes(false);
+                }
             }
         });
 

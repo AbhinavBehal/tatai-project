@@ -45,14 +45,17 @@
             <VBox fx:id="moduleBox"
                   visible="false"
                   opacity="0"
-                  alignment="CENTER"
-                  spacing="20">
-                <Button fx:id="practice"
-                        text="Practice"
-                        styleClass="h5"/>
-                <Button fx:id="test"
-                        text="Test"
-                        styleClass="h5"/>
+                  alignment="CENTER">
+                <VBox fx:id="containerBox"
+                      spacing="20"
+                      alignment="CENTER">
+                    <Button fx:id="practice"
+                            text="Practice"
+                            styleClass="h5"/>
+                    <Button fx:id="test"
+                            text="Test"
+                            styleClass="h5"/>
+                </VBox>
             </VBox>
         </StackPane>
 
