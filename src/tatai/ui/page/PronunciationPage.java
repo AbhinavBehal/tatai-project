@@ -58,7 +58,7 @@ public class PronunciationPage extends Page {
 
     private final static String FILENAME = "out.wav";
     private final static int DURATION = 3;
-    private static final int MAX_ATTEMPTS = 1;
+    private static final int MAX_ATTEMPTS = 2;
     private final int MAX_ROUNDS;
     private Recorder _recorder;
     private int _rounds;
