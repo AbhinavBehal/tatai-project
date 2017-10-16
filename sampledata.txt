@@ -1,0 +1,6 @@
+sunset;
+false,false;
+2017-10-13;pe7,pe8,pe8,ph4,te9,ph8,th5,th7,th10
+2017-10-14;ph8,ph9,ph7,ph8,th7,th9,te9,te7
+2017-10-15;pe8
+2017-10-16;th9
