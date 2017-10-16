@@ -76,23 +76,25 @@ public class StatsManager {
      * @param score The final score obtained.
      */
     public void updateScore(LocalDate date, Module module, Difficulty difficulty, int score) {
-        Triple dateScores = new Triple<>(date, module, difficulty);
-        _scoreLists.get(dateScores).add(score);
-        _listeners.forEach(l -> l.updateScore(module, difficulty, score));
+        if (date != null && module != null && difficulty != null) {
+            Triple dateScores = new Triple<>(date, module, difficulty);
+            _scoreLists.get(dateScores).add(score);
+            _listeners.forEach(l -> l.updateScore(module, difficulty, score));
 
-        int games = _scoreLists.get(dateScores).size();
+            int games = _scoreLists.get(dateScores).size();
 
-        double average = _statistics.get(new Triple<>(module, difficulty, AVERAGE));
-        average = (average * games + score ) / (games + 1);
-        double max = _statistics.get(new Triple<>(module, difficulty, MAX));
-        max = max < score ? score : max;
-        double correct = _statistics.get(new Triple<>(module, difficulty, CORRECT));
+            double average = _statistics.get(new Triple<>(module, difficulty, AVERAGE));
+            average = (average * games + score) / (games + 1);
+            double max = _statistics.get(new Triple<>(module, difficulty, MAX));
+            max = max < score ? score : max;
+            double correct = _statistics.get(new Triple<>(module, difficulty, CORRECT));
 
-        _statistics.put(new Triple<>(module, difficulty, AVERAGE), average);
-        _statistics.put(new Triple<>(module, difficulty, LAST), (double) score);
-        _statistics.put(new Triple<>(module, difficulty, MAX), max);
-        _statistics.put(new Triple<>(module, difficulty, CORRECT), correct + score);
-        _statistics.put(new Triple<>(module, difficulty, TOTAL), games * MAX_SCORE);
+            _statistics.put(new Triple<>(module, difficulty, AVERAGE), average);
+            _statistics.put(new Triple<>(module, difficulty, LAST), (double) score);
+            _statistics.put(new Triple<>(module, difficulty, MAX), max);
+            _statistics.put(new Triple<>(module, difficulty, CORRECT), correct + score);
+            _statistics.put(new Triple<>(module, difficulty, TOTAL), games * MAX_SCORE);
+        }
     }
 
     /**
