@@ -214,6 +214,7 @@ public class PronunciationPage extends Page {
         }
         button.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(button, Priority.ALWAYS);
+        HBox.setMargin(button, new Insets(0, 10, 0, 10));
         progressView.getChildren().set(_rounds - 1, button);
     }
 
