@@ -2,8 +2,6 @@ package tatai.ui.page;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
@@ -94,13 +92,13 @@ public class StatisticsPage extends Page {
 
         practice.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                Main.pushScene(new DetailedStatsPage(PRACTICE));
+                Main.pushPage(new DetailedStatsPage(PRACTICE));
             }
         });
 
         test.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                Main.pushScene(new DetailedStatsPage(TEST));
+                Main.pushPage(new DetailedStatsPage(TEST));
             }
         });
 

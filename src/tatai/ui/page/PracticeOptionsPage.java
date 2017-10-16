@@ -25,13 +25,13 @@ public class PracticeOptionsPage extends Page {
         easyButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Generator generator = new NumberGenerator(Difficulty.EASY);
-                Main.pushScene(new PronunciationPage("Practice - Easy", generator));
+                Main.pushPage(new PronunciationPage("Practice - Easy", generator));
             }
         });
         hardButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Generator generator = new NumberGenerator(Difficulty.HARD);
-                Main.pushScene(new PronunciationPage("Practice - Hard", generator));
+                Main.pushPage(new PronunciationPage("Practice - Hard", generator));
             }
         });
     }

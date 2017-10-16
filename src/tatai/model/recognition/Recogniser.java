@@ -7,6 +7,7 @@ import tatai.util.Promise;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 
 public class Recogniser {
 
@@ -43,11 +44,17 @@ public class Recogniser {
         @Override
         protected String call() throws Exception {
             // Might need to change the path to the HMMs if we're packaging it in the jar
-            String cmd = "HVite -H /HMMs/hmm15/macros -H /HMMs/hmm15/hmmdefs" +
-                    " -C /user/configLR -w /user/wordNetworkNum -o SWT -l '*' -i out.mlf" +
-                    " -p 0.0 -s 5.0 /user/dictionaryD /user/tiedList " +
-                    _audioFile.getName() +
-                    "; cat out.mlf";
+            String cmd =
+                    "HVite"
+                    + " -H " + "MaoriNumbers/HMMs/hmm15/macros"
+                    + " -H " + "MaoriNumbers/HMMs/hmm15/hmmdefs"
+                    + " -C " + "MaoriNumbers/user/configLR"
+                    + " -w " + "MaoriNumbers/user/wordNetworkNum"
+                    + " -o SWT -l '*' -i out.mlf"
+                    + " -p 0.0 -s 5.0 " + "MaoriNumbers/user/dictionaryD"
+                    + " " + "MaoriNumbers/user/tiedList"
+                    + " " + _audioFile.getName()
+                    + "; cat out.mlf";
 
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", cmd);
             Process process = builder.start();

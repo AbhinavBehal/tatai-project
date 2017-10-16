@@ -10,7 +10,6 @@ import tatai.model.generator.Generator;
 import tatai.ui.Main;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -53,7 +52,7 @@ public class CustomOptionsPage extends Page {
 
         startButton.setOnAction(e -> {
             Generator generator = new CustomGenerator(_questions, _answers);
-            Main.pushScene(new PronunciationPage("Custom Questions", generator));
+            Main.pushPage(new PronunciationPage("Custom Questions", generator));
         });
     }
 

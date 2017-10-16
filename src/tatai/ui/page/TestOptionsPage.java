@@ -50,14 +50,14 @@ public class TestOptionsPage extends Page {
 
         easyButton.setOnMouseClicked(e -> {
             Generator generator = new EquationGenerator(Difficulty.EASY, getSelectedOperations());
-            Main.pushScene(new PronunciationPage("Test - Easy", generator));
+            Main.pushPage(new PronunciationPage("Test - Easy", generator));
         });
         hardButton.setOnMouseClicked(e ->{
             Generator generator = new EquationGenerator(Difficulty.HARD, getSelectedOperations());
-            Main.pushScene(new PronunciationPage("Test - Hard", generator));
+            Main.pushPage(new PronunciationPage("Test - Hard", generator));
         });
 
-        customButton.setOnMouseClicked(e -> Main.pushScene(new CustomOptionsPage()));
+        customButton.setOnMouseClicked(e -> Main.pushPage(new CustomOptionsPage()));
     }
 
     @Override

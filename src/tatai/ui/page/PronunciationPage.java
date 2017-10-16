@@ -98,13 +98,13 @@ public class PronunciationPage extends Page {
     @Override
     public void onBackButtonPressed() {
         if (_rounds == 0 || _rounds == MAX_ROUNDS) {
-            Main.popScene();
+            Main.popPage();
         } else {
             Main.showAlert(Alert.AlertType.CONFIRMATION,
                     "Are you sure you want to go back?\n" +
                     "This round's progress will be lost.")
                     .filter(response -> response == ButtonType.OK)
-                    .ifPresent(reply -> Main.popScene());
+                    .ifPresent(reply -> Main.popPage());
         }
     }
 

@@ -21,7 +21,7 @@ public abstract class Page extends Scene {
     public abstract String getTitle();
 
     public void onBackButtonPressed() {
-        Main.popScene();
+        Main.popPage();
     }
     public abstract void onOptionsButtonPressed();
 

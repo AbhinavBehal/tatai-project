@@ -86,13 +86,13 @@ public class NavigationPage extends Scene implements ThemeListener {
         });
         themesButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                Main.pushScene(new ThemePickerPage());
+                Main.pushPage(new ThemePickerPage());
                 themesButton.setDisable(true);
             }
         });
         statsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                Main.pushScene(new StatisticsPage());
+                Main.pushPage(new StatisticsPage());
                 statsButton.setDisable(true);
             }
         });

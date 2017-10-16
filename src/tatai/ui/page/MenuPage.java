@@ -21,12 +21,12 @@ public class MenuPage extends Page {
     public void initialize() {
         practiceButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                Main.pushScene(new PracticeOptionsPage());
+                Main.pushPage(new PracticeOptionsPage());
             }
         });
         testButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                Main.pushScene(new TestOptionsPage());
+                Main.pushPage(new TestOptionsPage());
             }
         });
     }

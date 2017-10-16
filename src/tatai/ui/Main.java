@@ -5,12 +5,14 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import tatai.model.theme.ThemeManager;
 import tatai.ui.page.MenuPage;
 import tatai.ui.page.NavigationPage;
 import tatai.ui.page.Page;
 
+import java.io.File;
 import java.util.Optional;
 
 public class Main extends Application {
@@ -35,17 +37,29 @@ public class Main extends Application {
 
     }
 
-    public static void pushScene(Page page) {
+    @Override
+    public void stop() {
+        new File("out.wav").delete();
+        new File("out.mlf").delete();
+    }
+
+    public static void pushPage(Page page) {
         _navigationPage.pushPage(page);
     }
 
-    public static void popScene() {
+    public static void popPage() {
         _navigationPage.popPage();
     }
 
     public static Optional<ButtonType> showAlert(Alert.AlertType type, String text, ButtonType... buttons) {
         Alert alert = new Alert(type, text, buttons);
-        alert.getDialogPane().getStylesheets().addAll("/styles/common-styles.css", ThemeManager.manager().getCurrentTheme().toString());
+        Label message = new Label(text);
+        message.setWrapText(true);
+        alert.getDialogPane().setContent(message);
+        alert.getDialogPane().getStylesheets().addAll(
+                "/styles/common-styles.css",
+                ThemeManager.manager().getCurrentTheme().toString());
+
         switch(type) {
             case CONFIRMATION:
                 alert.getDialogPane().setGraphic(new MaterialDesignIconView(MaterialDesignIcon.HELP_CIRCLE));
