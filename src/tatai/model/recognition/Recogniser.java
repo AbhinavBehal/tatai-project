@@ -43,9 +43,9 @@ public class Recogniser {
         @Override
         protected String call() throws Exception {
             // Might need to change the path to the HMMs if we're packaging it in the jar
-            String cmd = "HVite -H ~/Documents/HTK/MaoriNumbers/HMMs/hmm15/macros -H ~/Documents/HTK/MaoriNumbers/HMMs/hmm15/hmmdefs" +
-                    " -C ~/Documents/HTK/MaoriNumbers/user/configLR -w ~/Documents/HTK/MaoriNumbers/user/wordNetworkNum -o SWT -l '*' -i out.mlf" +
-                    " -p 0.0 -s 5.0 ~/Documents/HTK/MaoriNumbers/user/dictionaryD ~/Documents/HTK/MaoriNumbers/user/tiedList " +
+            String cmd = "HVite -H /HMMs/hmm15/macros -H /HMMs/hmm15/hmmdefs" +
+                    " -C /user/configLR -w /user/wordNetworkNum -o SWT -l '*' -i out.mlf" +
+                    " -p 0.0 -s 5.0 /user/dictionaryD /user/tiedList " +
                     _audioFile.getName() +
                     "; cat out.mlf";
 

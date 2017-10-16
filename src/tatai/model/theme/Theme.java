@@ -2,6 +2,7 @@ package tatai.model.theme;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 
 /**
  * Theme enum, used to represent the themes available to the user for the UI.
@@ -26,7 +27,7 @@ public enum Theme {
     Theme(String url) {
         _url = url;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(getClass().getResource(url).getPath()))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(url)))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.contains("-background")) {
