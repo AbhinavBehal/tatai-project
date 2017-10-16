@@ -65,8 +65,7 @@
                   fx:id="barChart"
                   maxWidth="Infinity"
                   maxHeight="Infinity"
-                  title="Recent Scores"
-                  legendVisible="false">
+                  title="Max Scores">
             <xAxis>
                 <CategoryAxis fx:id="xAxis"
                               side="BOTTOM"/>

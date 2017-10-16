@@ -109,8 +109,9 @@ public class StatsManager {
             for (Difficulty difficulty : Difficulty.values()) {
                 XYChart.Series<String, Number> mdMax = new XYChart.Series<>();
                 Triple<Module, Difficulty, Statistic> mdMaxStat = new Triple<>(module, difficulty, MAX);
+                mdMax.setName(mdMaxStat.key() + "-" + mdMaxStat.item());
                 XYChart.Data<String, Number> mdMaxScore =
-                        new XYChart.Data<>(mdMaxStat.key() + "-" + mdMaxStat.item(), _statistics.get(mdMaxStat));
+                        new XYChart.Data<>("", _statistics.get(mdMaxStat));
                 mdMax.getData().add(mdMaxScore);
                 series.add(mdMax);
             }

@@ -11,10 +11,12 @@ import tatai.model.generator.Generator;
 import tatai.model.recognition.Recogniser;
 import tatai.model.recognition.Recorder;
 import tatai.model.recognition.Translator;
+import tatai.model.statistics.StatsManager;
 import tatai.ui.Main;
 import tatai.ui.control.IconButton;
 
 import java.io.File;
+import java.time.LocalDate;
 
 public class PronunciationPage extends Page {
 
@@ -56,7 +58,7 @@ public class PronunciationPage extends Page {
 
     private final static String FILENAME = "out.wav";
     private final static int DURATION = 3;
-    private static final int MAX_ATTEMPTS = 2;
+    private static final int MAX_ATTEMPTS = 1;
     private final int MAX_ROUNDS;
     private Recorder _recorder;
     private int _rounds;
@@ -109,9 +111,7 @@ public class PronunciationPage extends Page {
     }
 
     @Override
-    public void onOptionsButtonPressed() {
-        // Do we still need this?
-    }
+    public void onOptionsButtonPressed() { }
 
     private void nextQuestion() {
         questionLabel.setText(_generator.generate());
@@ -273,7 +273,7 @@ public class PronunciationPage extends Page {
                 feedbackView.setVisible(true);
                 break;
             case FINISH:
-                // TODO: Update scores here
+                StatsManager.manager().updateScore(LocalDate.now(), _generator.module(), _generator.difficulty(), _correct);
                 scoreLabel.setText("You scored\n" + _correct + "/" + MAX_ROUNDS);
                 feedbackView.setVisible(false);
                 questionView.setVisible(false);
