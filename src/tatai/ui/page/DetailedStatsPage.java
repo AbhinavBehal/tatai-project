@@ -1,6 +1,5 @@
 package tatai.ui.page;
 
-import com.sun.org.glassfish.external.statistics.Stats;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
