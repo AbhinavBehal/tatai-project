@@ -1,42 +1,42 @@
 package tatai.util;
 
-public class Triple<K extends Comparable<? super K>,
-        I extends Comparable<? super I>,
-        V extends Comparable<? super V>> implements Comparable<Triple<K, I, V>> {
+public class Triple<F extends Comparable<? super F>,
+        S extends Comparable<? super S>,
+        T extends Comparable<? super T>> implements Comparable<Triple<F, S, T>> {
 
-    private K _key;
-    private I _item;
-    private V _value;
+    private F _first;
+    private S _second;
+    private T _third;
 
     /**
      * Constructor for a new Triple, 3-tuple, class.
-     * @param key Object of first type.
-     * @param item Object of second type.
-     * @param value Object of third type.
+     * @param first Object of first type.
+     * @param second Object of second type.
+     * @param third Object of third type.
      */
-    public Triple(K key, I item, V value) {
-        _key = key;
-        _item = item;
-        _value = value;
+    public Triple(F first, S second, T third) {
+        _first = first;
+        _second = second;
+        _third = third;
     }
 
     /**
-     * Public method used to get the object stored as the key.
-     * @return Object stored as key.
+     * Public method used to get the object stored as the first.
+     * @return Object stored as first.
      */
-    public K key() { return _key; }
+    public F first() { return _first; }
 
     /**
-     * Public method used to get the object stored as the item.
-     * @return Object stored as item.
+     * Public method used to get the object stored as the second.
+     * @return Object stored as second.
      */
-    public I item() { return _item; }
+    public S second() { return _second; }
 
     /**
      * Public method used to get the object stored as the value.
      * @return Object stored as value.
      */
-    public V val() { return _value; }
+    public T third() { return _third; }
 
     /**
      * Public toString() method overridden to represent Triple class.
@@ -44,7 +44,7 @@ public class Triple<K extends Comparable<? super K>,
      */
     @Override
     public String toString() {
-        return "[" + _key + ", " + _item + ", " + _value + "]";
+        return "[" + _first + ", " + _second + ", " + _third + "]";
     }
 
     /**
@@ -54,7 +54,7 @@ public class Triple<K extends Comparable<? super K>,
      */
     @Override
     public int hashCode() {
-        return _key.hashCode() * 31 + _item.hashCode() * 11 + _value.hashCode() * 13;
+        return _first.hashCode() * 31 + _second.hashCode() * 11 + _third.hashCode() * 13;
     }
 
     /**
@@ -65,47 +65,32 @@ public class Triple<K extends Comparable<? super K>,
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (o instanceof Triple) {
-            Triple triple = (Triple) o;
-            if (this._key == null || triple._key == null || !this._key.equals(triple._key)) {
-                return false;
-            }
-
-            if (this._item == null || triple._item == null || !this._item.equals(triple._item)) {
-                return false;
-            }
-
-            if (this._value == null || triple._value == null || !this._value.equals(triple._value)) {
-                return false;
-            }
-
-            return true;
-        } else {
-            return false;
-        }
+        if (!(o instanceof Triple)) return false;
+        Triple triple = (Triple) o;
+        return _first == null ? _first == triple._first : _first.equals(triple._first) &&
+               _second == null ? _second == triple._second : _second.equals(triple._second) &&
+               _third == null ? _third == triple._third : _third.equals(triple._third);
     }
 
     /**
      * Public compareTo() method overridden to compare two Triple instances
      * @param triple The other Triple instance to compare with.
      * @return int depending on which instance is deemed greater, equal, or
-     * lesser. Compares key, then item, and lastly value.
+     * lesser. Compares first, then second, and lastly value.
      */
     @Override
-    public int compareTo(Triple<K, I, V> triple) {
-        int k = this._key.compareTo(triple.key());
-        int i = this._item.compareTo(triple.item());
+    public int compareTo(Triple<F, S, T> triple) {
+        int f = this._first.compareTo(triple.first());
+        int s = this._second.compareTo(triple.second());
 
-        if (k == 0) {
-            if (i == 0) {
-                return this._value.compareTo(triple.val());
+        if (f == 0) {
+            if (s == 0) {
+                return this._third.compareTo(triple.third());
             } else {
-                return i;
+                return s;
             }
         } else {
-            return k;
+            return f;
         }
     }
 }
