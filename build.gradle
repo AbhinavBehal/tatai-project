@@ -24,6 +24,21 @@ run {
 	mainClassName = 'tatai.ui.Main'
 }
 
+task submission(type: Zip) {
+	from "build/libs/tatai-project.jar"
+	from "run.sh"
+	from "README.TXT"
+	into ('/src') {
+			from 'src'
+	}
+	into ('/res') {
+		from 'res'
+	}
+	destinationDir = new File("./")
+	archiveName "tatai_project_group_33.zip"
+	fileMode = 777
+}
+
 jar {
 	from {
 		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } 
