@@ -36,6 +36,4 @@ public class MenuPage extends Page {
         return TITLE;
     }
 
-    @Override
-    public void onOptionsButtonPressed() { }
 }

@@ -73,7 +73,6 @@ public class NavigationPage extends Scene implements ThemeListener {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 popup(true);
             }
-            _pages.peek().onOptionsButtonPressed();
         });
         parentPane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             if (e.getPickResult().getIntersectedNode() == null || !e.getButton().equals(MouseButton.PRIMARY)) return;
@@ -118,15 +117,15 @@ public class NavigationPage extends Scene implements ThemeListener {
         }
     }
 
-    private void changePage() {
-        content.getChildren().setAll(_pages.peek().getRoot());
-        title.setText(_pages.peek().getTitle());
-    }
-
     @Override
     public void updateTheme(Theme previousTheme, Theme newTheme) {
         parentPane.getStylesheets().remove(previousTheme.toString());
         parentPane.getStylesheets().add(newTheme.toString());
+    }
+
+    private void changePage() {
+        content.getChildren().setAll(_pages.peek().getRoot());
+        title.setText(_pages.peek().getTitle());
     }
 
     private void popup(boolean show) {

@@ -56,17 +56,21 @@ public class PronunciationPage extends Page {
     @FXML
     private Button restartButton;
 
-    private final static String FILENAME = "out.wav";
-    private final static int DURATION = 3;
+    private static final String FILENAME = "out.wav";
+    private static final int DURATION = 3;
     private static final int MAX_ATTEMPTS = 2;
+
     private final int MAX_ROUNDS;
+
     private Recorder _recorder;
+    private Generator _generator;
+    private MediaPlayer _player;
+    private String _title;
+
     private int _rounds;
     private int _attempts;
     private int _correct;
-    private String _title;
-    private Generator _generator;
-    private MediaPlayer _player;
+
 
     public PronunciationPage(String title, Generator generator) {
         _generator = generator;
@@ -110,19 +114,11 @@ public class PronunciationPage extends Page {
         }
     }
 
-    @Override
-    public void onOptionsButtonPressed() { }
-
     private void nextQuestion() {
         questionLabel.setText(_generator.generate());
     }
 
     private void record() {
-        recordButton.setDisable(true);
-        playButton.setDisable(true);
-        submitButton.setDisable(true);
-        checkButton.setDisable(true);
-
         _recorder.start(new File(FILENAME), DURATION).then(media -> {
             if (_player != null) {
                 _player.dispose();

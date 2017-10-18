@@ -9,7 +9,10 @@ import tatai.model.generator.CustomGenerator;
 import tatai.model.generator.Generator;
 import tatai.ui.Main;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -61,9 +64,6 @@ public class CustomOptionsPage extends Page {
         return TITLE;
     }
 
-    @Override
-    public void onOptionsButtonPressed() { }
-    
     private void processFile(File questionFile) {
         if (questionFile == null) return;
         try (BufferedReader reader = new BufferedReader(new FileReader(questionFile))) {

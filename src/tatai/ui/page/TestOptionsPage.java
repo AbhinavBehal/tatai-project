@@ -28,7 +28,7 @@ public class TestOptionsPage extends Page {
 
     private static final String TITLE = "Test Yourself";
     private Map<Operator, CheckBox> _operatorMap;
-    private int numOperations;
+    private int _numOperations;
 
     public TestOptionsPage() {
         _operatorMap = new HashMap<>();
@@ -65,13 +65,10 @@ public class TestOptionsPage extends Page {
         return TITLE;
     }
 
-    @Override
-    public void onOptionsButtonPressed() { }
-
 
     private void onOperationSelected(boolean selected) {
-        numOperations = selected ? numOperations + 1 : numOperations - 1;
-        if (numOperations == 0) {
+        _numOperations = selected ? _numOperations + 1 : _numOperations - 1;
+        if (_numOperations == 0) {
             _operatorMap.get(Operator.ADDITION).setSelected(true);
         }
     }

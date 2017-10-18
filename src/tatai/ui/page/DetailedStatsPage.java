@@ -10,7 +10,8 @@ import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
 
-import static tatai.model.generator.Difficulty.*;
+import static tatai.model.generator.Difficulty.EASY;
+import static tatai.model.generator.Difficulty.HARD;
 
 public class DetailedStatsPage extends Page {
 
@@ -71,8 +72,4 @@ public class DetailedStatsPage extends Page {
         return TITLE;
     }
 
-    @Override
-    public void onOptionsButtonPressed() {
-
-    }
 }

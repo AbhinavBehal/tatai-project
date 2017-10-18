@@ -3,7 +3,10 @@ package tatai.ui.page;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
-import javafx.scene.chart.*;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -180,8 +183,4 @@ public class StatisticsPage extends Page {
         return TITLE;
     }
 
-    @Override
-    public void onOptionsButtonPressed() {
-
-    }
 }

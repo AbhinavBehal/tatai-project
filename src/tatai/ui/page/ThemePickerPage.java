@@ -3,7 +3,6 @@ package tatai.ui.page;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -62,11 +61,16 @@ public class ThemePickerPage extends Page {
         });
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
+
     private void draw(GraphicsContext gc, Color bg, Color fg) {
         gc.setFill(fg);
-        gc.fillRoundRect(0,0,150,150, 20,20);
+        gc.fillRoundRect(0, 0, 150, 150, 20, 20);
         gc.setFill(bg);
-        gc.fillRoundRect(10,10,130,130, 20,20);
+        gc.fillRoundRect(10, 10, 130, 130, 20, 20);
 
         gc.setStroke(fg);
         gc.setLineWidth(10);
@@ -75,14 +79,7 @@ public class ThemePickerPage extends Page {
         gc.setFill(fg);
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setFont(Font.loadFont(getClass().getResource("/fonts/Roboto-Regular.ttf").toExternalForm(), 48));
-        gc.fillText("T\u0101", 100,120);
+        gc.fillText("T\u0101", 100, 120);
     }
 
-    @Override
-    public String getTitle() {
-        return TITLE;
-    }
-
-    @Override
-    public void onOptionsButtonPressed() { }
 }

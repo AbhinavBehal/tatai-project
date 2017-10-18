@@ -13,8 +13,10 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
-import static tatai.model.generator.Difficulty.*;
-import static tatai.model.generator.Module.*;
+import static tatai.model.generator.Difficulty.EASY;
+import static tatai.model.generator.Difficulty.HARD;
+import static tatai.model.generator.Module.PRACTICE;
+import static tatai.model.generator.Module.TEST;
 import static tatai.model.statistics.Statistic.*;
 
 public class StatsManager {

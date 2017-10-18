@@ -23,7 +23,6 @@ public abstract class Page extends Scene {
     public void onBackButtonPressed() {
         Main.popPage();
     }
-    public abstract void onOptionsButtonPressed();
 
     protected final void loadFXML(URL fileURL) {
         FXMLLoader loader = new FXMLLoader(fileURL);

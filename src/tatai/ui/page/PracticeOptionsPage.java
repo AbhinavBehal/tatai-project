@@ -41,6 +41,4 @@ public class PracticeOptionsPage extends Page {
         return TITLE;
     }
 
-    @Override
-    public void onOptionsButtonPressed() { }
 }
