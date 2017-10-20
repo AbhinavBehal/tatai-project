@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.util.Pair;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.theme.ThemeManager;
@@ -77,7 +78,7 @@ public class StatsManager {
      * @param difficulty Difficulty the score was obtained in.
      * @param score The final score obtained.
      */
-    public void updateScore(LocalDate date, Module module, Difficulty difficulty, int score) {
+    public void updateScore(LocalDate date, Module module, Difficulty difficulty, int score, boolean write) {
         if (date != null && module != null && difficulty != null) {
             Triple dateScores = new Triple<>(date, module, difficulty);
             _scoreLists.get(dateScores).add(score);
@@ -96,61 +97,55 @@ public class StatsManager {
             _statistics.put(new Triple<>(module, difficulty, MAX), max);
             _statistics.put(new Triple<>(module, difficulty, CORRECT), correct + score);
             _statistics.put(new Triple<>(module, difficulty, TOTAL), games * MAX_SCORE);
+
+            if (write) {
+                write(module, difficulty, score);
+            }
         }
     }
 
     /**
      * Public method used to get the lifetime maximum scores obtained in each mode,
      * currently returns data only usable for an XYChart.
-     * TODO: change to return list or map?
-     * @return Observable collection of the series for each mode and maximum score
-     * for chart to use.
+     * @return List of each mode as a string and the maximum score.
      */
-    public ObservableList<XYChart.Series<String, Number>> getTopScores() {
-        ObservableList<XYChart.Series<String, Number>> series = FXCollections.observableArrayList();
+    public List<Pair<String, Double>> getTopScores() {
 
+        List<Pair<String, Double>> topScores = new ArrayList<>();
         for (Module module : Module.values()) {
             for (Difficulty difficulty : Difficulty.values()) {
-                XYChart.Series<String, Number> mdMax = new XYChart.Series<>();
-                Triple<Module, Difficulty, Statistic> mdMaxStat = new Triple<>(module, difficulty, MAX);
-                mdMax.setName(mdMaxStat.first() + "-" + mdMaxStat.second());
-                XYChart.Data<String, Number> mdMaxScore =
-                        new XYChart.Data<>("", _statistics.get(mdMaxStat));
-                mdMax.getData().add(mdMaxScore);
-                series.add(mdMax);
+                String name = (module.toString() + "-" + difficulty.toString());
+                Triple<Module, Difficulty, Statistic> maxStat = new Triple<>(module, difficulty, MAX);
+                Pair<String, Double> mdMaxScore = new Pair<>(name, _statistics.get(maxStat));
+                topScores.add(mdMaxScore);
             }
         }
 
-//        series.forEach(s -> System.out.println(s.getData()));
-
-        return series;
+        return topScores;
     }
 
     /**
      * Public method used to get the lifetime correct scores obtained in each mode,
      * currently returns data only usable for a PieChart.
-     * TODO: change to return list or map?
-     * @return Observable collection of PieChart.Data for each mode and total
-     * answers correct (and incorrect? - discuss) for chart to use.
+     * @return List of total scores for each mode as a string and total answers
+     * correct (and incorrect? - discuss).
      */
-    public ObservableList<PieChart.Data> getTotalCorrect() {
-        ObservableList<PieChart.Data> series = FXCollections.observableArrayList();
+    public List<Pair<String,Double>> getTotalCorrect() {
+        List<Pair<String, Double>> totalScores = new ArrayList<>();
         double totalCorrect = 0;
         double total = 0;
         for (Module module : Module.values()) {
             for (Difficulty difficulty : Difficulty.values()) {
                 double correct = _statistics.get(new Triple<>(module, difficulty, CORRECT));
-                series.add(new PieChart.Data(module + " " + difficulty, correct));
+                totalScores.add(new Pair<>(module + " " + difficulty, correct));
                 totalCorrect += correct;
                 total += _statistics.get(new Triple<>(module, difficulty, TOTAL));
             }
         }
 
-        series.add(new PieChart.Data("Attempted", total - totalCorrect));
+        totalScores.add(new Pair<>("Attempted", total - totalCorrect));
 
-//        series.forEach(System.out::println);
-
-        return series;
+        return totalScores;
     }
 
     /**
@@ -193,61 +188,83 @@ public class StatsManager {
      * Maps, and variables.
      */
     private void read() {
-        File dataFile = new File("data.txt");
-        if (!dataFile.exists()) {
-            try {
+        try {
+            File dataFile = new File("data.txt");
+            if (!dataFile.exists()) {
+                // If data file does not exist, make it and initialise with default values
                 if (dataFile.createNewFile()) {
-                    System.out.println("?");
                     BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
                     writer.write(ThemeManager.manager().getCurrentTheme().simpleName() + ";\n");
                     writer.write(_practiceUnlocked + "," + _testUnlocked + ";\n");
+                    writer.write(_date.toString() + ";\n");
                     writer.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File("data.txt")))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                if (line.split(",").length == 2) {
-                    String[] unlocked = line.split(",");
-
-                    _practiceUnlocked = unlocked[0].contains("true");
-                    _testUnlocked = unlocked[1].contains("true");
-
-                } else if (line.split(";").length == 2) {
-                    String[] dateScores = line.split(";");
-                    LocalDate date = LocalDate.parse(dateScores[0]);
-                    makeLists(date);
-
-                    String[] scores = dateScores[1].split(",");
-                    for (String scoreString : scores) {
-                        if (scoreString.length() == 3) {
-                            Module module;
-                            Difficulty difficulty;
-                            int score;
-
-                            module = scoreString.charAt(0) == 'p' ? PRACTICE : TEST;
-                            difficulty = scoreString.charAt(1) == 'e' ? EASY : HARD;
-                            score = Integer.parseInt(scoreString.substring(2));
-
-                            updateScore(date, module, difficulty, score);
-                        }
-                    }
-                } else {
                     makeLists(_date);
                 }
-            }
+            } else {
+                // Otherwise start reading from data file
+                BufferedReader reader = new BufferedReader(new FileReader(dataFile));
+                String line;
 
-            reader.close();
+                LocalDate date = _date;
+                while ((line = reader.readLine()) != null) {
+                    if (line.split("/").length == 2) {
+                        String[] unlocked = line.split("/");
+
+                        _practiceUnlocked = unlocked[0].contains("true");
+                        _testUnlocked = unlocked[1].contains("true");
+
+                    } else if (line.split("-").length == 3) {
+                        String[] dateScores = line.split(";");
+                        date = LocalDate.parse(dateScores[0]);
+                        makeLists(date);
+
+                        if (dateScores.length == 2) {
+                            String[] scores = dateScores[1].split(",");
+                            for (String scoreString : scores) {
+                                if (scoreString.length() == 3) {
+                                    Module module;
+                                    Difficulty difficulty;
+                                    int score;
+
+                                    module = scoreString.charAt(0) == 'P' ? PRACTICE : TEST;
+                                    difficulty = scoreString.charAt(1) == 'E' ? EASY : HARD;
+                                    score = Integer.parseInt(scoreString.substring(2));
+
+                                    updateScore(date, module, difficulty, score, false);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                reader.close();
+
+                if (!date.equals(_date)) {
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("data.txt", true));
+                    writer.write("\n" + _date.toString() + ";");
+                    makeLists(_date);
+                    writer.close();
+                }
+            }
 
             // for checking if data read in is correct
             System.out.println(_practiceUnlocked + ", " + _testUnlocked);
             _scoreLists.keySet().forEach(d -> System.out.println(d.toString() + " : " + _scoreLists.get(d)));
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void write(Module module, Difficulty difficulty, int score) {
+        File dataFile = new File("data.txt");
+        if (dataFile.exists()) {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile, true));
+                writer.write(module.toString().substring(0,1) + difficulty.toString().substring(0,1) + score + ",");
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -261,7 +278,7 @@ public class StatsManager {
             for (Difficulty difficulty : Difficulty.values()) {
                 _scoreLists.put(new Triple<>(date, module, difficulty), new ArrayList<>());
                 for (Statistic statistic : Statistic.values()) {
-                    _statistics.put(new Triple<>(module, difficulty, statistic), 0.0);
+                    _statistics.putIfAbsent(new Triple<>(module, difficulty, statistic), 0.0);
                 }
             }
         }

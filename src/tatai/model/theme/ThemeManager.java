@@ -74,18 +74,18 @@ public class ThemeManager {
                 if ((line = reader.readLine()) != null) {
                     for (Theme t : Theme.values()) {
                         if (line.contains(t.simpleName())) {
-                            System.out.println(line);
+                            System.out.println("theme line: " + line);
                             _currentTheme = t;
                         }
                     }
-                } else {
-                    _currentTheme = DEFAULT_THEME;
                 }
+
+                _currentTheme = _currentTheme == null ? DEFAULT_THEME : _currentTheme;
+
                 reader.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        System.out.println(_currentTheme);
     }
 }
