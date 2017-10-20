@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ThemeManager {
 
-    private static final Theme DEFAULT_THEME = Theme.SUNSET;
+    private static final Theme DEFAULT_THEME = Theme.BEACHSIDE;
     private static ThemeManager _manager;
     private List<ThemeListener> _listeners;
     private Theme _currentTheme;

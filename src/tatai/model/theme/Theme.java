@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
  * the user may define their own theme via placeholder-theme (subject to change).
  */
 public enum Theme {
-    SUNSET("/themes/sunset-theme.css"),
-    LABORATORY("/themes/laboratory-theme.css"),
+    BEACHSIDE("/themes/beachside-theme.css"),
+    CULTURAL("/themes/cultural-theme.css"),
     SUBLIME("/themes/sublime-theme.css"),
     PLACEHOLDER("/themes/placeholder-theme.css");
 

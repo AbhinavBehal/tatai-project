@@ -34,19 +34,19 @@ public class ThemePickerPage extends Page {
         GraphicsContext sb = sublime.getGraphicsContext2D();
         GraphicsContext pl = placeholder.getGraphicsContext2D();
 
-        draw(ss, Color.web(SUNSET.hexBackground()), Color.web(SUNSET.hexForeground()));
-        draw(lb, Color.web(LABORATORY.hexBackground()), Color.web(LABORATORY.hexForeground()));
+        draw(ss, Color.web(BEACHSIDE.hexBackground()), Color.web(BEACHSIDE.hexForeground()));
+        draw(lb, Color.web(CULTURAL.hexBackground()), Color.web(CULTURAL.hexForeground()));
         draw(sb, Color.web(SUBLIME.hexBackground()), Color.web(SUBLIME.hexForeground()));
         draw(pl, Color.web(PLACEHOLDER.hexBackground()), Color.web(PLACEHOLDER.hexForeground()));
 
         sunset.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                ThemeManager.manager().updateTheme(SUNSET);
+                ThemeManager.manager().updateTheme(BEACHSIDE);
             }
         });
         laboratory.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                ThemeManager.manager().updateTheme(LABORATORY);
+                ThemeManager.manager().updateTheme(CULTURAL);
             }
         });
         sublime.setOnMouseClicked(e -> {
