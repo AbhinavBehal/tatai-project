@@ -2,11 +2,10 @@ package tatai.ui.page;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -14,12 +13,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import javafx.util.Pair;
+import tatai.model.generator.Difficulty;
+import tatai.model.generator.Module;
+import tatai.model.statistics.Statistic;
 import tatai.model.statistics.StatsManager;
 import tatai.ui.Main;
 import tatai.ui.control.IconButton;
+import tatai.util.Triple;
+
+import java.util.List;
 
 import static tatai.model.generator.Module.PRACTICE;
 import static tatai.model.generator.Module.TEST;
+import static tatai.model.statistics.Statistic.MAX;
 
 public class StatisticsPage extends Page {
 
@@ -59,12 +66,6 @@ public class StatisticsPage extends Page {
         pieChartButton.setText("\nScores\nOverview");
         lineChartButton.setText("\nDetailed\nStatistics");
 
-        pieChart.setData(StatsManager.manager().getTotalCorrect());
-        pieChartButton.setOnMouseClicked(e -> {
-            if (e.getButton().equals(MouseButton.PRIMARY)){
-                showChart(true);
-            }
-        });
         parentPane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             if (e.getPickResult().getIntersectedNode() == null || e.getButton() != MouseButton.PRIMARY) return;
 
@@ -72,6 +73,13 @@ public class StatisticsPage extends Page {
                 // Don't do anything if during transition
                 if (pieChart.getOpacity() != 1) return;
                 showChart(false);
+            }
+        });
+
+        pieChart.setData(getTotalScores());
+        pieChartButton.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)){
+                showChart(true);
             }
         });
 
@@ -106,7 +114,7 @@ public class StatisticsPage extends Page {
         });
 
         // possibly change to a set number of points, 10/20/50 or let user choose
-        barChart.getData().addAll(StatsManager.manager().getTopScores());
+        barChart.getData().addAll(getTopScores());
     }
 
     private void showChart(boolean show) {
@@ -141,6 +149,26 @@ public class StatisticsPage extends Page {
                 overlay.setVisible(false);
             }
         });
+    }
+
+    private ObservableList<PieChart.Data> getTotalScores() {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        List<Pair<String, Double>> dataList = StatsManager.manager().getTotalCorrect();
+        dataList.forEach(d -> pieChartData.add(new PieChart.Data(d.getKey(), d.getValue())));
+        return pieChartData;
+    }
+
+    private ObservableList<XYChart.Series<String, Number>> getTopScores() {
+        ObservableList<XYChart.Series<String, Number>> series = FXCollections.observableArrayList();
+        List<Pair<String, Double>> dataList = StatsManager.manager().getTopScores();
+        dataList.forEach(d -> {
+            XYChart.Series<String, Number> totalSeries = new XYChart.Series();
+            totalSeries.setName(d.getKey());
+            totalSeries.getData().add(new XYChart.Data<>("", d.getValue()));
+            series.add(totalSeries);
+        });
+
+        return series;
     }
 
     private void showModes(boolean show) {
