@@ -19,6 +19,7 @@ import tatai.ui.page.Page;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.Random;
 
 public class Main extends Application {
 
@@ -78,11 +79,12 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
+        Random r = new Random();
         // Sample data
-        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.PRACTICE, Difficulty.EASY, 2));
-        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.TEST, Difficulty.HARD, 4));
-        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.TEST, Difficulty.EASY, 9));
-        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.PRACTICE, Difficulty.HARD, 10));
+        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.PRACTICE, Difficulty.EASY, r.nextInt(11)));
+        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.TEST, Difficulty.HARD, r.nextInt(11)));
+        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.TEST, Difficulty.EASY, r.nextInt(11)));
+        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.PRACTICE, Difficulty.HARD, r.nextInt(11)));
 
         launch(args);
     }

@@ -18,11 +18,6 @@ public class StatsManager {
     private static final int UNLOCK_TEST_THRESHOLD = 8;
     private static final int UNLOCK_PRACTICE_THRESHOLD = 8;
 
-    // Extra entry used for testing
-    public static void main(String[] args) {
-        StatsManager.manager().checkem();
-    }
-
     private static StatsManager _manager;
     private List<ScoreListener> _listeners;
     private Map<Triple<LocalDate, Module, Difficulty>, List<Integer>> _scoreLists;
@@ -40,7 +35,6 @@ public class StatsManager {
         _scoreLists = new TreeMap<>();
         _statistics = new HashMap<>();
         _date = LocalDate.now();
-
         initializeStats();
         DataManager.manager().getScores().forEach(s -> addScore(s.date(), s.module(), s.difficulty(), s.score()));
     }
@@ -66,9 +60,8 @@ public class StatsManager {
     }
 
     /**
-     * Public method used to update scores managed by StatsManager singleton, calls 
-     * the inherited updateScore method on all ScoreListeners and updates relevant 
-     * statistics depending on input arguments.
+     * Public method used to update scores managed by StatsManager singleton, calls
+     * the inherited updateScore method on all ScoreListeners.
      * @param date Date to add score to.
      * @param module Module the score was obtained in.
      * @param difficulty Difficulty the score was obtained in.
@@ -128,19 +121,19 @@ public class StatsManager {
 
     /**
      * Public method used to get the list scores obtained in a given mode.
-     * TODO: change to return list?
      * @param module Module of the list of scores.
      * @param difficulty Difficulty of the list of scores.
-     * @return XYChart.Series of the scores for that list.
+     * @return List of the scores requested.
      */
-    public XYChart.Series<Number, Number> getScoreList(Module module, Difficulty difficulty) {
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        int i = 1;
-        for (int score : _scoreLists.get(new Triple<>(_date, module, difficulty))) {
-            series.getData().add(new XYChart.Data<>(i++, score));
-        }
+    public List<Integer> getScoreList(Module module, Difficulty difficulty) {
+        List<Integer> scoreList = new ArrayList<>();
+        _scoreLists.forEach((k, v) -> {
+            if (k.second() == module && k.third() == difficulty) {
+                scoreList.addAll(v);
+            }
+        });
 
-        return series;
+        return scoreList;
     }
 
     /**
@@ -161,6 +154,14 @@ public class StatsManager {
         return _testUnlocked;
     }
 
+    /**
+     * Private method used to add newest score to appropriate list and update
+     * statistics accordingly.
+     * @param date Date to add score to.
+     * @param module Module the score was obtained in.
+     * @param difficulty Difficulty the score was obtained in.
+     * @param score The final score obtained.
+     */
     private void addScore(LocalDate date, Module module, Difficulty difficulty, int score) {
         if (date == null || module == null || difficulty == null) return;
 
@@ -194,6 +195,9 @@ public class StatsManager {
         _statistics.put(new Triple<>(module, difficulty, TOTAL), (double) games * MAX_SCORE);
     }
 
+    /**
+     * Private helper function used to initialise statistics for each list.
+     */
     private void initializeStats() {
         for (Module m : Module.values()) {
             for (Difficulty d : Difficulty.values()) {

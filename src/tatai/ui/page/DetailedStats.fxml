@@ -44,30 +44,45 @@
                         tickUnit="1"/>
         </yAxis>
     </LineChart>
-    <HBox GridPane.rowIndex="1"
+
+    <VBox GridPane.rowIndex="1"
           GridPane.columnIndex="0"
-          maxWidth="Infinity">
-        <VBox HBox.hgrow="ALWAYS"
-              alignment="CENTER">
-            <CheckBox fx:id="lastTen"/>
-            <Label text="10"/>
-        </VBox>
-        <VBox HBox.hgrow="ALWAYS"
-              alignment="CENTER">
-            <CheckBox fx:id="lastTwenty"/>
-            <Label text="20"/>
-        </VBox>
-        <VBox HBox.hgrow="ALWAYS"
-              alignment="CENTER">
-            <CheckBox fx:id="lastFifty"/>
-            <Label text="50"/>
-        </VBox>
-        <VBox HBox.hgrow="ALWAYS"
-              alignment="CENTER">
-            <CheckBox fx:id="all"/>
-            <Label text="All"/>
-        </VBox>
-    </HBox>
+          spacing="10"
+          alignment="CENTER">
+        <HBox alignment="CENTER">
+            <Label text="Choose most recent scores to show:"
+                   styleClass="h6"
+                   maxWidth="Infinity"/>
+        </HBox>
+        <HBox alignment="CENTER"
+              maxWidth="Infinity"
+              spacing="10">
+            <fx:define>
+                <ToggleGroup fx:id="recentN"/>
+            </fx:define>
+            <RadioButton fx:id="tenButton"
+                         text="10"
+                         styleClass="h6"
+                         toggleGroup="$recentN"/>
+            <RadioButton fx:id="twentyFiveButton"
+                         text="25"
+                         styleClass="h6"
+                         toggleGroup="$recentN"/>
+            <RadioButton fx:id="fiftyButton"
+                         text="50"
+                         styleClass="h6"
+                         toggleGroup="$recentN"/>
+            <RadioButton fx:id="allButton"
+                         text="All"
+                         styleClass="h6"
+                         toggleGroup="$recentN"/>
+            <RadioButton fx:id="customButton"
+                         styleClass="h6"
+                         toggleGroup="$recentN"/>
+            <TextField fx:id="customField"
+                       styleClass="h6"/>
+        </HBox>
+    </VBox>
 
     <VBox GridPane.rowIndex="0"
           GridPane.columnIndex="1"
