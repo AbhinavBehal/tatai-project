@@ -270,7 +270,7 @@ public class PronunciationPage extends Page {
                 feedbackView.setVisible(true);
                 break;
             case FINISH:
-                StatsManager.manager().updateScore(LocalDate.now(), _generator.module(), _generator.difficulty(), _correct, true);
+                StatsManager.manager().updateScore(LocalDate.now(), _generator.module(), _generator.difficulty(), _correct);
                 scoreLabel.setText("You scored\n" + _correct + "/" + MAX_ROUNDS);
                 feedbackView.setVisible(false);
                 questionView.setVisible(false);

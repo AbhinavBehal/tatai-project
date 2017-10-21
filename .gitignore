@@ -6,4 +6,5 @@ out/
 *.wav
 *.mlf
 data.txt
+data.json
 *.zip

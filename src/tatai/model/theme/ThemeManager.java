@@ -1,8 +1,7 @@
 package tatai.model.theme;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import tatai.model.data.DataManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +32,12 @@ public class ThemeManager {
     }
 
     /**
+     * Static method to get the default theme
+     * @return the default theme
+     */
+    public static Theme defaultTheme() { return DEFAULT_THEME; }
+
+    /**
      * Public method used to add listeners to StatsManager when scores change.
      * @param listener An object of class which implements ThemeListener.
      */
@@ -47,6 +52,7 @@ public class ThemeManager {
      * @param newTheme Theme to set current theme to.
      */
     public void updateTheme(Theme newTheme) {
+        DataManager.manager().updateTheme(newTheme);
         _listeners.forEach(l -> l.updateTheme(_currentTheme, newTheme));
         _currentTheme = newTheme;
     }
@@ -65,27 +71,6 @@ public class ThemeManager {
      * This is stored in the data file.
      */
     private void setInitialTheme() {
-        if (!new File("data.txt").exists()) {
-            _currentTheme = DEFAULT_THEME;
-        } else {
-            try (BufferedReader reader = new BufferedReader(new FileReader(new File("data.txt")))) {
-                String line;
-
-                if ((line = reader.readLine()) != null) {
-                    for (Theme t : Theme.values()) {
-                        if (line.contains(t.simpleName())) {
-                            System.out.println("theme line: " + line);
-                            _currentTheme = t;
-                        }
-                    }
-                }
-
-                _currentTheme = _currentTheme == null ? DEFAULT_THEME : _currentTheme;
-
-                reader.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        _currentTheme = DataManager.manager().getTheme();
     }
 }

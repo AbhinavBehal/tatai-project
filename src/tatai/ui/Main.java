@@ -7,12 +7,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import tatai.model.data.DataManager;
+import tatai.model.generator.Difficulty;
+import tatai.model.generator.Module;
+import tatai.model.statistics.Score;
 import tatai.model.theme.ThemeManager;
 import tatai.ui.page.MenuPage;
 import tatai.ui.page.NavigationPage;
 import tatai.ui.page.Page;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class Main extends Application {
@@ -72,6 +77,13 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
+        // Sample data
+        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.PRACTICE, Difficulty.EASY, 2));
+        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.TEST, Difficulty.HARD, 4));
+        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.TEST, Difficulty.EASY, 9));
+        DataManager.manager().updateScore(new Score(LocalDate.now(), Module.PRACTICE, Difficulty.HARD, 10));
+
         launch(args);
     }
 }

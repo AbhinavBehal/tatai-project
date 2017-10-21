@@ -162,7 +162,7 @@ public class StatisticsPage extends Page {
         ObservableList<XYChart.Series<String, Number>> series = FXCollections.observableArrayList();
         List<Pair<String, Double>> dataList = StatsManager.manager().getTopScores();
         dataList.forEach(d -> {
-            XYChart.Series<String, Number> totalSeries = new XYChart.Series();
+            XYChart.Series<String, Number> totalSeries = new XYChart.Series<>();
             totalSeries.setName(d.getKey());
             totalSeries.getData().add(new XYChart.Data<>("", d.getValue()));
             series.add(totalSeries);

@@ -18,6 +18,7 @@ repositories {
 }
 dependencies {
 	compile group: 'de.jensd', name: 'fontawesomefx', version: '8.9'
+	compile 'com.google.code.gson:gson:2.8.2'
 }
 
 run {

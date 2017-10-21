@@ -1,28 +1,22 @@
 package tatai.model.statistics;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.util.Pair;
+import tatai.model.data.DataManager;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
-import tatai.model.theme.ThemeManager;
 import tatai.util.Triple;
 
-import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
-import static tatai.model.generator.Difficulty.EASY;
-import static tatai.model.generator.Difficulty.HARD;
-import static tatai.model.generator.Module.PRACTICE;
-import static tatai.model.generator.Module.TEST;
 import static tatai.model.statistics.Statistic.*;
 
 public class StatsManager {
 
-    private static final double MAX_SCORE = 10;
+    private static final int MAX_SCORE = 10;
+    private static final int UNLOCK_TEST_THRESHOLD = 8;
+    private static final int UNLOCK_PRACTICE_THRESHOLD = 8;
 
     // Extra entry used for testing
     public static void main(String[] args) {
@@ -46,6 +40,7 @@ public class StatsManager {
         _scoreLists = new TreeMap<>();
         _statistics = new HashMap<>();
         _date = LocalDate.now();
+        initializeStats();
         read();
     }
 
@@ -78,30 +73,13 @@ public class StatsManager {
      * @param difficulty Difficulty the score was obtained in.
      * @param score The final score obtained.
      */
-    public void updateScore(LocalDate date, Module module, Difficulty difficulty, int score, boolean write) {
-        if (date != null && module != null && difficulty != null) {
-            Triple dateScores = new Triple<>(date, module, difficulty);
-            _scoreLists.get(dateScores).add(score);
-            _listeners.forEach(l -> l.updateScore(module, difficulty, score));
+    public void updateScore(LocalDate date, Module module, Difficulty difficulty, int score) {
+        if (date == null || module == null || difficulty == null) return;
 
-            int games = _scoreLists.get(dateScores).size();
+        addScore(date, module, difficulty, score);
+        DataManager.manager().updateScore(new Score(date, module, difficulty, score));
 
-            double average = _statistics.get(new Triple<>(module, difficulty, AVERAGE));
-            average = (average * games + score) / (games + 1);
-            double max = _statistics.get(new Triple<>(module, difficulty, MAX));
-            max = max < score ? score : max;
-            double correct = _statistics.get(new Triple<>(module, difficulty, CORRECT));
-
-            _statistics.put(new Triple<>(module, difficulty, AVERAGE), average);
-            _statistics.put(new Triple<>(module, difficulty, LAST), (double) score);
-            _statistics.put(new Triple<>(module, difficulty, MAX), max);
-            _statistics.put(new Triple<>(module, difficulty, CORRECT), correct + score);
-            _statistics.put(new Triple<>(module, difficulty, TOTAL), games * MAX_SCORE);
-
-            if (write) {
-                write(module, difficulty, score);
-            }
-        }
+        _listeners.forEach(l -> l.updateScore(module, difficulty, score));
     }
 
     /**
@@ -110,7 +88,6 @@ public class StatsManager {
      * @return List of each mode as a string and the maximum score.
      */
     public List<Pair<String, Double>> getTopScores() {
-
         List<Pair<String, Double>> topScores = new ArrayList<>();
         for (Module module : Module.values()) {
             for (Difficulty difficulty : Difficulty.values()) {
@@ -170,7 +147,7 @@ public class StatsManager {
      * unlocked.
      * @return boolean of whether or not HARD is unlocked.
      */
-    public boolean practiceUnlockedUnlocked() {
+    public boolean practiceUnlocked() {
         return _practiceUnlocked;
     }
 
@@ -179,7 +156,7 @@ public class StatsManager {
      * unlocked.
      * @return boolean of whether or not HARD is unlocked.
      */
-    public boolean testUnlockedUnlocked() {
+    public boolean testUnlocked() {
         return _testUnlocked;
     }
 
@@ -188,97 +165,51 @@ public class StatsManager {
      * Maps, and variables.
      */
     private void read() {
-        try {
-            File dataFile = new File("data.txt");
-            if (!dataFile.exists()) {
-                // If data file does not exist, make it and initialise with default values
-                if (dataFile.createNewFile()) {
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
-                    writer.write(ThemeManager.manager().getCurrentTheme().simpleName() + ";\n");
-                    writer.write(_practiceUnlocked + "," + _testUnlocked + ";\n");
-                    writer.write(_date.toString() + ";\n");
-                    writer.close();
-                    makeLists(_date);
-                }
-            } else {
-                // Otherwise start reading from data file
-                BufferedReader reader = new BufferedReader(new FileReader(dataFile));
-                String line;
-
-                LocalDate date = _date;
-                while ((line = reader.readLine()) != null) {
-                    if (line.split("/").length == 2) {
-                        String[] unlocked = line.split("/");
-
-                        _practiceUnlocked = unlocked[0].contains("true");
-                        _testUnlocked = unlocked[1].contains("true");
-
-                    } else if (line.split("-").length == 3) {
-                        String[] dateScores = line.split(";");
-                        date = LocalDate.parse(dateScores[0]);
-                        makeLists(date);
-
-                        if (dateScores.length == 2) {
-                            String[] scores = dateScores[1].split(",");
-                            for (String scoreString : scores) {
-                                if (scoreString.length() == 3) {
-                                    Module module;
-                                    Difficulty difficulty;
-                                    int score;
-
-                                    module = scoreString.charAt(0) == 'P' ? PRACTICE : TEST;
-                                    difficulty = scoreString.charAt(1) == 'E' ? EASY : HARD;
-                                    score = Integer.parseInt(scoreString.substring(2));
-
-                                    updateScore(date, module, difficulty, score, false);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                reader.close();
-
-                if (!date.equals(_date)) {
-                    BufferedWriter writer = new BufferedWriter(new FileWriter("data.txt", true));
-                    writer.write("\n" + _date.toString() + ";");
-                    makeLists(_date);
-                    writer.close();
-                }
-            }
-
-            // for checking if data read in is correct
-            System.out.println(_practiceUnlocked + ", " + _testUnlocked);
-            _scoreLists.keySet().forEach(d -> System.out.println(d.toString() + " : " + _scoreLists.get(d)));
-        } catch (IOException e) {
-            e.printStackTrace();
+        DataManager manager = DataManager.manager();
+        List<Score> scores = manager.getScores();
+        for (Score s : scores) {
+            addScore(s.date(), s.module(), s.difficulty(), s.score());
         }
     }
 
-    private void write(Module module, Difficulty difficulty, int score) {
-        File dataFile = new File("data.txt");
-        if (dataFile.exists()) {
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile, true));
-                writer.write(module.toString().substring(0,1) + difficulty.toString().substring(0,1) + score + ",");
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void addScore(LocalDate date, Module module, Difficulty difficulty, int score) {
+        if (date == null || module == null || difficulty == null) return;
+
+        Triple<LocalDate, Module, Difficulty> key = new Triple<>(date, module, difficulty);
+
+        if (!_scoreLists.containsKey(key)) {
+            _scoreLists.put(key, new ArrayList<>());
         }
+        _scoreLists.get(key).add(score);
+
+        int games = _scoreLists.get(key).size();
+
+        double average = _statistics.get(new Triple<>(module, difficulty, AVERAGE));
+        average = (average * games + score) / (games + 1);
+
+        double max = _statistics.get(new Triple<>(module, difficulty, MAX));
+        max = score > max ? score : max;
+
+        if (module == Module.PRACTICE) {
+            _practiceUnlocked = max > UNLOCK_PRACTICE_THRESHOLD;
+        } else if (module == Module.TEST) {
+            _testUnlocked = max > UNLOCK_TEST_THRESHOLD;
+        }
+
+        double correct = _statistics.get(new Triple<>(module, difficulty, CORRECT)) + score;
+
+        _statistics.put(new Triple<>(module, difficulty, AVERAGE), average);
+        _statistics.put(new Triple<>(module, difficulty, LAST), (double) score);
+        _statistics.put(new Triple<>(module, difficulty, MAX), max);
+        _statistics.put(new Triple<>(module, difficulty, CORRECT), correct);
+        _statistics.put(new Triple<>(module, difficulty, TOTAL), (double) games * MAX_SCORE);
     }
 
-    /**
-     * Private helper method used to make each of the 4 lists of modes for PRACTICE, TEST;
-     * and EASY, HARD for a given date.
-     * @param date Date to make lists for.
-     */
-    private void makeLists(LocalDate date) {
-        for (Module module : Module.values()) {
-            for (Difficulty difficulty : Difficulty.values()) {
-                _scoreLists.put(new Triple<>(date, module, difficulty), new ArrayList<>());
-                for (Statistic statistic : Statistic.values()) {
-                    _statistics.putIfAbsent(new Triple<>(module, difficulty, statistic), 0.0);
+    private void initializeStats() {
+        for (Module m : Module.values()) {
+            for (Difficulty d : Difficulty.values()) {
+                for (Statistic s : Statistic.values()) {
+                    _statistics.put(new Triple<>(m, d, s), 0.0);
                 }
             }
         }
