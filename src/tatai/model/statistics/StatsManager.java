@@ -40,8 +40,9 @@ public class StatsManager {
         _scoreLists = new TreeMap<>();
         _statistics = new HashMap<>();
         _date = LocalDate.now();
+
         initializeStats();
-        read();
+        DataManager.manager().getScores().forEach(s -> addScore(s.date(), s.module(), s.difficulty(), s.score()));
     }
 
     /**
@@ -158,18 +159,6 @@ public class StatsManager {
      */
     public boolean testUnlocked() {
         return _testUnlocked;
-    }
-
-    /**
-     * Private method used to read from data file and store data into the relevant
-     * Maps, and variables.
-     */
-    private void read() {
-        DataManager manager = DataManager.manager();
-        List<Score> scores = manager.getScores();
-        for (Score s : scores) {
-            addScore(s.date(), s.module(), s.difficulty(), s.score());
-        }
     }
 
     private void addScore(LocalDate date, Module module, Difficulty difficulty, int score) {
