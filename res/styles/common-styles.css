@@ -55,6 +55,36 @@
     -fx-background-color: -foreground;
 }
 
+.radio-button {
+    -fx-text-fill: -foreground;
+}
+
+.radio-button > .radio {
+    -fx-background-radius: 1.0em;
+    -fx-background-color: -background;
+    -fx-border-width: 2;
+    -fx-border-color: -foreground;
+    -fx-border-radius: 1.0em;
+}
+
+.radio-button > .radio > .dot {
+    -fx-background-color: -background;
+    -fx-background-insets: 0;
+}
+
+.radio-button:selected > .radio > .dot {
+    -fx-background-color: -foreground;
+}
+
+.text-field {
+    -fx-font-family: Roboto;
+    -fx-background-color: -background;
+    -fx-border-color: -foreground;
+    -fx-border-width: 2;
+    -fx-text-fill: -foreground;
+    -fx-padding: 4;
+}
+
 .glyph-icon {
     -fx-cursor: hand;
 }

@@ -41,6 +41,7 @@ public class DetailedStatsPage extends Page {
     }
 
     public void initialize() {
+        lineChart.setAnimated(false);
         populateList();
 
         recentN.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
