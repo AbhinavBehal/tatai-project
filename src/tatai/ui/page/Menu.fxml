@@ -3,10 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           alignment="CENTER"
           hgap="20">
+    <rowConstraints>
+        <RowConstraints percentHeight="25"/>
+        <RowConstraints percentHeight="75"/>
+    </rowConstraints>
     <columnConstraints>
         <ColumnConstraints percentWidth="50"/>
         <ColumnConstraints percentWidth="50"/>
@@ -14,15 +19,23 @@
     <padding>
         <Insets topRightBottomLeft="50"/>
     </padding>
+    <HBox GridPane.rowIndex="0"
+          GridPane.columnIndex="0"
+          GridPane.columnSpan="2"
+          alignment="BOTTOM_CENTER">
+        <Label text="Select from the following"
+               styleClass="h3"
+               textAlignment="CENTER"/>
+    </HBox>
     <Button fx:id="practiceButton"
-            GridPane.rowIndex="0"
+            GridPane.rowIndex="1"
             GridPane.columnIndex="0"
             text="Practice"
             styleClass="h3"
             maxWidth="Infinity"/>
 
     <Button fx:id="testButton"
-            GridPane.rowIndex="0"
+            GridPane.rowIndex="1"
             GridPane.columnIndex="1"
             text="Test"
             styleClass="h3"

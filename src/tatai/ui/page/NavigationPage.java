@@ -46,6 +46,7 @@ public class NavigationPage extends Scene implements ThemeListener {
     private IconButton statsButton;
 
     private static final int BACKBUTTON_SIZE = 48;
+    private static final int DURATION = 125;
     private Stack<Page> _pages;
 
     public NavigationPage(Page content) {
@@ -101,10 +102,10 @@ public class NavigationPage extends Scene implements ThemeListener {
     }
 
     public void pushPage(Page page) {
-        FadeTransition fOut = new FadeTransition(Duration.millis(200), _pages.peek().getRoot());
-        FadeTransition fIn = new FadeTransition(Duration.millis(200), _pages.push(page).getRoot());
-        FadeTransition navOut = new FadeTransition(Duration.millis(200), this.getRoot());
-        FadeTransition navIn = new FadeTransition(Duration.millis(200), this.getRoot());
+        FadeTransition fOut = new FadeTransition(Duration.millis(DURATION), _pages.peek().getRoot());
+        FadeTransition fIn = new FadeTransition(Duration.millis(DURATION), _pages.push(page).getRoot());
+        FadeTransition navOut = new FadeTransition(Duration.millis(DURATION), this.getRoot());
+        FadeTransition navIn = new FadeTransition(Duration.millis(DURATION), this.getRoot());
 
         fOut.setFromValue(1);
         fOut.setToValue(0);
@@ -131,10 +132,10 @@ public class NavigationPage extends Scene implements ThemeListener {
         themesButton.setDisable(!(_pages.peek() instanceof ThemePickerPage) && themesButton.isDisabled());
         statsButton.setDisable(!(_pages.peek() instanceof StatisticsPage) && statsButton.isDisabled());
         if (_pages.size() > 1) {
-            FadeTransition fOut = new FadeTransition(Duration.millis(200), _pages.pop().getRoot());
-            FadeTransition fIn = new FadeTransition(Duration.millis(200), _pages.peek().getRoot());
-            FadeTransition navOut = new FadeTransition(Duration.millis(200), this.getRoot());
-            FadeTransition navIn = new FadeTransition(Duration.millis(200), this.getRoot());
+            FadeTransition fOut = new FadeTransition(Duration.millis(DURATION), _pages.pop().getRoot());
+            FadeTransition fIn = new FadeTransition(Duration.millis(DURATION), _pages.peek().getRoot());
+            FadeTransition navOut = new FadeTransition(Duration.millis(DURATION), this.getRoot());
+            FadeTransition navIn = new FadeTransition(Duration.millis(DURATION), this.getRoot());
 
             fOut.setFromValue(1);
             fOut.setToValue(0);
