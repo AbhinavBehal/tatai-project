@@ -14,19 +14,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import tatai.model.generator.Difficulty;
-import tatai.model.generator.Module;
-import tatai.model.statistics.Statistic;
 import tatai.model.statistics.StatsManager;
 import tatai.ui.Main;
 import tatai.ui.control.IconButton;
-import tatai.util.Triple;
 
 import java.util.List;
 
 import static tatai.model.generator.Module.PRACTICE;
 import static tatai.model.generator.Module.TEST;
-import static tatai.model.statistics.Statistic.MAX;
 
 public class StatisticsPage extends Page {
 
@@ -113,13 +108,12 @@ public class StatisticsPage extends Page {
             }
         });
 
-        // possibly change to a set number of points, 10/20/50 or let user choose
         barChart.getData().addAll(getTopScores());
     }
 
     private void showChart(boolean show) {
-        FadeTransition overlayFade = new FadeTransition(Duration.millis(100), overlay);
-        FadeTransition pieChartFade = new FadeTransition(Duration.millis(100), pieChart);
+        FadeTransition overlayFade = new FadeTransition(Duration.millis(150), overlay);
+        FadeTransition pieChartFade = new FadeTransition(Duration.millis(150), pieChart);
         SequentialTransition st;
 
         if (show) {
@@ -154,13 +148,16 @@ public class StatisticsPage extends Page {
     private ObservableList<PieChart.Data> getTotalScores() {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         List<Pair<String, Double>> dataList = StatsManager.manager().getTotalCorrect();
+
         dataList.forEach(d -> pieChartData.add(new PieChart.Data(d.getKey(), d.getValue())));
+
         return pieChartData;
     }
 
     private ObservableList<XYChart.Series<String, Number>> getTopScores() {
         ObservableList<XYChart.Series<String, Number>> series = FXCollections.observableArrayList();
         List<Pair<String, Double>> dataList = StatsManager.manager().getTopScores();
+
         dataList.forEach(d -> {
             XYChart.Series<String, Number> totalSeries = new XYChart.Series<>();
             totalSeries.setName(d.getKey());
@@ -172,8 +169,8 @@ public class StatisticsPage extends Page {
     }
 
     private void showModes(boolean show) {
-        FadeTransition iconFade = new FadeTransition(Duration.millis(100), lineChartButton);
-        FadeTransition modeFade = new FadeTransition(Duration.millis(100), moduleBox);
+        FadeTransition iconFade = new FadeTransition(Duration.millis(50), lineChartButton);
+        FadeTransition modeFade = new FadeTransition(Duration.millis(50), moduleBox);
         SequentialTransition st;
 
         if (show) {
@@ -211,4 +208,12 @@ public class StatisticsPage extends Page {
         return TITLE;
     }
 
+    @Override
+    public void onBackButtonPressed() {
+        if (overlay.isVisible()) {
+            showChart(false);
+        } else {
+            Main.popPage();
+        }
+    }
 }

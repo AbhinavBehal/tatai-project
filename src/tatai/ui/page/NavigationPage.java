@@ -2,6 +2,7 @@ package tatai.ui.page;
 
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -100,20 +101,63 @@ public class NavigationPage extends Scene implements ThemeListener {
     }
 
     public void pushPage(Page page) {
-        _pages.push(page);
-        backButton.setGlyphSize(BACKBUTTON_SIZE);
-        changePage();
+        FadeTransition fOut = new FadeTransition(Duration.millis(200), _pages.peek().getRoot());
+        FadeTransition fIn = new FadeTransition(Duration.millis(200), _pages.push(page).getRoot());
+        FadeTransition navOut = new FadeTransition(Duration.millis(200), this.getRoot());
+        FadeTransition navIn = new FadeTransition(Duration.millis(200), this.getRoot());
+
+        fOut.setFromValue(1);
+        fOut.setToValue(0);
+        navOut.setFromValue(1);
+        navOut.setToValue(0);
+
+        fIn.setFromValue(0);
+        fIn.setToValue(1);
+        navIn.setFromValue(0);
+        navIn.setToValue(1);
+
+        ParallelTransition ptOut = new ParallelTransition(fOut, navOut);
+        ParallelTransition ptIn = new ParallelTransition(fIn, navIn);
+
+        ptOut.play();
+        ptOut.setOnFinished(e -> {
+            changePage();
+            backButton.setGlyphSize(BACKBUTTON_SIZE);
+            ptIn.play();
+        });
     }
 
     public void popPage() {
         themesButton.setDisable(!(_pages.peek() instanceof ThemePickerPage) && themesButton.isDisabled());
         statsButton.setDisable(!(_pages.peek() instanceof StatisticsPage) && statsButton.isDisabled());
         if (_pages.size() > 1) {
-            _pages.pop();
-            changePage();
+            FadeTransition fOut = new FadeTransition(Duration.millis(200), _pages.pop().getRoot());
+            FadeTransition fIn = new FadeTransition(Duration.millis(200), _pages.peek().getRoot());
+            FadeTransition navOut = new FadeTransition(Duration.millis(200), this.getRoot());
+            FadeTransition navIn = new FadeTransition(Duration.millis(200), this.getRoot());
 
-            // Don't show the back button if you can't go back
-            backButton.setGlyphSize(_pages.size() == 1 ? 0 : BACKBUTTON_SIZE);
+            fOut.setFromValue(1);
+            fOut.setToValue(0);
+            navOut.setFromValue(1);
+            navOut.setToValue(0);
+
+            fIn.setFromValue(0);
+            fIn.setToValue(1);
+            navIn.setFromValue(0);
+            navIn.setToValue(1);
+
+            ParallelTransition ptOut = new ParallelTransition(fOut, navOut);
+            ParallelTransition ptIn = new ParallelTransition(fIn, navIn);
+
+            ptOut.play();
+            ptOut.setOnFinished(e -> {
+                changePage();
+
+                // Don't show the back button if you can't go back
+                backButton.setGlyphSize(_pages.size() == 1 ? 0 : BACKBUTTON_SIZE);
+                ptIn.play();
+            });
+
         }
     }
 
