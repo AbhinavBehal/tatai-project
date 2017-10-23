@@ -35,6 +35,9 @@ task submission(type: Zip) {
 	into ('/res') {
 		from 'res'
 	}
+	into ('/MaoriNumbers') {
+		from 'MaoriNumbers'
+	}
 	destinationDir = new File("./")
 	archiveName "tatai_project_group_33.zip"
 	fileMode = 777
