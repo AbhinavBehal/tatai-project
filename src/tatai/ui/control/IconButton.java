@@ -7,6 +7,10 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 
+/**
+ * A button that can have an icon drawn inside of it.
+ * The names of icons that can be used are the ones defined in the material design specifications.
+ */
 public class IconButton extends Button {
     private MaterialDesignIconView _icon;
     public IconButton() {

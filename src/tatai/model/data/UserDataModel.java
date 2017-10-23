@@ -5,6 +5,9 @@ import tatai.model.theme.Theme;
 
 import java.util.List;
 
+/**
+ * Class representing the data model persisted in the users data file
+ */
 class UserDataModel {
     private Theme theme;
     private List<Score> scores;

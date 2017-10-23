@@ -3,7 +3,6 @@ package tatai.ui;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -46,18 +45,34 @@ public class Main extends Application {
 
     @Override
     public void stop() {
+        // Clean up generated files when the application closes
         new File("out.wav").delete();
         new File("out.mlf").delete();
     }
 
+    /**
+     * Method that changes the page shown to the one that is passed in.
+     * @param page The page to change to.
+     */
     public static void pushPage(Page page) {
         _navigationPage.pushPage(page);
     }
 
+    /**
+     * Method that changes the page shown to the previous one (if one exists).
+     */
     public static void popPage() {
         _navigationPage.popPage();
     }
 
+    /**
+     * Method that shows a modal alert dialog.
+     * @param type The type of the alert (determines the icon shown).
+     * @param text The message to show in the alert.
+     * @param buttons Optional parameter to customise the buttons shown (overrides the default ones specified
+     *                by the alert type).
+     * @return An optional representing which button was clicked in the alert.
+     */
     public static Optional<ButtonType> showAlert(Alert.AlertType type, String text, ButtonType... buttons) {
         Alert alert = new Alert(type, text, buttons);
         Label message = new Label(text);

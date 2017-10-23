@@ -24,6 +24,12 @@ import tatai.ui.control.IconButton;
 import java.io.IOException;
 import java.util.Stack;
 
+/**
+ * Class that wraps a Page, showing a navigation bar at the top of the screen that has a title,
+ * a back button and an options button. This class maintains a stack of Pages, and calls to pushPage() and popPage()
+ * add to the stack and remove from the stack, respectively. At anytime the currently shown page is the one that is at
+ * the top of the stack.
+ */
 public class NavigationPage extends Scene implements ThemeListener {
 
     @FXML
@@ -67,15 +73,23 @@ public class NavigationPage extends Scene implements ThemeListener {
     public void initialize() {
         changePage();
         backButton.setGlyphSize(0);
+
+        // Setup click handlers for when the back button gets pressed
         backButton.setOnMouseClicked(e -> {
             if (!e.getButton().equals(MouseButton.PRIMARY)) return;
+
+            // Fire the back button pressed event to the current set page
             _pages.peek().onBackButtonPressed();
         });
+
+        // Show the options menu when the options button is pressed
         optionsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 popup(true);
             }
         });
+
+        // Logic for hiding the options menu when the user click occurs outside of it
         parentPane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             if (e.getPickResult().getIntersectedNode() == null || !e.getButton().equals(MouseButton.PRIMARY)) return;
 
@@ -85,12 +99,16 @@ public class NavigationPage extends Scene implements ThemeListener {
                 popup(false);
             }
         });
+
+        // Logic for transitioning to the themes page when the themes button is clicked
         themesButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Main.pushPage(new ThemePickerPage());
                 themesButton.setDisable(true);
             }
         });
+
+        // Logic for transitioning to the statistics page when the statistics button is clicked
         statsButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Main.pushPage(new StatisticsPage());
@@ -101,6 +119,7 @@ public class NavigationPage extends Scene implements ThemeListener {
         parentPane.getStylesheets().add(ThemeManager.manager().getCurrentTheme().toString());
     }
 
+    // Method that changes the currently set Page to the one passed in, and handles transition logic
     public void pushPage(Page page) {
         FadeTransition fOut = new FadeTransition(Duration.millis(DURATION), _pages.peek().getRoot());
         FadeTransition fIn = new FadeTransition(Duration.millis(DURATION), _pages.push(page).getRoot());
@@ -128,6 +147,7 @@ public class NavigationPage extends Scene implements ThemeListener {
         });
     }
 
+    // Method that changes the current Page to the previous one in the stack, and handles transition logic
     public void popPage() {
         themesButton.setDisable(!(_pages.peek() instanceof ThemePickerPage) && themesButton.isDisabled());
         statsButton.setDisable(!(_pages.peek() instanceof StatisticsPage) && statsButton.isDisabled());
@@ -162,17 +182,20 @@ public class NavigationPage extends Scene implements ThemeListener {
         }
     }
 
+    // Method for listening to theme change events
     @Override
     public void updateTheme(Theme previousTheme, Theme newTheme) {
         parentPane.getStylesheets().remove(previousTheme.toString());
         parentPane.getStylesheets().add(newTheme.toString());
     }
 
+    // Helper method that sets the current page to the one at the top of the stack
     private void changePage() {
         content.getChildren().setAll(_pages.peek().getRoot());
         title.setText(_pages.peek().getTitle());
     }
 
+    // Method that handles the transitions involved in showing the options menu
     private void popup(boolean show) {
         TranslateTransition popOutTranslate = new TranslateTransition(Duration.millis(200), optionsPane);
         FadeTransition overlayFade = new FadeTransition(Duration.millis(100), overlay);

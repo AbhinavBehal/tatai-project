@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A generator that generates questions in a random order from a predefined list.
+ */
 public class CustomGenerator implements Generator {
 
     private List<String> _questions;
@@ -11,6 +14,11 @@ public class CustomGenerator implements Generator {
     private int _currentQuestion;
     private int _currentAnswer;
 
+    /**
+     * Construct a new CustomGenerator.
+     * @param questions The list of questions.
+     * @param answers The corresponding answers to those questions.
+     */
     public CustomGenerator(List<String> questions, List<Integer> answers) {
         _questions = questions;
         _answers = answers;
@@ -19,6 +27,7 @@ public class CustomGenerator implements Generator {
 
     @Override
     public String generate() {
+        // Reshuffle the questions if all of them have been generated
         if (_currentQuestion == _questions.size()) {
             _currentQuestion = 0;
             randomise();
@@ -48,6 +57,7 @@ public class CustomGenerator implements Generator {
         return null;
     }
 
+    // Helper function to shuffle the question and answer lists
     private void randomise() {
         Random r = new Random();
         for (int i = 0; i < _questions.size(); ++i) {

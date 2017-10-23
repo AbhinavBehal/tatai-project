@@ -1,6 +1,5 @@
 package tatai.model.statistics;
 
-import javafx.scene.chart.XYChart;
 import javafx.util.Pair;
 import tatai.model.data.DataManager;
 import tatai.model.generator.Difficulty;

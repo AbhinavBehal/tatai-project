@@ -22,6 +22,7 @@ public class PracticeOptionsPage extends Page {
     }
 
     public void initialize() {
+        // Set up click handlers for when the user presses the easy/hard buttons, that create the appropriate generator
         easyButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Generator generator = new NumberGenerator(Difficulty.EASY);

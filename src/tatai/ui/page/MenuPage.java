@@ -19,6 +19,7 @@ public class MenuPage extends Page {
     }
 
     public void initialize() {
+        // Setup click handlers for the practice and test buttons, that change the view to the corresponding scene
         practiceButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Main.pushPage(new PracticeOptionsPage());

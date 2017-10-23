@@ -5,6 +5,10 @@ import tatai.model.generator.Module;
 
 import java.time.LocalDate;
 
+/**
+ * A class that wraps metadata about a users score, such as the date the score was achieved,
+ * the module and difficulty it was obtained in, and the score itself.
+ */
 public class Score {
     private LocalDate date;
     private Module module;

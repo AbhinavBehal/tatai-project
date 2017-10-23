@@ -34,7 +34,7 @@ public class Triple<F extends Comparable<? super F>,
 
     /**
      * Public method used to get the object stored as the value.
-     * @return Object stored as value.
+     * @return Object stored as third.
      */
     public T third() { return _third; }
 

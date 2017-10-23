@@ -35,6 +35,7 @@ public class CustomOptionsPage extends Page {
         _questions = new ArrayList<>();
         _answers = new ArrayList<>();
 
+        // Setup the file chooser with the appropriate starting directories and file types
         _fileChooser = new FileChooser();
         _fileChooser.setTitle("Select your custom question file");
         _fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -64,6 +65,7 @@ public class CustomOptionsPage extends Page {
         return TITLE;
     }
 
+    // TODO: Workout if we should keep this way of handling custom questions, or switch to something else
     private void processFile(File questionFile) {
         if (questionFile == null) return;
         try (BufferedReader reader = new BufferedReader(new FileReader(questionFile))) {

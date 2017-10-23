@@ -5,9 +5,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * A class that provides static methods to encrypt and decrypt files.
+ * Calling the decrypt method on a file that was not encrypted using this class will have undefined consequences,
+ * and may result in the loss of data.
+ */
 public class Encrypter {
     private static final byte KEY = 33;
 
+    /**
+     * Encrypt the provided file.
+     * @param file the file to encrypt.
+     */
     public static void encrypt(File file) {
         try {
             Path path = file.toPath();
@@ -23,6 +32,10 @@ public class Encrypter {
         }
     }
 
+    /**
+     * Decrypt the provided file.
+     * @param file the file to decrypt.
+     */
     public static void decrypt(File file) {
         try {
             Path path = file.toPath();

@@ -8,7 +8,6 @@ public interface Callback<T> {
     /**
      * The callback function, called when an operation completes
      * @param result The result of the operation
-     *
      */
     void call(T result);
 }

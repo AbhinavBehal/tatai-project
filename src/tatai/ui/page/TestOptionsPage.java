@@ -37,6 +37,7 @@ public class TestOptionsPage extends Page {
 
     public void initialize() {
         for (Operator op : Operator.values()) {
+            // Fill the operator Map with the checkboxes for each operator
             String label = op.name().substring(0, 1).toUpperCase() + op.name().substring(1).toLowerCase();
             CheckBox checkBox = new CheckBox(label);
             checkBox.getStyleClass().add("h5");
@@ -69,6 +70,7 @@ public class TestOptionsPage extends Page {
     private void onOperationSelected(boolean selected) {
         _numOperations = selected ? _numOperations + 1 : _numOperations - 1;
         if (_numOperations == 0) {
+            // If no operations are selected, select the addition operation by default
             _operatorMap.get(Operator.ADDITION).setSelected(true);
         }
     }

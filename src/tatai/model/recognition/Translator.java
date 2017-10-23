@@ -1,5 +1,8 @@
 package tatai.model.recognition;
 
+/**
+ * Class that provides a static method to translate a number into its Maori form.
+ */
 public class Translator {
     private static final String[] words = {
             "tahi",
@@ -14,6 +17,11 @@ public class Translator {
             "tekau"
     };
 
+    /**
+     * Translate an integer between 1 - 99 (inclusive) into its Maori form.
+     * @param n The integer to translate.
+     * @return The Maori representation of the number.
+     */
     public static String translate(int n) {
         String output;
         if (n <= 10) {
