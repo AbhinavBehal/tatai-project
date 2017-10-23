@@ -108,8 +108,10 @@ public class PronunciationPage extends Page {
         } else {
             Main.showAlert(Alert.AlertType.CONFIRMATION,
                     "Are you sure you want to go back?\n" +
-                    "This round's progress will be lost.")
-                    .filter(response -> response == ButtonType.OK)
+                    "This round's progress will be lost.",
+                    ButtonType.YES,
+                    ButtonType.NO)
+                    .filter(response -> response == ButtonType.YES)
                     .ifPresent(reply -> Main.popPage());
         }
     }
