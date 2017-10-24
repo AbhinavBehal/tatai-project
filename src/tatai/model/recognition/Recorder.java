@@ -11,12 +11,21 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class that records audio using ffmpeg and bash.
+ */
 public class Recorder {
 
     private RecordingTask _recordingTask;
     private Promise<Media> _promise;
     public Recorder() { }
 
+    /**
+     * Method to start the recording.
+     * @param output The the audio file to save the recording to.
+     * @param duration The duration of the recording.
+     * @return A promise holding the recording as a Media object.
+     */
     public Promise<Media> start(File output, int duration) {
         if (_recordingTask != null && _recordingTask.isRunning()) {
             _recordingTask.cancel();
@@ -34,10 +43,17 @@ public class Recorder {
         return _promise;
     }
 
+    /**
+     * Property that exposes the progress of the recording.
+     * @return A double property representing the progress of the recording.
+     */
     public ReadOnlyDoubleProperty progressProperty() {
         return _recordingTask == null ? null  : _recordingTask.progressProperty();
     }
 
+    // Private method that rejects/resolves the recording promise when the recording task
+    // is finished successfully or unsuccessfully.
+    // The promise is reject if any exception is thrown while recording, and resolved otherwise.
     private void onRecordingFinished(WorkerStateEvent e) {
         if (_promise == null) return;
 
@@ -49,6 +65,9 @@ public class Recorder {
 
     }
 
+    /**
+     * Private class that handles the recording of audio using ffmpeg.
+     */
     private class RecordingTask extends Task<Media> {
 
         File _output;
@@ -61,9 +80,11 @@ public class Recorder {
 
         @Override
         protected Media call() throws Exception {
+            // Setup the bash command and call it in a new process
             String cmd = "ffmpeg -y -f alsa -i default -t " + _duration + " -acodec pcm_s16le -ar 22050 -ac 1 " + _output.getName();
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", cmd);
 
+            // Setup and start a timer that updates the progress of the task
             long period = 10;
             Timer progressTimer = new Timer();
             progressTimer.scheduleAtFixedRate(new TimerTask() {
@@ -74,7 +95,7 @@ public class Recorder {
                 }
             }, 0, period);
 
-            // Uncomment below if on linux
+            // Wait for the process to finish, and check for any thrown exceptions
             try {
                 builder.start().waitFor();
                 progressTimer.cancel();
@@ -85,7 +106,6 @@ public class Recorder {
                 progressTimer.cancel();
                 throw e;
             }
-            //Thread.sleep(_duration * 1000); // To simulate the recording task (comment this if on linux)
             return new Media(_output.toURI().toString());
         }
     }
