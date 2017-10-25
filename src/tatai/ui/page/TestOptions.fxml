@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml" stylesheets="/styles/test-options-styles.css">
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="/styles/test-options-styles.css">
     <padding>
         <Insets topRightBottomLeft="50"/>
     </padding>
@@ -33,7 +34,8 @@
                     text="Hard"
                     styleClass="h3"
                     maxWidth="Infinity"/>
-            <Label GridPane.rowIndex="1"
+            <Label fx:id="hardLabel"
+                   GridPane.rowIndex="1"
                    GridPane.columnIndex="1"
                    styleClass="h4"
                    text="1 - 99"/>

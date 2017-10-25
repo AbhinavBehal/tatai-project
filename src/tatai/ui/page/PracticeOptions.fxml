@@ -32,7 +32,8 @@
             text="Hard"
             styleClass="h3"
             maxWidth="Infinity"/>
-    <Label GridPane.rowIndex="1"
+    <Label fx:id="hardLabel"
+           GridPane.rowIndex="1"
            GridPane.columnIndex="1"
            styleClass="h4"
            GridPane.halignment="CENTER"

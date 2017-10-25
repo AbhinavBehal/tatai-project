@@ -3,11 +3,11 @@ package tatai.ui.page;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import tatai.model.generator.Difficulty;
-import tatai.model.generator.EquationGenerator;
-import tatai.model.generator.Generator;
-import tatai.model.generator.Operator;
+import tatai.model.generator.*;
+import tatai.model.statistics.ScoreListener;
+import tatai.model.statistics.StatsManager;
 import tatai.ui.Main;
 
 import java.util.ArrayList;
@@ -15,12 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestOptionsPage extends Page {
+public class TestOptionsPage extends Page implements ScoreListener {
 
     @FXML
     private Button easyButton;
     @FXML
     private Button hardButton;
+    @FXML
+    private Label hardLabel;
     @FXML
     private Button customButton;
     @FXML
@@ -33,6 +35,7 @@ public class TestOptionsPage extends Page {
     public TestOptionsPage() {
         _operatorMap = new HashMap<>();
         loadFXML(getClass().getResource("TestOptions.fxml"));
+        StatsManager.manager().addListener(this);
     }
 
     public void initialize() {
@@ -53,6 +56,10 @@ public class TestOptionsPage extends Page {
             Generator generator = new EquationGenerator(Difficulty.EASY, getSelectedOperations());
             Main.pushPage(new PronunciationPage("Test - Easy", generator));
         });
+
+        hardButton.setDisable(!StatsManager.manager().testUnlocked());
+        hardLabel.setDisable(!StatsManager.manager().testUnlocked());
+
         hardButton.setOnMouseClicked(e ->{
             Generator generator = new EquationGenerator(Difficulty.HARD, getSelectedOperations());
             Main.pushPage(new PronunciationPage("Test - Hard", generator));
@@ -83,5 +90,13 @@ public class TestOptionsPage extends Page {
             }
         }
         return operations;
+    }
+
+    @Override
+    public void updateScore(Module module, Difficulty difficulty, int lastScore) {
+        if (lastScore > 7) {
+            hardButton.setDisable(false);
+            hardLabel.setDisable(false);
+        }
     }
 }

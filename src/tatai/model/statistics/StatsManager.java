@@ -179,9 +179,9 @@ public class StatsManager {
         double max = _statistics.get(new Triple<>(module, difficulty, MAX));
         max = score > max ? score : max;
 
-        if (module == Module.PRACTICE) {
+        if (module == Module.PRACTICE && difficulty == Difficulty.EASY) {
             _practiceUnlocked = max > UNLOCK_PRACTICE_THRESHOLD;
-        } else if (module == Module.TEST) {
+        } else if (module == Module.TEST && difficulty == Difficulty.EASY) {
             _testUnlocked = max > UNLOCK_TEST_THRESHOLD;
         }
 
