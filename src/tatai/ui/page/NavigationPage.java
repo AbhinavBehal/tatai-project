@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -37,6 +38,8 @@ public class NavigationPage extends Scene implements ThemeListener {
     @FXML
     private StackPane content;
     @FXML
+    private HBox navBar;
+    @FXML
     private MaterialDesignIconView backButton;
     @FXML
     private MaterialDesignIconView optionsButton;
@@ -52,7 +55,10 @@ public class NavigationPage extends Scene implements ThemeListener {
     private IconButton statsButton;
 
     private static final int BACKBUTTON_SIZE = 48;
-    private static final int DURATION = 125;
+    private static final int DURATION = 200;
+    private static final int DEFAULT_MAX = 1;
+    private static final int DEFAULT_MIN = 0;
+    private static final double VARIABLE_PERCENT = 0.4;
     private Stack<Page> _pages;
 
     public NavigationPage(Page content) {
@@ -95,7 +101,7 @@ public class NavigationPage extends Scene implements ThemeListener {
 
             if (e.getPickResult().getIntersectedNode() != optionsPane && optionsPane.isVisible()) {
                 // Don't move it back if it's already moving
-                if (optionsPane.getTranslateX() != 0) return;
+                if (optionsPane.getTranslateX() != DEFAULT_MIN) return;
                 popup(false);
             }
         });
@@ -123,18 +129,18 @@ public class NavigationPage extends Scene implements ThemeListener {
     public void pushPage(Page page) {
         FadeTransition fOut = new FadeTransition(Duration.millis(DURATION), _pages.peek().getRoot());
         FadeTransition fIn = new FadeTransition(Duration.millis(DURATION), _pages.push(page).getRoot());
-        FadeTransition navOut = new FadeTransition(Duration.millis(DURATION), this.getRoot());
-        FadeTransition navIn = new FadeTransition(Duration.millis(DURATION), this.getRoot());
+        FadeTransition navOut = new FadeTransition(Duration.millis(DURATION), navBar);
+        FadeTransition navIn = new FadeTransition(Duration.millis(DURATION), navBar);
 
-        fOut.setFromValue(1);
-        fOut.setToValue(0);
-        navOut.setFromValue(1);
-        navOut.setToValue(0);
+        fOut.setFromValue(DEFAULT_MAX);
+        fOut.setToValue(DEFAULT_MIN);
+        navOut.setFromValue(DEFAULT_MAX);
+        navOut.setToValue(DEFAULT_MIN);
 
-        fIn.setFromValue(0);
-        fIn.setToValue(1);
-        navIn.setFromValue(0);
-        navIn.setToValue(1);
+        fIn.setFromValue(DEFAULT_MIN);
+        fIn.setToValue(DEFAULT_MAX);
+        navIn.setFromValue(DEFAULT_MIN);
+        navIn.setToValue(DEFAULT_MAX);
 
         ParallelTransition ptOut = new ParallelTransition(fOut, navOut);
         ParallelTransition ptIn = new ParallelTransition(fIn, navIn);
@@ -154,18 +160,18 @@ public class NavigationPage extends Scene implements ThemeListener {
         if (_pages.size() > 1) {
             FadeTransition fOut = new FadeTransition(Duration.millis(DURATION), _pages.pop().getRoot());
             FadeTransition fIn = new FadeTransition(Duration.millis(DURATION), _pages.peek().getRoot());
-            FadeTransition navOut = new FadeTransition(Duration.millis(DURATION), this.getRoot());
-            FadeTransition navIn = new FadeTransition(Duration.millis(DURATION), this.getRoot());
+            FadeTransition navOut = new FadeTransition(Duration.millis(DURATION), navBar);
+            FadeTransition navIn = new FadeTransition(Duration.millis(DURATION), navBar);
 
-            fOut.setFromValue(1);
-            fOut.setToValue(0);
-            navOut.setFromValue(1);
-            navOut.setToValue(0);
+            fOut.setFromValue(DEFAULT_MAX);
+            fOut.setToValue(DEFAULT_MIN);
+            navOut.setFromValue(DEFAULT_MAX);
+            navOut.setToValue(DEFAULT_MIN);
 
-            fIn.setFromValue(0);
-            fIn.setToValue(1);
-            navIn.setFromValue(0);
-            navIn.setToValue(1);
+            fIn.setFromValue(DEFAULT_MIN);
+            fIn.setToValue(DEFAULT_MAX);
+            navIn.setFromValue(DEFAULT_MIN);
+            navIn.setToValue(DEFAULT_MAX);
 
             ParallelTransition ptOut = new ParallelTransition(fOut, navOut);
             ParallelTransition ptIn = new ParallelTransition(fIn, navIn);
@@ -175,10 +181,9 @@ public class NavigationPage extends Scene implements ThemeListener {
                 changePage();
 
                 // Don't show the back button if you can't go back
-                backButton.setGlyphSize(_pages.size() == 1 ? 0 : BACKBUTTON_SIZE);
+                backButton.setGlyphSize(_pages.size() == 1 ? DEFAULT_MIN : BACKBUTTON_SIZE);
                 ptIn.play();
             });
-
         }
     }
 
@@ -197,26 +202,26 @@ public class NavigationPage extends Scene implements ThemeListener {
 
     // Method that handles the transitions involved in showing the options menu
     private void popup(boolean show) {
-        TranslateTransition popOutTranslate = new TranslateTransition(Duration.millis(200), optionsPane);
-        FadeTransition overlayFade = new FadeTransition(Duration.millis(100), overlay);
+        TranslateTransition popOutTranslate = new TranslateTransition(Duration.millis(DURATION), optionsPane);
+        FadeTransition overlayFade = new FadeTransition(Duration.millis(DURATION), overlay);
         SequentialTransition st;
 
         if (show) {
             overlay.setVisible(true);
-            overlayFade.setFromValue(0);
-            overlayFade.setToValue(0.4);
+            overlayFade.setFromValue(DEFAULT_MIN);
+            overlayFade.setToValue(VARIABLE_PERCENT);
 
             optionsPane.setVisible(true);
             popOutTranslate.setFromX(optionsPane.getWidth());
-            popOutTranslate.setToX(0);
+            popOutTranslate.setToX(DEFAULT_MIN);
 
             st = new SequentialTransition(overlayFade, popOutTranslate);
         } else {
-            popOutTranslate.setFromX(0);
+            popOutTranslate.setFromX(DEFAULT_MIN);
             popOutTranslate.setToX(optionsPane.getWidth());
 
-            overlayFade.setFromValue(0.4);
-            overlayFade.setToValue(0);
+            overlayFade.setFromValue(VARIABLE_PERCENT);
+            overlayFade.setToValue(DEFAULT_MIN);
 
             st = new SequentialTransition(popOutTranslate, overlayFade);
         }

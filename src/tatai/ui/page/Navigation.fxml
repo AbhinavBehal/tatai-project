@@ -11,7 +11,8 @@
            stylesheets="/styles/common-styles.css, /styles/navigation-styles.css">
     <BorderPane StackPane.alignment="TOP_CENTER">
         <top>
-            <HBox styleClass="navBar"
+            <HBox fx:id="navBar"
+                  styleClass="navBar"
                   alignment="CENTER" spacing="10">
                 <padding>
                     <Insets topRightBottomLeft="10"/>
