@@ -1,17 +1,20 @@
 package tatai.ui.page;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
+import tatai.util.PropertyTransition;
 
 import java.util.List;
 
@@ -23,6 +26,12 @@ public class DetailedStatsPage extends Page {
     private final String TITLE;
     private Module _module;
 
+    @FXML
+    private ColumnConstraints lineChartCol;
+    @FXML
+    private ColumnConstraints easyListCol;
+    @FXML
+    private ColumnConstraints hardListCol;
     @FXML
     private LineChart<Number, Number> lineChart;
     @FXML
@@ -37,6 +46,12 @@ public class DetailedStatsPage extends Page {
     private RadioButton tenButton;
     @FXML
     private TextField customField;
+    @FXML
+    private VBox easyBox;
+    @FXML
+    private VBox hardBox;
+    @FXML
+    private Button butone;
 
     public DetailedStatsPage(Module module) {
         _module = module;
@@ -47,6 +62,10 @@ public class DetailedStatsPage extends Page {
     public void initialize() {
         lineChart.setAnimated(false);
         populateList();
+
+        lineChartCol.setPercentWidth(80);
+        easyListCol.setPercentWidth(10);
+        hardListCol.setPercentWidth(10);
 
         recentN.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             RadioButton btn = (RadioButton) newValue;
@@ -75,6 +94,8 @@ public class DetailedStatsPage extends Page {
                 setScores(Integer.parseInt(customField.getText()));
             }
         });
+
+        butone.setOnAction(e -> transit());
     }
 
     /**
@@ -156,6 +177,28 @@ public class DetailedStatsPage extends Page {
                 }
             }
         }
+    }
+
+    private void transit() {
+        PropertyTransition lineChartTransition = new PropertyTransition(Duration.millis(200), lineChartCol.percentWidthProperty());
+        lineChartTransition.setFromValue(lineChartCol.getPercentWidth());
+        lineChartTransition.setToValue(100);
+
+        PropertyTransition easyListTransition = new PropertyTransition(Duration.millis(150), easyListCol.percentWidthProperty());
+        easyListTransition.setFromValue(easyListCol.getPercentWidth());
+        easyListTransition.setToValue(0);
+
+        PropertyTransition hardListTransition = new PropertyTransition(Duration.millis(150), hardListCol.percentWidthProperty());
+        hardListTransition.setFromValue(hardListCol.getPercentWidth());
+        hardListTransition.setToValue(0);
+
+        ParallelTransition pt = new ParallelTransition(lineChartTransition, easyListTransition, hardListTransition);
+
+        pt.play();
+        pt.setOnFinished(e -> {
+            easyBox.setVisible(false);
+            hardBox.setVisible(false);
+        });
     }
 
     @Override

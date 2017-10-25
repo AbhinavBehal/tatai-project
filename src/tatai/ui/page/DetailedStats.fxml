@@ -15,9 +15,9 @@
         <RowConstraints percentHeight="15"/>
     </rowConstraints>
     <columnConstraints>
-        <ColumnConstraints percentWidth="60"/>
-        <ColumnConstraints percentWidth="20"/>
-        <ColumnConstraints percentWidth="20"/>
+        <ColumnConstraints fx:id="lineChartCol"/>
+        <ColumnConstraints fx:id="easyListCol"/>
+        <ColumnConstraints fx:id="hardListCol"/>
     </columnConstraints>
     <padding>
         <Insets topRightBottomLeft="30"/>
@@ -84,7 +84,8 @@
         </HBox>
     </VBox>
 
-    <VBox GridPane.rowIndex="0"
+    <VBox fx:id="easyBox"
+          GridPane.rowIndex="0"
           GridPane.columnIndex="1"
           styleClass="h5" spacing="5">
         <Label text="Easy"/>
@@ -95,7 +96,8 @@
                   VBox.vgrow="ALWAYS"
                   styleClass="h5"/>
     </VBox>
-    <VBox GridPane.rowIndex="0"
+    <VBox fx:id="hardBox"
+          GridPane.rowIndex="0"
           GridPane.columnIndex="2"
           styleClass="h5" spacing="5">
         <Label text="Hard"/>
@@ -106,4 +108,8 @@
                   fx:id="hardList"
                   styleClass="h5"/>
     </VBox>
+    <Button GridPane.rowIndex="2"
+            GridPane.columnIndex="0"
+            fx:id="butone"
+            minWidth="0"/>
 </GridPane>
