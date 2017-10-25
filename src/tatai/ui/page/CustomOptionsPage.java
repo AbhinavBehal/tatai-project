@@ -126,9 +126,12 @@ public class CustomOptionsPage extends Page {
                 if (invalidCount > 0) continue;
 
                 // Add the equation without the answer to the list of questions that will be displayed
+                int answerNum = Integer.parseInt(answer);
+                if (answerNum > 99 || answerNum <= 0) continue;
+
                 line = line.substring(0, equalsIndex);
                 _questions.add(line);
-                _answers.add(Integer.parseInt(answer));
+                _answers.add(answerNum);
             }
             questionsView.setItems(FXCollections.observableArrayList(_questions));
         } catch (IOException e) {
