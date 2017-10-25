@@ -36,12 +36,6 @@ public class StatisticsPage extends Page {
     @FXML
     private PieChart pieChart;
     @FXML
-    private IconButton lineChartButton;
-    @FXML
-    private VBox moduleBox;
-    @FXML
-    private VBox containerBox;
-    @FXML
     private Button practice;
     @FXML
     private Button test;
@@ -58,8 +52,7 @@ public class StatisticsPage extends Page {
 
     public void initialize() {
 
-        pieChartButton.setText("\nScores\nOverview");
-        lineChartButton.setText("\nDetailed\nStatistics");
+        pieChartButton.setText("Scores Overview");
 
         parentPane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             if (e.getPickResult().getIntersectedNode() == null || e.getButton() != MouseButton.PRIMARY) return;
@@ -75,24 +68,6 @@ public class StatisticsPage extends Page {
         pieChartButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)){
                 showChart(true);
-            }
-        });
-
-        lineChartButton.setOnMouseEntered(e -> {
-            if (lineChartButton.isVisible()){
-                showModes(true);
-            }
-        });
-
-        containerBox.setOnMouseExited(e -> {
-            if (moduleBox.isVisible()) {
-                // Don't do anything if during transition
-                // NOTE: this will cause state to be stuck in container box even if
-                // the mouse is outside, this is due to user moving over the region
-                // too quickly.
-                if (!lineChartButton.isVisible()) {
-                    showModes(false);
-                }
             }
         });
 
@@ -166,41 +141,6 @@ public class StatisticsPage extends Page {
         });
 
         return series;
-    }
-
-    private void showModes(boolean show) {
-        FadeTransition iconFade = new FadeTransition(Duration.millis(50), lineChartButton);
-        FadeTransition modeFade = new FadeTransition(Duration.millis(50), moduleBox);
-        SequentialTransition st;
-
-        if (show) {
-            iconFade.setFromValue(1);
-            iconFade.setToValue(0);
-
-            moduleBox.setVisible(true);
-            modeFade.setFromValue(0);
-            modeFade.setToValue(1);
-
-            st = new SequentialTransition(iconFade, modeFade);
-        } else {
-            lineChartButton.setVisible(true);
-            iconFade.setFromValue(0);
-            iconFade.setToValue(1);
-
-            modeFade.setFromValue(1);
-            modeFade.setToValue(0);
-
-            st = new SequentialTransition(modeFade, iconFade);
-        }
-
-        st.play();
-        st.setOnFinished(e -> {
-            if (show) {
-                lineChartButton.setVisible(false);
-            } else {
-                moduleBox.setVisible(false);
-            }
-        });
     }
 
     @Override

@@ -1,0 +1,4 @@
+.detailsBox {
+    -fx-border-width: 2;
+    -fx-border-color: -foreground;
+}

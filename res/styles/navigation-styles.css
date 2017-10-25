@@ -10,6 +10,7 @@
 
 .navBar > .glyph-icon {
     -fx-fill: -foreground;
+    -fx-cursor: hand;
 }
 
 .options-menu {

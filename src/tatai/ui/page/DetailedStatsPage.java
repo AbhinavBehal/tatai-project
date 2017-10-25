@@ -20,7 +20,7 @@ import static tatai.model.generator.Difficulty.HARD;
 
 public class DetailedStatsPage extends Page {
 
-    private static final String TITLE = "Detailed Statistics";
+    private final String TITLE;
     private Module _module;
 
     @FXML
@@ -40,6 +40,7 @@ public class DetailedStatsPage extends Page {
 
     public DetailedStatsPage(Module module) {
         _module = module;
+        TITLE = "Detailed Statistics - " + _module;
         loadFXML(getClass().getResource("DetailedStats.fxml"));
     }
 

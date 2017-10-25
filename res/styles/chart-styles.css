@@ -15,6 +15,10 @@
     -fx-background-insets: 2;
 }
 
+.chart-bar {
+    -fx-background-color: -fx-bar-fill;
+}
+
 .chart-pie-label {
     -fx-fill: -foreground;
 }

@@ -86,7 +86,7 @@
 }
 
 .glyph-icon {
-    -fx-cursor: hand;
+    -fx-fill: -foreground;
 }
 
 .label {
