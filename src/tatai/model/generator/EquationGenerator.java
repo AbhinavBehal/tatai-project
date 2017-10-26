@@ -166,14 +166,6 @@ public class EquationGenerator implements Generator {
     }
 
     /**
-     * @param equation equation to parse
-     * @return _value of equation?
-     */
-    public int solve(String equation) {
-        return -1;
-    }
-
-    /**
      * Public method used to get the current randomly generated answer.
      * @return answer to equation generated
      */

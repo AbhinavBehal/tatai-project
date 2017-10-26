@@ -57,7 +57,7 @@ public class PronunciationPage extends Page {
     private Button restartButton;
 
     private static final String FILENAME = "out.wav";
-    private static final int DURATION = 3;
+    private static final int RECORDING_DURATION = 3;
     private static final int MAX_ATTEMPTS = 2;
 
     private final int MAX_ROUNDS;
@@ -123,7 +123,7 @@ public class PronunciationPage extends Page {
 
     private void record() {
         // Start recording, and update the game state when it finishes
-        _recorder.start(new File(FILENAME), DURATION).then(media -> {
+        _recorder.start(new File(FILENAME), RECORDING_DURATION).then(media -> {
             if (_player != null) {
                 _player.dispose();
             }

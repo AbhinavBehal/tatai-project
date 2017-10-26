@@ -13,7 +13,7 @@ import static tatai.model.theme.Theme.*;
 
 /**
  * ThemePicker Page controller, handles user actions on ThemePicker page,
- * namely for drawing the icrons for each theme colour and updating the
+ * namely for drawing the icons for each theme colour and updating the
  * selected theme.
  */
 public class ThemePickerPage extends Page {

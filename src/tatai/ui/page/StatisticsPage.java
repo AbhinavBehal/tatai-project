@@ -11,7 +11,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import tatai.model.statistics.StatsManager;
@@ -159,7 +158,7 @@ public class StatisticsPage extends Page {
 
     @Override
     public void onBackButtonPressed() {
-        // If PieChart is open, close that before exiting from the page.
+        // If PieChart is open, close that instead of going back from the page.
         if (overlay.isVisible()) {
             showChart(false);
         } else {

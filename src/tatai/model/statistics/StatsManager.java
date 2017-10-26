@@ -25,7 +25,6 @@ public class StatsManager {
     private List<ScoreListener> _listeners;
     private Map<Triple<LocalDate, Module, Difficulty>, List<Integer>> _scoreLists;
     private Map<Triple<Module, Difficulty, Statistic>, Double> _statistics;
-    private LocalDate _date;
     private boolean _practiceUnlocked;
     private boolean _testUnlocked;
 
@@ -37,7 +36,6 @@ public class StatsManager {
         _listeners = new ArrayList<>();
         _scoreLists = new TreeMap<>();
         _statistics = new HashMap<>();
-        _date = LocalDate.now();
         initializeStats();
         DataManager.manager().getScores().forEach(s -> addScore(s.date(), s.module(), s.difficulty(), s.score()));
     }
@@ -55,7 +53,6 @@ public class StatsManager {
 
     /**
      * Public method used to add listeners to StatsManager when scores change.
-     * TODO: Discuss necessity
      * @param listener An object of class which implements ScoreListener.
      */
     public void addListener(ScoreListener listener) {

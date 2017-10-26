@@ -53,7 +53,7 @@ public class Recorder {
 
     // Private method that rejects/resolves the recording promise when the recording task
     // is finished successfully or unsuccessfully.
-    // The promise is reject if any exception is thrown while recording, and resolved otherwise.
+    // The promise is rejected if any exception was thrown while recording, and resolved otherwise.
     private void onRecordingFinished(WorkerStateEvent e) {
         if (_promise == null) return;
 

@@ -1,6 +1,5 @@
 package tatai.ui.page;
 
-import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
@@ -9,12 +8,10 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
 
-import java.util.Collections;
 import java.util.List;
 
 import static tatai.model.generator.Difficulty.EASY;
@@ -102,7 +99,7 @@ public class DetailedStatsPage extends Page {
             }
         });
 
-        expandButton.setOnAction(e -> transit(easyBox.isVisible() || hardBox.isVisible()));
+        expandButton.setOnAction(e -> expandChart(easyBox.isVisible() || hardBox.isVisible()));
     }
 
     @Override
@@ -134,7 +131,6 @@ public class DetailedStatsPage extends Page {
 
         // If LineChart already has data, remove it before adding new data.
         if (lineChart.getData().size() > 0) {
-            System.out.println(lineChart.getData());
             lineChart.getData().remove(0, lineChart.getData().size());
         }
         lineChart.getData().add(easySeries);
@@ -189,7 +185,11 @@ public class DetailedStatsPage extends Page {
         }
     }
 
-    private void transit(boolean expand) {
+    /**
+     * Private helper function used to expand the line chart.
+     * @param expand true if the chart should expand, false if it should go back to its default size.
+     */
+    private void expandChart(boolean expand) {
         if (expand) {
             easyBox.setVisible(false);
             hardBox.setVisible(false);

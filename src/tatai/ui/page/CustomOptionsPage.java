@@ -65,7 +65,8 @@ public class CustomOptionsPage extends Page {
         return TITLE;
     }
 
-    // TODO: Workout if we should keep this way of handling custom questions, or switch to something else
+    // Private function that parses the input question file.
+    // Adds all the equations that are in the correct format to a the question list.
     private void processFile(File questionFile) {
         if (questionFile == null) return;
         try (BufferedReader reader = new BufferedReader(new FileReader(questionFile))) {

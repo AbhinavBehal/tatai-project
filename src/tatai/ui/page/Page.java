@@ -20,7 +20,7 @@ public abstract class Page extends Scene {
 
     /**
      * Get the title of the Page.
-     * @return The the tile of the page.
+     * @return The tile of the page.
      */
     public abstract String getTitle();
 
