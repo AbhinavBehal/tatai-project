@@ -185,7 +185,7 @@ public class EquationGenerator implements Generator {
 
     /**
      * Public method used to get the module of the generator, which
-     * (for now) will only be TEST.
+     * will only be TEST.
      * @return TEST Module enum.
      */
     @Override

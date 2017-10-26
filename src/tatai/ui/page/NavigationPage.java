@@ -26,10 +26,11 @@ import java.io.IOException;
 import java.util.Stack;
 
 /**
- * Class that wraps a Page, showing a navigation bar at the top of the screen that has a title,
- * a back button and an options button. This class maintains a stack of Pages, and calls to pushPage() and popPage()
- * add to the stack and remove from the stack, respectively. At anytime the currently shown page is the one that is at
- * the top of the stack.
+ * Class that wraps a Page, showing a navigation bar at the top of the screen
+ * that has a title, a back button and an options button. This class maintains
+ * a stack of Pages, and calls to pushPage() and popPage() add to the stack
+ * and remove from the stack, respectively. At anytime the currently shown page
+ * is the one that is at the top of the stack.
  */
 public class NavigationPage extends Scene implements ThemeListener {
 

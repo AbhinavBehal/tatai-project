@@ -1,5 +1,9 @@
 package tatai.model.generator;
 
+/**
+ * Interface used for subclasses which generate strings, used for
+ * mathematical equations.
+ */
 public interface Generator {
 
     /**

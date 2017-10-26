@@ -12,6 +12,10 @@ import tatai.model.statistics.ScoreListener;
 import tatai.model.statistics.StatsManager;
 import tatai.ui.Main;
 
+/**
+ * PracticeOptions Page controller, handles user actions on PracticeOptions page,
+ * namely for choosing difficulty.
+ */
 public class PracticeOptionsPage extends Page implements ScoreListener {
 
     @FXML

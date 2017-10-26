@@ -15,6 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * TestOptions Page controller, handles user actions on TestOptions page,
+ * namely for choosing difficulty and operators to include in the equations.
+ */
 public class TestOptionsPage extends Page implements ScoreListener {
 
     @FXML
@@ -74,6 +78,14 @@ public class TestOptionsPage extends Page implements ScoreListener {
         return TITLE;
     }
 
+    // Listener method used to see if hard becomes unlocked by scoring 8 or above
+    @Override
+    public void updateScore(Module module, Difficulty difficulty, int lastScore) {
+        if (lastScore > 7) {
+            hardButton.setDisable(false);
+            hardLabel.setDisable(false);
+        }
+    }
 
     private void onOperationSelected(boolean selected) {
         _numOperations = selected ? _numOperations + 1 : _numOperations - 1;
@@ -87,14 +99,5 @@ public class TestOptionsPage extends Page implements ScoreListener {
             }
         }
         return operations;
-    }
-
-    // Listener method used to see if hard becomes unlocked by scoring 8 or above
-    @Override
-    public void updateScore(Module module, Difficulty difficulty, int lastScore) {
-        if (lastScore > 7) {
-            hardButton.setDisable(false);
-            hardLabel.setDisable(false);
-        }
     }
 }

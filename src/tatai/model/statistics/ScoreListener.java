@@ -3,6 +3,9 @@ package tatai.model.statistics;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 
+/**
+ * Interface used as a listener such that subclasses are notified of score changes.
+ */
 public interface ScoreListener {
 
     /**

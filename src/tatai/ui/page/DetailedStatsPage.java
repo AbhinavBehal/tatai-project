@@ -17,6 +17,11 @@ import java.util.List;
 import static tatai.model.generator.Difficulty.EASY;
 import static tatai.model.generator.Difficulty.HARD;
 
+/**
+ * DetailedStats Page controller, handles user actions on DetailedStats page,
+ * namely for choosing how many recent scores to show, and expanding/shrinking
+ * the LineChart.
+ */
 public class DetailedStatsPage extends Page {
 
     private static final double DEFAULT_CHART_WIDTH = 60;

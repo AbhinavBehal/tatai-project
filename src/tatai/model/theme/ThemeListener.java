@@ -1,5 +1,8 @@
 package tatai.model.theme;
 
+/**
+ * Interface used as a listener such that subclasses are notified of theme changes.
+ */
 public interface ThemeListener {
 
     /**

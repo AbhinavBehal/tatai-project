@@ -48,7 +48,7 @@ public class DataManager {
     }
 
     /**
-     * Get the singleton instance of the DataManager
+     * Get the singleton instance of the DataManager.
      * @return the singleton DataManager instance
      */
     public static DataManager manager() {

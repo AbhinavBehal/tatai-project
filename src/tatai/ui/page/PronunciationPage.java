@@ -18,6 +18,11 @@ import tatai.ui.control.IconButton;
 import java.io.File;
 import java.time.LocalDate;
 
+/**
+ * Pronunciation Page controller, handles user actions on Pronunciation page,
+ * namely the class defines a state machine defining the current state of the
+ * application and user's progress throughout the round.
+ */
 public class PronunciationPage extends Page {
 
     @FXML
@@ -141,6 +146,7 @@ public class PronunciationPage extends Page {
         progressBar.progressProperty().bind(_recorder.progressProperty());
     }
 
+    // Method that is used to play back the recorded audio
     private void play() {
         if (_player == null) return;
         _player.stop();
@@ -173,6 +179,7 @@ public class PronunciationPage extends Page {
         });
     }
 
+    // Method that is called when submitting an answer
     private void submit() {
         if (_player == null) return;
         Recogniser.recognise(new File(_player.getMedia().getSource())).then(recognised -> {

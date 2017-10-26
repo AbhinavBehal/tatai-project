@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * CustomOptions Page controller, handles user actions on CustomOptions page,
+ * namely for loading and parsing the custom file's equations.
+ */
 public class CustomOptionsPage extends Page {
 
     @FXML

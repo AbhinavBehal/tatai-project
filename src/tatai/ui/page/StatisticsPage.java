@@ -89,6 +89,21 @@ public class StatisticsPage extends Page {
         barChart.getData().addAll(getTopScores());
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
+
+    @Override
+    public void onBackButtonPressed() {
+        // If PieChart is open, close that instead of going back from the page.
+        if (overlay.isVisible()) {
+            showChart(false);
+        } else {
+            Main.popPage();
+        }
+    }
+
     // Private helper function used for the transition of showing the PieChart
     private void showChart(boolean show) {
         FadeTransition overlayFade = new FadeTransition(Duration.millis(150), overlay);
@@ -149,20 +164,5 @@ public class StatisticsPage extends Page {
         });
 
         return series;
-    }
-
-    @Override
-    public String getTitle() {
-        return TITLE;
-    }
-
-    @Override
-    public void onBackButtonPressed() {
-        // If PieChart is open, close that instead of going back from the page.
-        if (overlay.isVisible()) {
-            showChart(false);
-        } else {
-            Main.popPage();
-        }
     }
 }
