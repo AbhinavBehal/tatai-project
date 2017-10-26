@@ -108,8 +108,10 @@
                   fx:id="hardList"
                   styleClass="h5"/>
     </VBox>
-    <Button GridPane.rowIndex="2"
-            GridPane.columnIndex="0"
-            fx:id="butone"
-            minWidth="0"/>
+    <HBox GridPane.rowIndex="2"
+          GridPane.columnIndex="0"
+          alignment="CENTER">
+        <Button fx:id="expandButton"
+                text="Expand"/>
+    </HBox>
 </GridPane>

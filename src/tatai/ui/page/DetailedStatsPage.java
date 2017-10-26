@@ -1,7 +1,6 @@
 package tatai.ui.page;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
+import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
@@ -50,7 +49,7 @@ public class DetailedStatsPage extends Page {
     @FXML
     private VBox hardBox;
     @FXML
-    private Button butone;
+    private Button expandButton;
 
     public DetailedStatsPage(Module module) {
         _module = module;
@@ -94,7 +93,7 @@ public class DetailedStatsPage extends Page {
             }
         });
 
-        //butone.setOnAction(e -> transit());
+        expandButton.setOnAction(e -> transit(easyBox.isVisible() || hardBox.isVisible()));
     }
 
     /**
@@ -177,29 +176,27 @@ public class DetailedStatsPage extends Page {
             }
         }
     }
-/*
-    private void transit() {
-        PropertyTransition lineChartTransition = new PropertyTransition(Duration.millis(200), lineChartCol.percentWidthProperty());
-        lineChartTransition.setFromValue(lineChartCol.getPercentWidth());
-        lineChartTransition.setToValue(100);
 
-        PropertyTransition easyListTransition = new PropertyTransition(Duration.millis(150), easyListCol.percentWidthProperty());
-        easyListTransition.setFromValue(easyListCol.getPercentWidth());
-        easyListTransition.setToValue(0);
-
-        PropertyTransition hardListTransition = new PropertyTransition(Duration.millis(150), hardListCol.percentWidthProperty());
-        hardListTransition.setFromValue(hardListCol.getPercentWidth());
-        hardListTransition.setToValue(0);
-
-        ParallelTransition pt = new ParallelTransition(lineChartTransition, easyListTransition, hardListTransition);
-
-        pt.play();
-        pt.setOnFinished(e -> {
+    private void transit(boolean expand) {
+        if (expand) {
             easyBox.setVisible(false);
             hardBox.setVisible(false);
-        });
+            easyListCol.setPercentWidth(0);
+            hardListCol.setPercentWidth(0);
+
+            Timeline tl = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(lineChartCol.percentWidthProperty(), 100)));
+            tl.play();
+        } else {
+            Timeline tl = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(lineChartCol.percentWidthProperty(), 80)));
+            tl.play();
+
+            easyBox.setVisible(true);
+            hardBox.setVisible(true);
+            easyListCol.setPercentWidth(10);
+            hardListCol.setPercentWidth(10);
+        }
     }
-*/
+
     @Override
     public String getTitle() {
         return TITLE;
