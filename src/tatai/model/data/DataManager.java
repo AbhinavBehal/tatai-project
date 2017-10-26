@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class DataManager {
 
-    private static final File DATA_FILE = new File("data.json");
+    private static final File DATA_FILE = new File(".data.json");
     private static DataManager _instance;
     private final Object fileLock = new Object();
     private UserDataModel _dataModel;

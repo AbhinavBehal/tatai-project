@@ -7,4 +7,5 @@ out/
 *.mlf
 data.txt
 data.json
+.data.json
 *.zip
