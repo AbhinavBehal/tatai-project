@@ -14,6 +14,7 @@ import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
 
+import java.util.Collections;
 import java.util.List;
 
 import static tatai.model.generator.Difficulty.EASY;
@@ -152,16 +153,14 @@ public class DetailedStatsPage extends Page {
         // If requesting more than or equal size of available data.
         if (n >= size) {
             // Get data from end of list to start so that newest data is on the right.
-            for (int i = 1; i <= n && i <= size; i++) {
-                series.getData().add(new XYChart.Data<>(i, scores.get(size - i)));
+            for (int i = 0; i < size; ++i) {
+                series.getData().add(new XYChart.Data<>(i + 1, scores.get(i)));
             }
         } else {
             // Otherwise start getting data once within the most recent n entries.
             int j = 1;
-            for (int i = size; i > 0; i--) {
-                if (i <= n) {
-                    series.getData().add(new XYChart.Data<>(j++, scores.get(size - i)));
-                }
+            for (int i = size - n; i < size; ++i) {
+                series.getData().add(new XYChart.Data<>(j++, scores.get(i)));
             }
         }
         return series;
