@@ -29,8 +29,13 @@ task submission(type: Zip) {
 	from "build/libs/tatai-project.jar"
 	from "run.sh"
 	from "README.TXT"
+	from "Tatai-User_Manual.pdf"
+	into ('/coversheets') {
+		from "abeh957_coversheet.pdf"
+		from "zqia153_coversheet.pdf"
+	}
 	into ('/src') {
-			from 'src'
+		from 'src'
 	}
 	into ('/res') {
 		from 'res'

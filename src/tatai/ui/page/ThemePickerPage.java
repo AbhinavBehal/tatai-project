@@ -42,7 +42,7 @@ public class ThemePickerPage extends Page {
         draw(ss, Color.web(BEACHSIDE.hexBackground()), Color.web(BEACHSIDE.hexForeground()));
         draw(lb, Color.web(CULTURAL.hexBackground()), Color.web(CULTURAL.hexForeground()));
         draw(sb, Color.web(SUBLIME.hexBackground()), Color.web(SUBLIME.hexForeground()));
-        draw(pl, Color.web(PLACEHOLDER.hexBackground()), Color.web(PLACEHOLDER.hexForeground()));
+        draw(pl, Color.web(KORU.hexBackground()), Color.web(KORU.hexForeground()));
 
         sunset.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
@@ -61,7 +61,7 @@ public class ThemePickerPage extends Page {
         });
         placeholder.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                ThemeManager.manager().updateTheme(PLACEHOLDER);
+                ThemeManager.manager().updateTheme(KORU);
             }
         });
     }

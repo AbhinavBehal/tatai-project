@@ -12,7 +12,7 @@ public enum Theme {
     BEACHSIDE("/themes/beachside-theme.css"),
     CULTURAL("/themes/cultural-theme.css"),
     SUBLIME("/themes/sublime-theme.css"),
-    PLACEHOLDER("/themes/placeholder-theme.css");
+    KORU("/themes/koru-theme.css");
 
     private String _url;
     private String _bg;
