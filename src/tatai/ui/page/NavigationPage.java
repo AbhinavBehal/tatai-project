@@ -125,10 +125,32 @@ public class NavigationPage extends Scene implements ThemeListener {
         parentPane.getStylesheets().add(ThemeManager.manager().getCurrentTheme().toString());
     }
 
-    // Method that changes the currently set Page to the one passed in, and handles transition logic
+    // Method that changes the currently set Page to the one passed in
     public void pushPage(Page page) {
-        FadeTransition fOut = new FadeTransition(Duration.millis(DURATION), _pages.peek().getRoot());
-        FadeTransition fIn = new FadeTransition(Duration.millis(DURATION), _pages.push(page).getRoot());
+        transitionPage(_pages.peek(), _pages.push(page));
+    }
+
+    // Method that changes the current Page to the previous one in the stack
+    public void popPage() {
+        themesButton.setDisable(!(_pages.peek() instanceof ThemePickerPage) && themesButton.isDisabled());
+        statsButton.setDisable(!(_pages.peek() instanceof StatisticsPage) && statsButton.isDisabled());
+
+        if (_pages.size() > 1) {
+            transitionPage(_pages.pop(), _pages.peek());
+        }
+    }
+
+    // Method for listening to theme change events
+    @Override
+    public void updateTheme(Theme previousTheme, Theme newTheme) {
+        parentPane.getStylesheets().remove(previousTheme.toString());
+        parentPane.getStylesheets().add(newTheme.toString());
+    }
+
+    // Helper method that transitions between two pages
+    private void transitionPage(Page start, Page end) {
+        FadeTransition fOut = new FadeTransition(Duration.millis(DURATION), start.getRoot());
+        FadeTransition fIn = new FadeTransition(Duration.millis(DURATION), end.getRoot());
         FadeTransition navOut = new FadeTransition(Duration.millis(DURATION), navBar);
         FadeTransition navIn = new FadeTransition(Duration.millis(DURATION), navBar);
 
@@ -148,56 +170,15 @@ public class NavigationPage extends Scene implements ThemeListener {
         ptOut.play();
         ptOut.setOnFinished(e -> {
             changePage();
-            backButton.setGlyphSize(BACKBUTTON_SIZE);
             ptIn.play();
         });
-    }
-
-    // Method that changes the current Page to the previous one in the stack, and handles transition logic
-    public void popPage() {
-        themesButton.setDisable(!(_pages.peek() instanceof ThemePickerPage) && themesButton.isDisabled());
-        statsButton.setDisable(!(_pages.peek() instanceof StatisticsPage) && statsButton.isDisabled());
-        if (_pages.size() > 1) {
-            FadeTransition fOut = new FadeTransition(Duration.millis(DURATION), _pages.pop().getRoot());
-            FadeTransition fIn = new FadeTransition(Duration.millis(DURATION), _pages.peek().getRoot());
-            FadeTransition navOut = new FadeTransition(Duration.millis(DURATION), navBar);
-            FadeTransition navIn = new FadeTransition(Duration.millis(DURATION), navBar);
-
-            fOut.setFromValue(DEFAULT_MAX);
-            fOut.setToValue(DEFAULT_MIN);
-            navOut.setFromValue(DEFAULT_MAX);
-            navOut.setToValue(DEFAULT_MIN);
-
-            fIn.setFromValue(DEFAULT_MIN);
-            fIn.setToValue(DEFAULT_MAX);
-            navIn.setFromValue(DEFAULT_MIN);
-            navIn.setToValue(DEFAULT_MAX);
-
-            ParallelTransition ptOut = new ParallelTransition(fOut, navOut);
-            ParallelTransition ptIn = new ParallelTransition(fIn, navIn);
-
-            ptOut.play();
-            ptOut.setOnFinished(e -> {
-                changePage();
-
-                // Don't show the back button if you can't go back
-                backButton.setGlyphSize(_pages.size() == 1 ? DEFAULT_MIN : BACKBUTTON_SIZE);
-                ptIn.play();
-            });
-        }
-    }
-
-    // Method for listening to theme change events
-    @Override
-    public void updateTheme(Theme previousTheme, Theme newTheme) {
-        parentPane.getStylesheets().remove(previousTheme.toString());
-        parentPane.getStylesheets().add(newTheme.toString());
     }
 
     // Helper method that sets the current page to the one at the top of the stack
     private void changePage() {
         content.getChildren().setAll(_pages.peek().getRoot());
         title.setText(_pages.peek().getTitle());
+        backButton.setGlyphSize(_pages.size() == 1 ? DEFAULT_MIN : BACKBUTTON_SIZE);
     }
 
     // Method that handles the transitions involved in showing the options menu
