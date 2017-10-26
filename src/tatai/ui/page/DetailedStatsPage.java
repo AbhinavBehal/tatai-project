@@ -94,7 +94,11 @@ public class DetailedStatsPage extends Page {
             if (!newValue.matches("\\d*")) {
                 customField.setText(oldValue);
             } else if (!newValue.isEmpty()) {
-                setScores(Integer.parseInt(customField.getText()));
+                if (newValue.length() > 9) {
+                    customField.setText(oldValue);
+                } else {
+                    setScores(Integer.parseInt(customField.getText()));
+                }
             }
         });
 
