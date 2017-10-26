@@ -57,13 +57,14 @@ public class TestOptionsPage extends Page implements ScoreListener {
             Main.pushPage(new PronunciationPage("Test - Easy", generator));
         });
 
-        hardButton.setDisable(!StatsManager.manager().testUnlocked());
-        hardLabel.setDisable(!StatsManager.manager().testUnlocked());
-
         hardButton.setOnMouseClicked(e ->{
             Generator generator = new EquationGenerator(Difficulty.HARD, getSelectedOperations());
             Main.pushPage(new PronunciationPage("Test - Hard", generator));
         });
+
+        // Disables hard mode if it is not unlocked yet
+        hardButton.setDisable(!StatsManager.manager().testUnlocked());
+        hardLabel.setDisable(!StatsManager.manager().testUnlocked());
 
         customButton.setOnMouseClicked(e -> Main.pushPage(new CustomOptionsPage()));
     }
@@ -76,22 +77,19 @@ public class TestOptionsPage extends Page implements ScoreListener {
 
     private void onOperationSelected(boolean selected) {
         _numOperations = selected ? _numOperations + 1 : _numOperations - 1;
-        if (_numOperations == 0) {
-            // If no operations are selected, select the addition operation by default
-            _operatorMap.get(Operator.ADDITION).setSelected(true);
-        }
     }
 
     private List<Operator> getSelectedOperations() {
         List<Operator> operations = new ArrayList<>();
         for (Map.Entry<Operator, CheckBox> entry : _operatorMap.entrySet()) {
-            if (entry.getValue().isSelected()) {
+            if (entry.getValue().isSelected() || _numOperations == 0) {
                 operations.add(entry.getKey());
             }
         }
         return operations;
     }
 
+    // Listener method used to see if hard becomes unlocked by scoring 8 or above
     @Override
     public void updateScore(Module module, Difficulty difficulty, int lastScore) {
         if (lastScore > 7) {
