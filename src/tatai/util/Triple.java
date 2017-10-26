@@ -1,5 +1,11 @@
 package tatai.util;
 
+/**
+ * Class used as a tuple, namely a Triple. Stores three objects inside the class.
+ * @param <F> First Object
+ * @param <S> Second Object
+ * @param <T> Third Object
+ */
 public class Triple<F extends Comparable<? super F>,
         S extends Comparable<? super S>,
         T extends Comparable<? super T>> implements Comparable<Triple<F, S, T>> {

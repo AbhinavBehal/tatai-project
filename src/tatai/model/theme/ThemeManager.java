@@ -5,6 +5,10 @@ import tatai.model.data.DataManager;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Singleton class used to manage user theme.
+ * Handles updating and storing current theme.
+ */
 public class ThemeManager {
 
     private static final Theme DEFAULT_THEME = Theme.BEACHSIDE;

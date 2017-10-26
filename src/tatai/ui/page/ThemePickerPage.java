@@ -11,6 +11,11 @@ import tatai.model.theme.ThemeManager;
 
 import static tatai.model.theme.Theme.*;
 
+/**
+ * ThemePicker Page controller, handles user actions on ThemePicker page,
+ * namely for drawing the icrons for each theme colour and updating the
+ * selected theme.
+ */
 public class ThemePickerPage extends Page {
 
     @FXML
@@ -66,6 +71,7 @@ public class ThemePickerPage extends Page {
         return TITLE;
     }
 
+    // Private helper function used to draw the theme icons
     private void draw(GraphicsContext gc, Color bg, Color fg) {
         gc.setFill(fg);
         gc.fillRoundRect(0, 0, 150, 150, 20, 20);

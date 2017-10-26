@@ -11,6 +11,10 @@ import java.util.*;
 
 import static tatai.model.statistics.Statistic.*;
 
+/**
+ * Singleton class used to manage user statistics.
+ * Handles storing and updating scores as well as calculating statistics.
+ */
 public class StatsManager {
 
     private static final int MAX_SCORE = 10;
@@ -90,7 +94,6 @@ public class StatsManager {
                 topScores.add(mdMaxScore);
             }
         }
-
         return topScores;
     }
 
@@ -112,7 +115,6 @@ public class StatsManager {
                 total += _statistics.get(new Triple<>(module, difficulty, TOTAL));
             }
         }
-
         totalScores.add(new Pair<>("Attempted", total - totalCorrect));
 
         return totalScores;
@@ -131,7 +133,6 @@ public class StatsManager {
                 scoreList.addAll(v);
             }
         });
-
         return scoreList;
     }
 
@@ -202,17 +203,6 @@ public class StatsManager {
             for (Difficulty d : Difficulty.values()) {
                 for (Statistic s : Statistic.values()) {
                     _statistics.put(new Triple<>(m, d, s), 0.0);
-                }
-            }
-        }
-    }
-
-    // Private method to check stats, used for testing
-    private void checkem() {
-        for (Module m : Module.values()) {
-            for (Difficulty d : Difficulty.values()) {
-                for (Statistic s : Statistic.values()) {
-                    System.out.println(m + ":" + d + ":" + s + "=" + _statistics.get(new Triple<>(m, d, s)));
                 }
             }
         }

@@ -25,6 +25,11 @@ public class CustomGenerator implements Generator {
         randomise();
     }
 
+    /**
+     * Inherited public method which returns a string representation of an
+     * equation the user loaded.
+     * @return String representation of equation.
+     */
     @Override
     public String generate() {
         // Reshuffle the questions if all of them have been generated
@@ -37,21 +42,31 @@ public class CustomGenerator implements Generator {
         return _questions.get(_currentQuestion++) + " = ?";
     }
 
+    /**
+     * Public method used to get the value of the answer to the current equation.
+     * @return integer value of answer.
+     */
     @Override
     public int value() {
         return _currentAnswer;
     }
 
+    /**
+     * Public method used to get the number of questions loaded in.
+     * @return integer size of the list.
+     */
     @Override
     public int questions() {
         return _questions.size();
     }
 
+    // Does not have
     @Override
     public Module module() {
         return null;
     }
 
+    // Does not have
     @Override
     public Difficulty difficulty() {
         return null;

@@ -37,15 +37,16 @@ public class PracticeOptionsPage extends Page implements ScoreListener {
             }
         });
 
-        hardButton.setDisable(!StatsManager.manager().practiceUnlocked());
-        hardLabel.setDisable(!StatsManager.manager().practiceUnlocked());
-
         hardButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Generator generator = new NumberGenerator(Difficulty.HARD);
                 Main.pushPage(new PronunciationPage("Practice - Hard", generator));
             }
         });
+
+        // Disables hard mode if it is not unlocked yet
+        hardButton.setDisable(!StatsManager.manager().practiceUnlocked());
+        hardLabel.setDisable(!StatsManager.manager().practiceUnlocked());
     }
 
     @Override
@@ -53,6 +54,7 @@ public class PracticeOptionsPage extends Page implements ScoreListener {
         return TITLE;
     }
 
+    // Listener method used to see if hard becomes unlocked by scoring 8 or above
     @Override
     public void updateScore(Module module, Difficulty difficulty, int lastScore) {
         if (lastScore > 7) {

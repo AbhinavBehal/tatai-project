@@ -5,6 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import tatai.ui.Main;
 
+/**
+ * Menu Page controller, handles actions on Menu page where users can navigate
+ * to Practice or Test {@link tatai.model.generator.Module}.
+ */
 public class MenuPage extends Page {
 
     @FXML

@@ -6,20 +6,11 @@ import java.util.Random;
 
 import static tatai.model.generator.Operator.*;
 
+/**
+ * Class implementing Generator used to generate strings of equations based on
+ * input difficulty and operator parameters.
+ */
 public class EquationGenerator implements Generator {
-
-    // extra entry, used for testing equation generator
-    // remove once completed testing
-    public static void main(String[] args) {
-        ArrayList<Operator> OP = new ArrayList<>();
-        OP.add(ADDITION);
-        OP.add(SUBTRACTION);
-        OP.add(MULTIPLICATION);
-        OP.add(DIVISION);
-        EquationGenerator eg = new EquationGenerator(Difficulty.HARD, OP);
-        System.out.println(eg.generate());
-        System.out.println("=" + eg.value());
-    }
 
     private static final int MIN_OPERATORS = 1;
     private static final int MAX_OPERATORS = 3;
@@ -56,6 +47,8 @@ public class EquationGenerator implements Generator {
         } else {
             newEquation = append(MIN_OPERATORS, _answer);
         }
+
+        // Returns equation string without outside brackets
         return newEquation.substring(1, newEquation.length() - 1) + " = ?";
     }
 
@@ -83,7 +76,6 @@ public class EquationGenerator implements Generator {
 
     /**
      * Private helper method used to generate a random multiple of a number less than 500.
-     * TODO: change after 13/10 meeting regarding operating with numbers > 99
      * @param number number to get multiple of
      * @return a random multiple less than 500 of number
      */
@@ -110,17 +102,14 @@ public class EquationGenerator implements Generator {
      * @return appended equation
      */
     private String append(int n, int previousAnswer) {
-
-        // check if working correctly
-        //System.out.println(n + " " + previousAnswer);
         if (n == 0) {
             return Integer.toString(previousAnswer);
         }
 
-        Random r = new Random();
         int a = Math.abs(r.nextInt(_difficulty.val()) - previousAnswer);
         int currentAnswer = previousAnswer;
 
+        // Get a random operator
         Operator op;
         if (_operators.size() == 1) {
             op = _operators.get(0);
@@ -128,10 +117,12 @@ public class EquationGenerator implements Generator {
             op = _operators.get(r.nextInt(_operators.size()));
         }
 
+        // Don't allow division by 0
         if (op == DIVISION && currentAnswer == 0) {
             op = ADDITION;
         }
 
+        // Calculate newest answer depending on operator
         if (op.equals(ADDITION)) {
             currentAnswer -= a;
         } else if (op.equals(SUBTRACTION)) {
@@ -146,11 +137,12 @@ public class EquationGenerator implements Generator {
             return "";
         }
 
-        // check current equation output
-        //System.out.println(previousAnswer + "=" + currentAnswer + op + a);
-
+        // Append next operator
         String newEquation = append(--n, currentAnswer);
 
+        // Construct string from previously generated equation string and append
+        // current equation to it. If addition or multiplication, append current
+        // equation either in front or behind.
         if (op.equals(ADDITION)) {
             if (r.nextBoolean()) {
                 newEquation = "(" + newEquation + " " + op + " " + a + ")";
@@ -169,11 +161,11 @@ public class EquationGenerator implements Generator {
             newEquation = "(" + a + " " + op + " " + newEquation + ")";
         }
 
+        // Return string with adding negative replaced with just subtracting
         return newEquation.replace("+ -", SUBTRACTION + " ");
     }
 
     /**
-     * TODO: string parser? - may move to util if still needed?
      * @param equation equation to parse
      * @return _value of equation?
      */

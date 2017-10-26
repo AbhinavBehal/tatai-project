@@ -14,7 +14,6 @@ import javafx.util.Duration;
 import tatai.model.generator.Difficulty;
 import tatai.model.generator.Module;
 import tatai.model.statistics.StatsManager;
-import tatai.util.PropertyTransition;
 
 import java.util.List;
 

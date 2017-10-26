@@ -23,6 +23,10 @@ import java.util.List;
 import static tatai.model.generator.Module.PRACTICE;
 import static tatai.model.generator.Module.TEST;
 
+/**
+ * Statistics Page controller, handles user actions on Statistics page, namely
+ * showing the PieChart and choosing which DetailedStatistics page to show.
+ */
 public class StatisticsPage extends Page {
 
     private static final String TITLE = "Statistics";
@@ -86,6 +90,7 @@ public class StatisticsPage extends Page {
         barChart.getData().addAll(getTopScores());
     }
 
+    // Private helper function used for the transition of showing the PieChart
     private void showChart(boolean show) {
         FadeTransition overlayFade = new FadeTransition(Duration.millis(150), overlay);
         FadeTransition pieChartFade = new FadeTransition(Duration.millis(150), pieChart);
@@ -120,6 +125,8 @@ public class StatisticsPage extends Page {
         });
     }
 
+    // Private helper function used to get score data from StatsManager and convert
+    // to PieChart.Data for PieChart to use.
     private ObservableList<PieChart.Data> getTotalScores() {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         List<Pair<String, Double>> dataList = StatsManager.manager().getTotalCorrect();
@@ -129,6 +136,8 @@ public class StatisticsPage extends Page {
         return pieChartData;
     }
 
+    // Private helper function used to get score data from StatsManager and convert
+    // to XYChart.Series for BarChart to use.
     private ObservableList<XYChart.Series<String, Number>> getTopScores() {
         ObservableList<XYChart.Series<String, Number>> series = FXCollections.observableArrayList();
         List<Pair<String, Double>> dataList = StatsManager.manager().getTopScores();
@@ -150,6 +159,7 @@ public class StatisticsPage extends Page {
 
     @Override
     public void onBackButtonPressed() {
+        // If PieChart is open, close that before exiting from the page.
         if (overlay.isVisible()) {
             showChart(false);
         } else {
