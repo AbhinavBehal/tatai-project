@@ -94,7 +94,7 @@ public class DetailedStatsPage extends Page {
             }
         });
 
-        butone.setOnAction(e -> transit());
+        //butone.setOnAction(e -> transit());
     }
 
     /**
@@ -177,7 +177,7 @@ public class DetailedStatsPage extends Page {
             }
         }
     }
-
+/*
     private void transit() {
         PropertyTransition lineChartTransition = new PropertyTransition(Duration.millis(200), lineChartCol.percentWidthProperty());
         lineChartTransition.setFromValue(lineChartCol.getPercentWidth());
@@ -199,7 +199,7 @@ public class DetailedStatsPage extends Page {
             hardBox.setVisible(false);
         });
     }
-
+*/
     @Override
     public String getTitle() {
         return TITLE;
