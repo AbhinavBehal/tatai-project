@@ -9,8 +9,8 @@
           alignment="CENTER"
           hgap="20">
     <columnConstraints>
-        <ColumnConstraints percentWidth="50"/>
-        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="50" halignment="CENTER"/>
+        <ColumnConstraints percentWidth="50" halignment="CENTER"/>
     </columnConstraints>
     <padding>
         <Insets topRightBottomLeft="50"/>
@@ -24,7 +24,6 @@
     <Label GridPane.rowIndex="1"
            GridPane.columnIndex="0"
            styleClass="h4"
-           GridPane.halignment="CENTER"
            text="1 - 9"/>
     <Button fx:id="hardButton"
             GridPane.rowIndex="0"
@@ -36,6 +35,5 @@
            GridPane.rowIndex="1"
            GridPane.columnIndex="1"
            styleClass="h4"
-           GridPane.halignment="CENTER"
            text="1 - 99"/>
 </GridPane>

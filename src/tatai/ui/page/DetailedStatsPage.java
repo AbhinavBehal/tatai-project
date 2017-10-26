@@ -21,6 +21,9 @@ import static tatai.model.generator.Difficulty.HARD;
 
 public class DetailedStatsPage extends Page {
 
+    private static final double DEFAULT_CHART_WIDTH = 60;
+    private static final double DEFAULT_LIST_WIDTH = 20;
+
     private final String TITLE;
     private Module _module;
 
@@ -51,6 +54,7 @@ public class DetailedStatsPage extends Page {
     @FXML
     private Button expandButton;
 
+
     public DetailedStatsPage(Module module) {
         _module = module;
         TITLE = "Detailed Statistics - " + _module;
@@ -61,9 +65,9 @@ public class DetailedStatsPage extends Page {
         lineChart.setAnimated(false);
         populateList();
 
-        lineChartCol.setPercentWidth(80);
-        easyListCol.setPercentWidth(10);
-        hardListCol.setPercentWidth(10);
+        lineChartCol.setPercentWidth(DEFAULT_CHART_WIDTH);
+        easyListCol.setPercentWidth(DEFAULT_LIST_WIDTH);
+        hardListCol.setPercentWidth(DEFAULT_LIST_WIDTH);
 
         recentN.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             RadioButton btn = (RadioButton) newValue;
@@ -94,6 +98,11 @@ public class DetailedStatsPage extends Page {
         });
 
         expandButton.setOnAction(e -> transit(easyBox.isVisible() || hardBox.isVisible()));
+    }
+
+    @Override
+    public String getTitle() {
+        return TITLE;
     }
 
     /**
@@ -183,22 +192,15 @@ public class DetailedStatsPage extends Page {
             hardBox.setVisible(false);
             easyListCol.setPercentWidth(0);
             hardListCol.setPercentWidth(0);
-
-            Timeline tl = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(lineChartCol.percentWidthProperty(), 100)));
-            tl.play();
+            lineChartCol.setPercentWidth(100);
+            expandButton.setText("Shrink Graph");
         } else {
-            Timeline tl = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(lineChartCol.percentWidthProperty(), 80)));
-            tl.play();
-
             easyBox.setVisible(true);
             hardBox.setVisible(true);
-            easyListCol.setPercentWidth(10);
-            hardListCol.setPercentWidth(10);
+            easyListCol.setPercentWidth(DEFAULT_LIST_WIDTH);
+            hardListCol.setPercentWidth(DEFAULT_LIST_WIDTH);
+            lineChartCol.setPercentWidth(DEFAULT_CHART_WIDTH);
+            expandButton.setText("Expand Graph");
         }
-    }
-
-    @Override
-    public String getTitle() {
-        return TITLE;
     }
 }

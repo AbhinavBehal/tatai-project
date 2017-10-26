@@ -89,7 +89,8 @@
                   barGap="50">
             <xAxis>
                 <CategoryAxis fx:id="xAxis"
-                              side="BOTTOM"/>
+                              side="BOTTOM"
+                              tickMarkVisible="false"/>
             </xAxis>
             <yAxis>
                 <NumberAxis fx:id="yAxis"
@@ -97,6 +98,7 @@
                             side="LEFT"
                             autoRanging="false"
                             upperBound="10"
+                            minorTickVisible="false"
                             tickUnit="1"/>
             </yAxis>
         </BarChart>
