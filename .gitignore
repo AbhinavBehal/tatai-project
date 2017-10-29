@@ -2,6 +2,7 @@
 .gradle/
 build/
 out/
+MaoriNumbers/
 *.iml
 *.wav
 *.mlf
